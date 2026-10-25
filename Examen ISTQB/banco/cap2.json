@@ -1,0 +1,230 @@
+[
+{
+"id": "2-01", "cap": 2, "lo": "FL-2.1.2", "k": "K2", "tema": "Buenas prácticas en cualquier ciclo de vida",
+"pregunta": "¿Cuál de las siguientes es una buena práctica de prueba aplicable a CUALQUIER modelo de ciclo de vida de desarrollo?",
+"opciones": {
+"a": "Para cada actividad de desarrollo existe una actividad de prueba correspondiente.",
+"b": "La prueba solo debe empezar cuando el código esté completo, para no hacer trabajo dos veces.",
+"c": "Todos los niveles de prueba deben tener los mismos objetivos, para que sean coherentes.",
+"d": "Los probadores solo deben revisar las versiones finales y aprobadas de los productos de trabajo."
+},
+"correcta": ["a"],
+"explicacion": "El programa de estudio recoge cuatro buenas prácticas independientes del ciclo de vida: 1) para cada actividad de desarrollo hay una actividad de prueba correspondiente, de modo que todas las actividades estén sujetas a control de calidad; 2) los distintos niveles de prueba tienen objetivos específicos y diferentes, lo que permite que sean adecuadamente completos sin redundancia; 3) el análisis y el diseño de la prueba de un nivel empiezan durante la fase de desarrollo correspondiente, siguiendo el principio de prueba temprana; 4) los probadores participan en la revisión de los productos de trabajo en cuanto hay borradores disponibles.",
+"razones": {
+"a": "Correcta. Es la primera buena práctica del programa.",
+"b": "Contradice el principio de prueba temprana.",
+"c": "Al revés: cada nivel tiene objetivos específicos y diferentes.",
+"d": "Deben participar en cuanto hay borradores, no solo en las versiones finales."
+},
+"clave": "Las 4 buenas prácticas: actividad espejo, objetivos distintos por nivel, empezar pronto y revisar borradores."
+},
+{
+"id": "2-02", "cap": 2, "lo": "FL-2.1.3", "k": "K1", "tema": "Enfoques 'primero la prueba'",
+"pregunta": "¿Qué enfoque dirige la codificación mediante casos de prueba de componente escritos antes que el código, y después refactoriza ese código?",
+"opciones": {
+"a": "Desarrollo guiado por pruebas (TDD).",
+"b": "Desarrollo guiado por pruebas de aceptación (ATDD).",
+"c": "Desarrollo guiado por el comportamiento (BDD).",
+"d": "Prueba exploratoria."
+},
+"correcta": ["a"],
+"explicacion": "En TDD se escriben primero las pruebas (normalmente de componente), luego el código mínimo para que pasen, y después se refactorizan tanto las pruebas como el código. En ATDD las pruebas se derivan de los criterios de aceptación como parte del diseño del sistema. En BDD el comportamiento deseado se expresa con casos de prueba en lenguaje natural, normalmente con el formato Dado/Cuando/Entonces.",
+"razones": {
+"a": "Correcta. Prueba de componente primero, luego código y luego refactorización = TDD.",
+"b": "ATDD trabaja a nivel de criterios de aceptación, no de componente.",
+"c": "BDD expresa el comportamiento en lenguaje natural (Dado/Cuando/Entonces).",
+"d": "No es un enfoque 'primero la prueba' de desarrollo; es una técnica basada en la experiencia."
+},
+"clave": "TDD → componente. ATDD → criterios de aceptación. BDD → Dado/Cuando/Entonces."
+},
+{
+"id": "2-03", "cap": 2, "lo": "FL-2.1.3", "k": "K2", "tema": "Enfoques 'primero la prueba'",
+"pregunta": "¿Qué afirmación describe MEJOR el desarrollo guiado por el comportamiento (BDD)?",
+"opciones": {
+"a": "Expresa el comportamiento deseado de la aplicación con casos de prueba en lenguaje natural, fáciles de entender por las partes interesadas, normalmente con el formato Dado/Cuando/Entonces.",
+"b": "Escribe pruebas unitarias antes del código y las ejecuta en cada compilación.",
+"c": "Diseña las pruebas a partir de la estructura interna del código.",
+"d": "Sustituye a los criterios de aceptación por scripts de prueba automatizados escritos solo por los desarrolladores."
+},
+"correcta": ["a"],
+"explicacion": "En BDD el comportamiento deseado se expresa con casos de prueba escritos en una forma sencilla de lenguaje natural, fácil de entender por las partes interesadas, normalmente con el formato Dado/Cuando/Entonces. Después, los casos de prueba se traducen automáticamente a pruebas ejecutables. Favorece una comprensión compartida entre negocio, desarrollo y prueba.",
+"razones": {
+"a": "Correcta.",
+"b": "Describe TDD.",
+"c": "Describe la prueba de caja blanca.",
+"d": "BDD busca precisamente que negocio participe; no lo excluye ni sustituye los criterios de aceptación."
+},
+"clave": "BDD = lenguaje natural compartido con negocio."
+},
+{
+"id": "2-04", "cap": 2, "lo": "FL-2.1.4", "k": "K2", "tema": "DevOps y prueba",
+"pregunta": "¿Cuál de los siguientes es un BENEFICIO de DevOps para la prueba?",
+"opciones": {
+"a": "Retroalimentación rápida sobre la calidad del código y sobre si los cambios afectan negativamente al código existente.",
+"b": "Elimina por completo la necesidad de la prueba manual.",
+"c": "El pipeline de entrega no necesita mantenimiento una vez configurado.",
+"d": "Ya no hace falta disponer de entornos de prueba."
+},
+"correcta": ["a"],
+"explicacion": "Beneficios de DevOps para la prueba según el programa: retroalimentación rápida sobre la calidad del código y sobre si los cambios afectan negativamente al código existente; la integración continua fomenta el shift-left, animando a entregar código de alta calidad acompañado de pruebas de componente y análisis estático; promueve procesos automatizados como CI/CD que facilitan entornos de prueba estables; aumenta la visibilidad de las características de calidad no funcionales; la automatización mediante el pipeline reduce la necesidad de prueba manual repetitiva, y se minimiza el riesgo de regresión. Riesgos: hay que definir y establecer el pipeline, introducir y mantener herramientas de CI/CD, y la automatización requiere recursos adicionales.",
+"razones": {
+"a": "Correcta.",
+"b": "Reduce la prueba manual REPETITIVA, pero no la elimina (exploratoria, usabilidad...).",
+"c": "Mantener el pipeline y sus herramientas es precisamente un riesgo de DevOps.",
+"d": "Al contrario: DevOps facilita entornos de prueba estables."
+},
+"clave": "Reduce ≠ elimina. Las opciones absolutas ('elimina por completo') suelen ser incorrectas."
+},
+{
+"id": "2-05", "cap": 2, "lo": "FL-2.1.5", "k": "K2", "tema": "Shift-left",
+"pregunta": "¿Cuál de las siguientes prácticas NO es un ejemplo del enfoque shift-left?",
+"opciones": {
+"a": "Revisar la especificación desde la perspectiva de la prueba.",
+"b": "Escribir los casos de prueba antes de escribir el código.",
+"c": "Hacer análisis estático del código fuente antes de la prueba dinámica.",
+"d": "Dejar toda la prueba no funcional para después de terminar la prueba de sistema."
+},
+"correcta": ["d"],
+"explicacion": "Shift-left significa hacer la prueba antes en el ciclo de vida. Las buenas prácticas que recoge el programa son: revisar la especificación desde la perspectiva de la prueba, escribir los casos de prueba antes que el código y ejecutarlos en un entorno de prueba durante la implementación, usar CI (y a ser posible CD) con pruebas de componente automatizadas, completar el análisis estático del código antes de la prueba dinámica y, cuando sea posible, empezar la prueba no funcional ya en el nivel de componente.",
+"razones": {
+"a": "Es shift-left.",
+"b": "Es shift-left.",
+"c": "Es shift-left.",
+"d": "Correcta. Retrasar la prueba no funcional al final va en contra del shift-left, que propone empezarla en el nivel de componente cuando sea posible."
+},
+"clave": "Ojo a los 'NO' en el enunciado: subráyalos mentalmente."
+},
+{
+"id": "2-06", "cap": 2, "lo": "FL-2.1.6", "k": "K1", "tema": "Retrospectivas",
+"pregunta": "En una retrospectiva, ¿qué se trata típicamente?",
+"opciones": {
+"a": "Qué ha ido bien, qué no ha ido bien y cómo mejorar.",
+"b": "La asignación de culpas por los defectos que se han escapado.",
+"c": "La planificación detallada del calendario de la siguiente versión.",
+"d": "La revisión técnica del código fuente."
+},
+"correcta": ["a"],
+"explicacion": "Las retrospectivas (o 'reuniones post-proyecto') se celebran normalmente al final de un proyecto o de una iteración, en un hito de entrega, o cuando hace falta. En ellas los participantes (no solo los probadores) discuten qué ha tenido éxito y debe mantenerse, qué no ha tenido éxito y podría mejorarse, y cómo incorporar las mejoras y mantener los éxitos en el futuro. Beneficios para la prueba: más eficacia y eficiencia, más calidad de los productos de prueba, unión del equipo, mejor calidad de la base de prueba y mejor cooperación entre desarrollo y prueba.",
+"razones": {
+"a": "Correcta.",
+"b": "Una retrospectiva busca la mejora, no culpables.",
+"c": "Eso es planificación (de versión o de iteración).",
+"d": "Eso es una revisión (prueba estática)."
+},
+"clave": "Retrospectiva = mejora continua: bien / mal / cómo mejorar."
+},
+{
+"id": "2-07", "cap": 2, "lo": "FL-2.2.1", "k": "K2", "tema": "Niveles de prueba",
+"pregunta": "Un equipo prueba las interfaces y la interacción entre su sistema de reservas y la pasarela de pago externa de un proveedor. ¿Qué nivel de prueba es?",
+"opciones": {
+"a": "Prueba de integración de componentes.",
+"b": "Prueba de integración de sistemas.",
+"c": "Prueba de sistema.",
+"d": "Prueba de aceptación."
+},
+"correcta": ["b"],
+"explicacion": "La prueba de integración de sistemas se centra en las interfaces del sistema que se prueba con otros sistemas y con servicios externos. Requiere entornos de prueba adecuados, preferiblemente parecidos al entorno operativo. La de integración de componentes se centra en las interfaces e interacciones entre componentes de UN sistema. La de sistema se centra en el comportamiento y las capacidades generales de un sistema o producto completo.",
+"razones": {
+"a": "Esa sería entre componentes internos del mismo sistema.",
+"b": "Correcta. Sistema propio ↔ servicio externo = integración de sistemas.",
+"c": "La prueba de sistema evalúa el sistema completo, no específicamente la interfaz con otro sistema externo.",
+"d": "La aceptación valida la preparación para el despliegue según las necesidades del negocio."
+},
+"clave": "¿Es 'otro sistema' o 'servicio externo'? → integración de SISTEMAS."
+},
+{
+"id": "2-08", "cap": 2, "lo": "FL-2.2.1", "k": "K2", "tema": "Niveles de prueba",
+"pregunta": "Antes de la puesta en producción, un banco pide a un grupo de empleados de sus oficinas que usen el nuevo sistema con sus tareas diarias reales en un entorno parecido al de producción, para confirmar que satisface sus necesidades. ¿Qué tipo de prueba es?",
+"opciones": {
+"a": "Prueba de sistema.",
+"b": "Prueba de aceptación de usuario.",
+"c": "Prueba de aceptación operativa.",
+"d": "Prueba de integración de componentes."
+},
+"correcta": ["b"],
+"explicacion": "La prueba de aceptación se centra en la validación y en demostrar la preparación para el despliegue, es decir, que el sistema satisface las necesidades del negocio del usuario. Sus formas principales son: aceptación de usuario (UAT), aceptación operativa, aceptación contractual y regulatoria, prueba alfa y prueba beta. Si son los usuarios finales los que validan con sus tareas reales, es UAT. La aceptación operativa la hacen normalmente los administradores u operadores (copias de seguridad, recuperación, mantenimiento...).",
+"razones": {
+"a": "La prueba de sistema la suele hacer un equipo de prueba independiente y verifica el sistema frente a sus especificaciones.",
+"b": "Correcta. Usuarios reales, tareas reales, validar sus necesidades → UAT.",
+"c": "La aceptación operativa se centra en aspectos de operación (copias de seguridad, instalación, recuperación).",
+"d": "Es un nivel técnico entre componentes."
+},
+"clave": "Usuarios finales validando = UAT. Operadores y administradores = aceptación operativa."
+},
+{
+"id": "2-09", "cap": 2, "lo": "FL-2.2.2", "k": "K2", "tema": "Tipos de prueba",
+"pregunta": "¿Cuál de los siguientes es un ejemplo de prueba NO funcional?",
+"opciones": {
+"a": "Comprobar que el carrito suma bien el precio de los productos.",
+"b": "Comprobar que la página de búsqueda responde en menos de 2 segundos con 500 usuarios concurrentes.",
+"c": "Comprobar que un usuario bloqueado no puede iniciar sesión.",
+"d": "Comprobar que se aplica el descuento del 10 % a los socios."
+},
+"correcta": ["b"],
+"explicacion": "La prueba funcional evalúa las funciones que debe realizar un componente o sistema: 'qué' debe hacer. La prueba no funcional evalúa atributos distintos de las características funcionales: 'cómo de bien' se comporta. Según ISO/IEC 25010 se incluyen la eficiencia de desempeño (rendimiento), la compatibilidad, la usabilidad, la fiabilidad, la seguridad, la mantenibilidad y la portabilidad. El tiempo de respuesta bajo carga es eficiencia de desempeño.",
+"razones": {
+"a": "Funcional: resultado de un cálculo.",
+"b": "Correcta. Tiempo de respuesta con carga = eficiencia de desempeño (no funcional).",
+"c": "Funcional: regla de negocio de acceso.",
+"d": "Funcional: regla de negocio."
+},
+"clave": "Funcional = QUÉ hace. No funcional = CÓMO DE BIEN lo hace."
+},
+{
+"id": "2-10", "cap": 2, "lo": "FL-2.2.3", "k": "K2", "tema": "Prueba de confirmación y de regresión",
+"pregunta": "Se corrige un defecto en el cálculo del IVA. El probador vuelve a ejecutar el caso de prueba que había fallado y además ejecuta pruebas sobre la facturación y los descuentos, que usan ese mismo cálculo. ¿Qué tipos de prueba ha realizado?",
+"opciones": {
+"a": "Regresión en ambos casos.",
+"b": "Confirmación al repetir el caso que falló, y regresión al probar la facturación y los descuentos.",
+"c": "Confirmación en ambos casos.",
+"d": "Prueba de mantenimiento al repetir el caso, y prueba de sistema al probar la facturación."
+},
+"correcta": ["b"],
+"explicacion": "La prueba de confirmación confirma que se ha corregido el defecto original: se repiten las pruebas que fallaron (o se añaden pruebas nuevas si la corrección lo requiere). La prueba de regresión confirma que un cambio, incluida una corrección que ya ha pasado la confirmación, no ha provocado consecuencias negativas en otras partes. Conviene hacer análisis de impacto para decidir el alcance de la regresión, y las suites de regresión son buenas candidatas para la automatización.",
+"razones": {
+"a": "Repetir el caso que falló es confirmación, no regresión.",
+"b": "Correcta.",
+"c": "Probar otras zonas afectadas es regresión.",
+"d": "Mezcla conceptos; mantenimiento y sistema no describen lo que ha hecho."
+},
+"clave": "Confirmación = ¿se arregló? Regresión = ¿se ha roto algo más?"
+},
+{
+"id": "2-11", "cap": 2, "lo": "FL-2.3.1", "k": "K1", "tema": "Prueba de mantenimiento",
+"pregunta": "¿Cuál de los siguientes es un desencadenante de la prueba de mantenimiento?",
+"opciones": {
+"a": "La migración de la base de datos del sistema en producción a una plataforma nueva.",
+"b": "La redacción de la primera historia de usuario de un producto nuevo.",
+"c": "La prueba de aceptación inicial de un sistema que aún no se ha desplegado.",
+"d": "La contratación de nuevos probadores para el equipo."
+},
+"correcta": ["a"],
+"explicacion": "La prueba de mantenimiento se aplica a sistemas ya en operación. Sus desencadenantes son: modificaciones (mejoras planificadas, cambios correctivos o arreglos urgentes), actualizaciones o migraciones del entorno operativo (por ejemplo, de una plataforma a otra, lo que puede requerir probar la conversión de datos) y la retirada de una aplicación (puede requerir probar el archivado de datos y los procedimientos de restauración). Antes de un cambio conviene hacer un análisis de impacto.",
+"razones": {
+"a": "Correcta. Una migración del entorno operativo es un desencadenante típico.",
+"b": "Es el inicio de un desarrollo nuevo, no mantenimiento.",
+"c": "El sistema aún no está en operación.",
+"d": "No tiene relación con el objeto de prueba."
+},
+"clave": "Mantenimiento = sistema YA en producción: modificación, migración o retirada."
+},
+{
+"id": "2-12", "cap": 2, "lo": "FL-2.2.2", "k": "K1", "tema": "Tipos de prueba",
+"pregunta": "¿En qué se basa la prueba de caja blanca?",
+"opciones": {
+"a": "En la estructura interna o la implementación del sistema.",
+"b": "En las especificaciones externas del sistema.",
+"c": "En la experiencia y la intuición del probador.",
+"d": "En las opiniones de los usuarios finales."
+},
+"correcta": ["a"],
+"explicacion": "La prueba de caja blanca está basada en la estructura y deriva las pruebas a partir de la estructura interna o de la implementación del sistema (código, arquitectura, flujos de trabajo y de datos). La de caja negra está basada en la especificación y deriva las pruebas a partir de documentación externa al objeto de prueba, comprobando su comportamiento frente a las especificaciones.",
+"razones": {
+"a": "Correcta.",
+"b": "Eso es caja negra.",
+"c": "Eso son técnicas basadas en la experiencia.",
+"d": "No define ningún tipo de prueba del programa."
+},
+"clave": "Caja blanca = estructura. Caja negra = especificación."
+}
+]

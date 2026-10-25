@@ -1,0 +1,352 @@
+[
+{
+"id": "5-01", "cap": 5, "lo": "FL-5.1.4", "k": "K3", "tema": "Estimación de tres puntos",
+"pregunta": "Para estimar el esfuerzo de prueba de una funcionalidad, los expertos dan estos valores: optimista (a) = 6 días-persona, más probable (m) = 9 días-persona, pesimista (b) = 18 días-persona. Usando la estimación de tres puntos, ¿cuál es la estimación (E) y su desviación típica (SD)?",
+"opciones": {
+"a": "E = 10; SD = 2",
+"b": "E = 11; SD = 2",
+"c": "E = 10; SD = 12",
+"d": "E = 9; SD = 2"
+},
+"correcta": ["a"],
+"explicacion": "En la estimación de tres puntos los expertos dan tres valores: el más optimista (a), el más probable (m) y el más pesimista (b). La estimación final es la media aritmética ponderada E = (a + 4m + b) / 6 = (6 + 36 + 18) / 6 = 60 / 6 = 10. La desviación típica es SD = (b − a) / 6 = (18 − 6) / 6 = 2. El resultado se expresa como E ± SD = 10 ± 2 días-persona.",
+"razones": {
+"a": "Correcta.",
+"b": "11 es la media simple (6 + 9 + 18) / 3; no aplica la ponderación 4m.",
+"c": "12 es b − a sin dividir entre 6.",
+"d": "9 es el valor más probable, no la estimación ponderada."
+},
+"clave": "E = (a + 4m + b) / 6; SD = (b − a) / 6. Apréndetela de memoria."
+},
+{
+"id": "5-02", "cap": 5, "lo": "FL-5.1.4", "k": "K3", "tema": "Estimación basada en ratios",
+"pregunta": "En el proyecto anterior de la organización, el esfuerzo de desarrollo fue de 800 días-persona y el de prueba de 200 días-persona. El nuevo proyecto, similar, tiene un esfuerzo de desarrollo estimado de 1.200 días-persona. Con la estimación basada en ratios, ¿cuál es el esfuerzo de prueba estimado?",
+"opciones": {
+"a": "240 días-persona",
+"b": "300 días-persona",
+"c": "400 días-persona",
+"d": "1.500 días-persona"
+},
+"correcta": ["b"],
+"explicacion": "La estimación basada en ratios usa cifras recogidas en proyectos anteriores de la organización para derivar ratios 'estándar' para proyectos similares. Ratio prueba / desarrollo = 200 / 800 = 0,25 (o 4:1 desarrollo:prueba). Esfuerzo de prueba = 1.200 × 0,25 = 300 días-persona.",
+"razones": {
+"a": "Sería aplicar un 20 %, que no es el ratio histórico.",
+"b": "Correcta.",
+"c": "Sería un ratio de 3:1.",
+"d": "Es la suma de desarrollo + prueba del proyecto anterior más 500; no tiene sentido."
+},
+"clave": "Ratio histórico × tamaño nuevo."
+},
+{
+"id": "5-03", "cap": 5, "lo": "FL-5.1.5", "k": "K3", "tema": "Priorización basada en el riesgo",
+"pregunta": "Hay que ejecutar estos casos de prueba, priorizados según el riesgo:",
+"anexo": "Caso   Riesgo      Dependencia\nTC1    Muy alto    requiere que antes se haya ejecutado TC3\nTC2    Medio       —\nTC3    Bajo        —\nTC4    Alto        —",
+"pregunta2": "¿En qué orden deben ejecutarse?",
+"opciones": {
+"a": "TC1, TC4, TC2, TC3",
+"b": "TC3, TC1, TC4, TC2",
+"c": "TC4, TC1, TC2, TC3",
+"d": "TC3, TC2, TC4, TC1"
+},
+"correcta": ["b"],
+"explicacion": "En la priorización basada en el riesgo, el orden lo marca el resultado del análisis de riesgos: primero lo de mayor riesgo. Pero el programa aclara que, si un caso de alta prioridad depende de otro de menor prioridad, el de menor prioridad debe ejecutarse antes. TC1 (muy alto) necesita TC3, así que va TC3 → TC1, luego TC4 (alto) y por último TC2 (medio).",
+"razones": {
+"a": "TC1 no puede ejecutarse antes de TC3.",
+"b": "Correcta.",
+"c": "Ignora la dependencia y pone TC4 antes que TC1, de riesgo mayor.",
+"d": "Ordena de menor a mayor riesgo."
+},
+"clave": "Riesgo de mayor a menor, PERO las dependencias mandan."
+},
+{
+"id": "5-04", "cap": 5, "lo": "FL-5.1.5", "k": "K3", "tema": "Priorización basada en la cobertura",
+"pregunta": "Se usa la priorización basada en la cobertura ADICIONAL. Los casos cubren estos requisitos:",
+"anexo": "TC-A: R1, R2, R3\nTC-B: R3, R4\nTC-C: R1, R2\nTC-D: R4, R5",
+"pregunta2": "¿Qué dos casos se ejecutan primero, en este orden?",
+"opciones": {
+"a": "TC-A y TC-B",
+"b": "TC-A y TC-D",
+"c": "TC-D y TC-A",
+"d": "TC-A y TC-C"
+},
+"correcta": ["b"],
+"explicacion": "En la priorización por cobertura adicional se ejecuta primero el caso con más cobertura (TC-A, 3 requisitos). Después, en cada paso, el que añade más cobertura todavía no alcanzada. Tras TC-A faltan R4 y R5: TC-B añade 1 (R4), TC-C añade 0 y TC-D añade 2 (R4 y R5). Por tanto, el segundo es TC-D. Con TC-A y TC-D ya se cubre el 100 % de los requisitos.",
+"razones": {
+"a": "TC-B solo añade R4; TC-D añade dos requisitos.",
+"b": "Correcta.",
+"c": "TC-A tiene más cobertura inicial (3 frente a 2), así que va primero.",
+"d": "TC-C no añade nada nuevo tras TC-A."
+},
+"clave": "Cobertura adicional: después del primero, mira solo lo que AÑADE cada caso."
+},
+{
+"id": "5-05", "cap": 5, "lo": "FL-5.5.1", "k": "K3", "tema": "Informe de defecto",
+"pregunta": "Un probador registra este informe de defecto:",
+"anexo": "Título: Error en el pago\nDescripción: No funciona el pago con tarjeta.\nSeveridad: Alta",
+"pregunta2": "¿Qué información es MÁS importante añadir para que el informe sea útil?",
+"opciones": {
+"a": "El nombre del desarrollador que lo corregirá.",
+"b": "Los pasos para reproducirlo, el resultado esperado y el real, y el entorno y la versión del objeto de prueba.",
+"c": "Una estimación del coste de la corrección.",
+"d": "El código fuente corregido."
+},
+"correcta": ["b"],
+"explicacion": "Un informe de defecto suele contener: identificador único; título con un resumen breve; fecha de observación, organización emisora y autor; identificación del objeto de prueba y del entorno; contexto del defecto (caso de prueba ejecutado, actividad, fase del ciclo de vida, técnica, datos...); descripción del fallo que permita reproducirlo y resolverlo, incluidos los pasos y las evidencias (registros, volcados de base de datos, capturas, grabaciones); resultados esperados y reales; severidad; prioridad de corrección; estado y referencias (por ejemplo, al caso de prueba). Sin pasos, resultados esperado y real ni entorno, el desarrollador no puede reproducirlo.",
+"razones": {
+"a": "La asignación la hace la gestión de defectos; no es lo que más falta.",
+"b": "Correcta.",
+"c": "No forma parte del contenido típico de un informe de defecto.",
+"d": "El probador no aporta la corrección."
+},
+"clave": "Un informe de defecto útil es REPRODUCIBLE: pasos, esperado frente a real, entorno."
+},
+{
+"id": "5-06", "cap": 5, "lo": "FL-5.5.1", "k": "K3", "tema": "Severidad y prioridad",
+"pregunta": "Justo antes de lanzar una campaña publicitaria, se detecta que el nombre de la empresa aparece mal escrito en el logotipo de la página de inicio. Ninguna funcionalidad se ve afectada. ¿Cómo debería clasificarse el defecto?",
+"opciones": {
+"a": "Severidad alta, prioridad alta.",
+"b": "Severidad baja, prioridad alta.",
+"c": "Severidad alta, prioridad baja.",
+"d": "Severidad baja, prioridad baja."
+},
+"correcta": ["b"],
+"explicacion": "La severidad es el grado de impacto del defecto en el sistema o en las partes interesadas. La prioridad es la urgencia de corregirlo. Un error tipográfico en el logo no afecta a ninguna funcionalidad (severidad baja), pero por su visibilidad y la campaña inminente es urgente corregirlo (prioridad alta). Son dos campos independientes del informe de defecto.",
+"razones": {
+"a": "El impacto técnico es bajo: nada deja de funcionar.",
+"b": "Correcta.",
+"c": "Está al revés.",
+"d": "Por el contexto de negocio la urgencia es alta."
+},
+"clave": "Severidad = impacto. Prioridad = urgencia de negocio. Pueden ir en direcciones opuestas."
+},
+{
+"id": "5-07", "cap": 5, "lo": "FL-5.1.1", "k": "K2", "tema": "Plan de prueba",
+"pregunta": "¿Qué elemento forma parte típicamente del contenido de un plan de prueba?",
+"opciones": {
+"a": "El enfoque de prueba: niveles, tipos y técnicas de prueba, y criterios de entrada y salida.",
+"b": "El código fuente de los componentes que se van a probar.",
+"c": "Las correcciones aplicadas a los defectos encontrados.",
+"d": "El manual de usuario final del producto."
+},
+"correcta": ["a"],
+"explicacion": "El plan de prueba describe los objetivos, los recursos y los procesos de un proyecto de prueba. Contenido típico: contexto (alcance, objetivos de prueba, restricciones, base de prueba), supuestos y restricciones, partes interesadas (roles, responsabilidades, relevancia, formación), comunicación, registro de riesgos, enfoque de prueba (niveles, tipos, técnicas, entregables, criterios de entrada y salida, independencia, métricas, requisitos de datos y de entorno, desviaciones respecto a la política y la estrategia de la organización), y presupuesto y calendario.",
+"razones": {
+"a": "Correcta.",
+"b": "El código es el objeto de prueba, no contenido del plan.",
+"c": "Las correcciones las hace desarrollo; no forman parte del plan.",
+"d": "No es un producto de prueba."
+},
+"clave": "El plan responde a: qué, por qué, cómo, quién, cuándo y con qué riesgos."
+},
+{
+"id": "5-08", "cap": 5, "lo": "FL-5.1.2", "k": "K2", "tema": "Contribución del probador a la planificación",
+"pregunta": "¿Cómo contribuye el probador a la planificación de la ITERACIÓN?",
+"opciones": {
+"a": "Participa en el análisis de riesgo detallado de las historias de usuario, determina su comprobabilidad, las descompone en tareas de prueba y estima el esfuerzo.",
+"b": "Define la visión del producto y el presupuesto de la versión.",
+"c": "Decide en solitario qué historias entran en la iteración.",
+"d": "Escribe el código de las historias de mayor riesgo."
+},
+"correcta": ["a"],
+"explicacion": "En la planificación de la VERSIÓN, los probadores participan en la redacción de historias de usuario comprobables y de sus criterios de aceptación, en los análisis de riesgos del proyecto y de calidad, en la estimación del esfuerzo de prueba de las historias, en la definición del enfoque de prueba y en la planificación de la prueba de la versión. En la planificación de la ITERACIÓN, participan en el análisis de riesgo detallado de las historias, determinan su comprobabilidad, las descomponen en tareas (sobre todo tareas de prueba), estiman el esfuerzo de prueba de todas las tareas e identifican y refinan los aspectos funcionales y no funcionales del objeto de prueba.",
+"razones": {
+"a": "Correcta.",
+"b": "Es responsabilidad de negocio o del propietario del producto.",
+"c": "La decide el equipo con el propietario del producto.",
+"d": "No es su contribución a la planificación."
+},
+"clave": "Versión = visión amplia. Iteración = historias concretas → tareas y estimación."
+},
+{
+"id": "5-09", "cap": 5, "lo": "FL-5.1.3", "k": "K2", "tema": "Criterios de entrada y salida",
+"pregunta": "¿Cuál de los siguientes es un ejemplo de criterio de SALIDA?",
+"opciones": {
+"a": "Se ha alcanzado el 90 % de cobertura de requisitos y no quedan defectos críticos abiertos.",
+"b": "El entorno de prueba está disponible y configurado.",
+"c": "El objeto de prueba ha superado las pruebas de humo.",
+"d": "Los probadores han recibido formación sobre la herramienta."
+},
+"correcta": ["a"],
+"explicacion": "Los criterios de entrada definen las condiciones previas para empezar una actividad: disponibilidad de recursos (personas, herramientas, entornos, datos de prueba, presupuesto, tiempo), disponibilidad de productos de prueba (base de prueba, requisitos comprobables, historias, casos de prueba) y un nivel de calidad inicial del objeto de prueba (por ejemplo, que haya pasado las pruebas de humo). Los criterios de salida definen qué hay que conseguir para dar por terminada una actividad: medidas de exhaustividad (cobertura alcanzada, número de defectos sin resolver, densidad de defectos, casos fallidos) y criterios binarios de compleción (pruebas planificadas ejecutadas, prueba estática realizada, defectos notificados, regresión automatizada). Quedarse sin tiempo o presupuesto también puede ser un criterio de salida válido si las partes interesadas aceptan el riesgo.",
+"razones": {
+"a": "Correcta.",
+"b": "Es criterio de entrada (recursos).",
+"c": "Es criterio de entrada (calidad inicial del objeto de prueba).",
+"d": "Es criterio de entrada (recursos)."
+},
+"clave": "Entrada = ¿podemos empezar? Salida = ¿podemos terminar?"
+},
+{
+"id": "5-10", "cap": 5, "lo": "FL-5.1.3", "k": "K1", "tema": "Definición de Hecho",
+"pregunta": "En el desarrollo de software ágil, ¿cómo se suelen denominar los criterios de salida?",
+"opciones": {
+"a": "Definición de Preparado (Definition of Ready).",
+"b": "Definición de Hecho (Definition of Done).",
+"c": "Criterios INVEST.",
+"d": "Carta de prueba."
+},
+"correcta": ["b"],
+"explicacion": "En ágil, los criterios de salida suelen llamarse Definición de Hecho (DoD): definen las métricas objetivas del equipo para considerar un elemento terminado y listo para entregar. Los criterios de entrada que debe cumplir una historia de usuario para empezar el desarrollo o la prueba se llaman Definición de Preparado (DoR).",
+"razones": {
+"a": "La DoR son los criterios de ENTRADA.",
+"b": "Correcta.",
+"c": "INVEST son características de una buena historia de usuario.",
+"d": "Una carta de prueba guía una sesión de prueba exploratoria."
+},
+"clave": "DoR = entrada. DoD = salida."
+},
+{
+"id": "5-11", "cap": 5, "lo": "FL-5.1.7", "k": "K2", "tema": "Cuadrantes de prueba",
+"pregunta": "Según el modelo de cuadrantes de prueba, ¿en qué cuadrante se sitúan la prueba exploratoria, la prueba de usabilidad y la prueba de aceptación de usuario?",
+"opciones": {
+"a": "Q1: orientado a la tecnología, apoya al equipo.",
+"b": "Q2: orientado al negocio, apoya al equipo.",
+"c": "Q3: orientado al negocio, critica el producto.",
+"d": "Q4: orientado a la tecnología, critica el producto."
+},
+"correcta": ["c"],
+"explicacion": "Los cuadrantes (de Brian Marick) agrupan los niveles y tipos de prueba en ágil. Q1 (tecnología, apoya al equipo): pruebas de componente y de integración de componentes, automatizadas e incluidas en CI. Q2 (negocio, apoya al equipo): pruebas funcionales, ejemplos, pruebas de historias de usuario, prototipos de experiencia de usuario, prueba de API y simulaciones; comprueban los criterios de aceptación y pueden ser manuales o automatizadas. Q3 (negocio, critica el producto): prueba exploratoria, de usabilidad y de aceptación de usuario; orientadas al usuario y a menudo manuales. Q4 (tecnología, critica el producto): pruebas de humo y pruebas no funcionales (excepto usabilidad), a menudo automatizadas.",
+"razones": {
+"a": "Q1: componente e integración de componentes.",
+"b": "Q2: pruebas funcionales y de historias.",
+"c": "Correcta.",
+"d": "Q4: pruebas de humo y no funcionales técnicas (rendimiento, seguridad...)."
+},
+"clave": "Q3 = el usuario critica el producto (exploratoria, usabilidad, UAT)."
+},
+{
+"id": "5-12", "cap": 5, "lo": "FL-5.1.6", "k": "K2", "tema": "Pirámide de prueba",
+"pregunta": "¿Qué afirmación sobre la pirámide de prueba es correcta?",
+"opciones": {
+"a": "Las pruebas de las capas inferiores son pequeñas, aisladas y rápidas, y hay más pruebas en la base que en la cima.",
+"b": "Las pruebas de extremo a extremo de la cima son las más rápidas y deben ser las más numerosas.",
+"c": "Todas las capas deben tener el mismo número de pruebas.",
+"d": "La pirámide solo se aplica a la prueba manual."
+},
+"correcta": ["a"],
+"explicacion": "La pirámide de prueba es un modelo que muestra que distintas pruebas pueden tener distinta granularidad. Su altura representa el esfuerzo de automatización: las capas inferiores tienen pruebas pequeñas, aisladas y rápidas que comprueban poca funcionalidad, así que hacen falta muchas para una cobertura razonable. Las capas superiores tienen pruebas complejas, de alto nivel y de extremo a extremo, más lentas, que comprueban mucha funcionalidad, por lo que suelen bastar menos. El número y el nombre de las capas pueden variar.",
+"razones": {
+"a": "Correcta.",
+"b": "Las de extremo a extremo son las más lentas y menos numerosas.",
+"c": "El número de pruebas disminuye al subir.",
+"d": "Representa el esfuerzo de automatización."
+},
+"clave": "Base: muchas, rápidas y aisladas. Cima: pocas, lentas y de extremo a extremo."
+},
+{
+"id": "5-13", "cap": 5, "lo": "FL-5.2.2", "k": "K2", "tema": "Riesgos de proyecto y de producto",
+"pregunta": "¿Cuáles de los siguientes son riesgos de PROYECTO? (Selecciona DOS)",
+"opciones": {
+"a": "El proveedor externo entrega el entorno de prueba con tres semanas de retraso.",
+"b": "El tiempo de respuesta del sistema puede ser inadecuado con carga alta.",
+"c": "El equipo no tiene suficiente experiencia con la herramienta de automatización elegida.",
+"d": "El cálculo de intereses puede ser incorrecto en años bisiestos.",
+"e": "La aplicación puede tener vulnerabilidades de seguridad en el inicio de sesión."
+},
+"correcta": ["a", "c"],
+"explicacion": "Los riesgos de proyecto afectan a la gestión y el control del proyecto: cuestiones organizativas (retrasos en las entregas, estimaciones inexactas, recortes de costes), de personas (habilidades insuficientes, conflictos, problemas de comunicación, falta de personal), técnicas (aumento del alcance, poco soporte de herramientas) y de proveedores (fallos en la entrega de terceros, quiebra de la empresa proveedora). Los riesgos de producto afectan a las características de calidad del producto: funcionalidad que falta o es incorrecta, cálculos incorrectos, errores en tiempo de ejecución, mala arquitectura, algoritmos ineficientes, tiempo de respuesta inadecuado, mala experiencia de usuario o vulnerabilidades de seguridad.",
+"razones": {
+"a": "Correcta. Riesgo de proveedor (proyecto).",
+"b": "Riesgo de producto (eficiencia de desempeño).",
+"c": "Correcta. Riesgo de personas (proyecto).",
+"d": "Riesgo de producto (cálculo incorrecto).",
+"e": "Riesgo de producto (seguridad)."
+},
+"clave": "¿Afecta al PRODUCTO que se entrega o a CÓMO se gestiona el proyecto?"
+},
+{
+"id": "5-14", "cap": 5, "lo": "FL-5.2.4", "k": "K2", "tema": "Control del riesgo de producto",
+"pregunta": "Se ha identificado un riesgo de producto de alto impacto: el cálculo de intereses podría ser incorrecto. ¿Qué acción es una MITIGACIÓN de ese riesgo mediante la prueba?",
+"opciones": {
+"a": "Aplicar técnicas de prueba adecuadas (por ejemplo, valores frontera) con un nivel de cobertura más alto sobre el módulo de cálculo, y asignar probadores con experiencia en el dominio.",
+"b": "Aceptar el riesgo sin hacer nada más.",
+"c": "Contratar un seguro que cubra posibles reclamaciones.",
+"d": "Eliminar el módulo del registro de riesgos para centrarse en otros."
+},
+"correcta": ["a"],
+"explicacion": "El control del riesgo de producto incluye la mitigación y la monitorización. Las opciones de respuesta son: mitigación mediante la prueba, aceptación del riesgo, transferencia del riesgo y plan de contingencia. Acciones de mitigación mediante la prueba: elegir probadores con la experiencia y las habilidades adecuadas para cada tipo de riesgo; aplicar un nivel adecuado de independencia; hacer revisiones y análisis estático; aplicar técnicas de prueba y niveles de cobertura adecuados; aplicar los tipos de prueba que tratan las características de calidad afectadas, y hacer prueba dinámica, incluida la de regresión.",
+"razones": {
+"a": "Correcta.",
+"b": "Es aceptar el riesgo, no mitigarlo mediante la prueba.",
+"c": "Es transferir el riesgo, no mitigarlo mediante la prueba.",
+"d": "Ignorar el riesgo no es ninguna respuesta válida."
+},
+"clave": "Respuestas al riesgo: mitigar (con prueba), aceptar, transferir o plan de contingencia."
+},
+{
+"id": "5-15", "cap": 5, "lo": "FL-5.3.1", "k": "K2", "tema": "Métricas de prueba",
+"pregunta": "¿Cuál de las siguientes es una métrica de CALIDAD DEL PRODUCTO?",
+"opciones": {
+"a": "Tiempo medio hasta el fallo (MTTF).",
+"b": "Porcentaje de casos de prueba ejecutados.",
+"c": "Esfuerzo de prueba consumido hasta la fecha.",
+"d": "Grado de avance en la preparación del entorno de prueba."
+},
+"correcta": ["a"],
+"explicacion": "El programa agrupa las métricas así: de avance del proyecto (finalización de tareas, uso de recursos, esfuerzo de prueba); de avance de la prueba (avance en la implementación de casos, en la preparación del entorno, número de casos ejecutados o no, superados o fallidos, tiempo de ejecución); de calidad del producto (disponibilidad, tiempo de respuesta, tiempo medio hasta el fallo); de defectos (número y prioridad de defectos encontrados y corregidos, densidad de defectos, porcentaje de detección de defectos); de riesgo (nivel de riesgo residual); de cobertura (de requisitos, de código), y de coste (coste de la prueba, coste organizativo de la calidad).",
+"razones": {
+"a": "Correcta.",
+"b": "Métrica de avance de la prueba.",
+"c": "Métrica de avance del proyecto.",
+"d": "Métrica de avance de la prueba."
+},
+"clave": "Calidad del producto: disponibilidad, tiempo de respuesta, MTTF."
+},
+{
+"id": "5-16", "cap": 5, "lo": "FL-5.3.2", "k": "K2", "tema": "Informes de prueba",
+"pregunta": "¿Qué contenido es propio del informe de COMPLECIÓN de la prueba y no del informe de avance?",
+"opciones": {
+"a": "Lecciones aprendidas y riesgos no mitigados al final de la prueba.",
+"b": "Las pruebas planificadas para el siguiente periodo.",
+"c": "Los impedimentos actuales y sus soluciones provisionales.",
+"d": "El avance respecto al plan durante el periodo actual."
+},
+"correcta": ["a"],
+"explicacion": "El informe de avance se elabora periódicamente durante la prueba e incluye: periodo, avance respecto al plan (con desviaciones), impedimentos y soluciones provisionales, métricas, riesgos nuevos o cambiados y la prueba planificada para el siguiente periodo. El informe de compleción se elabora cuando termina un proyecto, un nivel o un tipo de prueba (idealmente cuando se cumplen los criterios de salida) e incluye: resumen, evaluación de la prueba y de la calidad del producto frente al plan, desviaciones, impedimentos, métricas, riesgos no mitigados, defectos no corregidos y lecciones aprendidas relevantes para la prueba.",
+"razones": {
+"a": "Correcta.",
+"b": "Es propio del informe de avance.",
+"c": "Es propio del informe de avance.",
+"d": "Es propio del informe de avance."
+},
+"clave": "Avance = mirar hacia delante (siguiente periodo). Compleción = balance final y lecciones aprendidas."
+},
+{
+"id": "5-17", "cap": 5, "lo": "FL-5.3.1", "k": "K2", "tema": "Control de la prueba",
+"pregunta": "¿Cuál es un ejemplo de CONTROL de la prueba?",
+"opciones": {
+"a": "Volver a priorizar las pruebas cuando un riesgo identificado se materializa.",
+"b": "Recopilar el número de casos superados y fallidos.",
+"c": "Archivar los productos de prueba al terminar el proyecto.",
+"d": "Diseñar casos de prueba a partir de las condiciones de prueba."
+},
+"correcta": ["a"],
+"explicacion": "La monitorización de la prueba recopila información sobre la prueba para evaluar su avance y comprobar si se cumplen los criterios de salida. El control de la prueba usa esa información para dar orientación y aplicar las acciones correctivas necesarias (directivas de control). Ejemplos de control: volver a priorizar las pruebas cuando un riesgo identificado se convierte en un problema, reevaluar si un elemento cumple los criterios de entrada o salida tras un retrabajo, ajustar el calendario por un retraso en la entrega del entorno, o añadir recursos nuevos cuando y donde hagan falta.",
+"razones": {
+"a": "Correcta.",
+"b": "Es monitorización.",
+"c": "Es compleción.",
+"d": "Es diseño de la prueba."
+},
+"clave": "Monitorizar = medir. Controlar = actuar sobre lo medido."
+},
+{
+"id": "5-18", "cap": 5, "lo": "FL-5.4.1", "k": "K1", "tema": "Gestión de la configuración",
+"pregunta": "En la prueba, ¿qué proporciona la gestión de la configuración?",
+"opciones": {
+"a": "Una disciplina para identificar, controlar y hacer el seguimiento de productos de trabajo como planes, casos y resultados de prueba, como elementos de configuración con sus versiones y líneas base.",
+"b": "Un método para estimar el esfuerzo de prueba.",
+"c": "Una técnica de caja negra para derivar casos de prueba.",
+"d": "Una forma de evaluar el rendimiento de los probadores."
+},
+"correcta": ["a"],
+"explicacion": "La gestión de la configuración (CM) proporciona una disciplina para identificar, controlar y hacer el seguimiento de productos de trabajo como planes de prueba, estrategias, condiciones, casos, scripts, resultados, registros e informes, tratados como elementos de configuración. Lleva el registro de los cambios, de las versiones y de las líneas base (configuraciones aprobadas que solo cambian mediante un proceso formal). Asegura que todos los elementos están identificados de forma única, controlados por versión y relacionados entre sí para mantener la trazabilidad. En CI/CD la CM suele estar automatizada.",
+"razones": {
+"a": "Correcta.",
+"b": "La estimación es otro tema del capítulo 5.",
+"c": "No es una técnica de prueba.",
+"d": "No tiene relación."
+},
+"clave": "CM = versiones + líneas base + trazabilidad de los productos de prueba."
+}
+]

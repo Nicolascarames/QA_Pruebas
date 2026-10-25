@@ -1,0 +1,430 @@
+[
+{
+"id": "4-01", "cap": 4, "lo": "FL-4.2.1", "k": "K3", "tema": "Partición de equivalencia",
+"pregunta": "Un campo de una web de venta de entradas acepta números enteros:\n• menos de 1: se rechaza;\n• de 1 a 6: compra directa;\n• de 7 a 10: requiere aprobación del supervisor;\n• más de 10: se rechaza.\n¿Qué conjunto de valores cubre TODAS las particiones de equivalencia con el menor número de valores?",
+"opciones": {
+"a": "0, 3, 8, 11",
+"b": "1, 6, 7, 10",
+"c": "-1, 0, 5, 12",
+"d": "2, 4, 9, 15"
+},
+"correcta": ["a"],
+"explicacion": "Hay 4 particiones: P1 (≤ 0, inválida), P2 (1–6, válida), P3 (7–10, válida) y P4 (≥ 11, inválida). La cobertura de partición de equivalencia se mide como particiones ejercitadas / particiones identificadas; para el 100 % basta un valor de cada partición. 0 → P1, 3 → P2, 8 → P3 y 11 → P4: cuatro valores, uno por partición.",
+"razones": {
+"a": "Correcta. Un valor en cada una de las 4 particiones.",
+"b": "Solo cubre las dos particiones válidas (son valores frontera de P2 y P3).",
+"c": "-1 y 0 están ambos en P1, 5 en P2 y 12 en P4: falta P3 (7–10).",
+"d": "2 y 4 están en P2, 9 en P3 y 15 en P4: falta P1 (≤ 0)."
+},
+"clave": "Primero dibuja las particiones en una recta; luego comprueba que cada opción toca TODAS."
+},
+{
+"id": "4-02", "cap": 4, "lo": "FL-4.2.1", "k": "K3", "tema": "Partición de equivalencia (Each Choice)",
+"pregunta": "Un formulario tiene dos parámetros:\n• Tipo de cliente: Particular, Empresa\n• Método de pago: Tarjeta, Transferencia, Bizum\nConsiderando solo las particiones válidas, ¿cuál es el número MÍNIMO de casos de prueba para alcanzar el 100 % de cobertura 'Each Choice'?",
+"opciones": {
+"a": "2",
+"b": "3",
+"c": "5",
+"d": "6"
+},
+"correcta": ["b"],
+"explicacion": "La cobertura Each Choice exige que cada partición de cada conjunto se ejercite al menos una vez, sin tener en cuenta las combinaciones. El mínimo es el número de particiones del parámetro con más particiones: 3. Por ejemplo: (Particular, Tarjeta), (Empresa, Transferencia), (Particular, Bizum). Las 6 combinaciones (2 × 3) solo harían falta para probar todas las combinaciones, que no es lo que pide Each Choice.",
+"razones": {
+"a": "Con 2 casos no puedes usar los 3 métodos de pago.",
+"b": "Correcta. Máximo entre 2 y 3 = 3.",
+"c": "Es la suma de particiones (2 + 3); no hace falta un caso por partición cuando se pueden combinar.",
+"d": "Es el producto cartesiano (todas las combinaciones), más de lo que pide Each Choice."
+},
+"clave": "Each Choice → el mínimo es el número de particiones del parámetro que más tiene."
+},
+{
+"id": "4-03", "cap": 4, "lo": "FL-4.2.2", "k": "K3", "tema": "Análisis de valores frontera (2 valores)",
+"pregunta": "Una contraseña es válida si tiene entre 8 y 16 caracteres, ambos incluidos. Usando el análisis de valores frontera de DOS valores, ¿qué conjunto de longitudes da el 100 % de cobertura?",
+"opciones": {
+"a": "7, 8, 16, 17",
+"b": "8, 16",
+"c": "7, 8, 9, 15, 16, 17",
+"d": "0, 8, 16, 20"
+},
+"correcta": ["a"],
+"explicacion": "En el BVA de 2 valores, para cada frontera se prueba el valor frontera y su vecino más cercano de la partición adyacente. Particiones: ≤ 7 (inválida), 8–16 (válida) y ≥ 17 (inválida). Fronteras inferiores: 7 | 8. Fronteras superiores: 16 | 17. Elementos de cobertura: 7, 8, 16 y 17.",
+"razones": {
+"a": "Correcta.",
+"b": "Faltan los vecinos de las particiones inválidas (7 y 17).",
+"c": "Es el BVA de TRES valores (añade 9 y 15).",
+"d": "0 y 20 no son valores frontera."
+},
+"clave": "2 valores → frontera + vecino del otro lado. 3 valores → frontera + los dos vecinos."
+},
+{
+"id": "4-04", "cap": 4, "lo": "FL-4.2.2", "k": "K3", "tema": "Análisis de valores frontera (3 valores)",
+"pregunta": "Un termostato trabaja con temperaturas enteras en °C:\n• 15 o menos: calefacción encendida;\n• de 16 a 24: no hace nada;\n• 25 o más: aire acondicionado encendido.\nUsando el análisis de valores frontera de TRES valores, ¿cuántos valores DISTINTOS hacen falta para el 100 % de cobertura?",
+"opciones": {
+"a": "4",
+"b": "6",
+"c": "8",
+"d": "12"
+},
+"correcta": ["c"],
+"explicacion": "Los valores frontera son 15 y 16 (entre la primera y la segunda partición) y 24 y 25 (entre la segunda y la tercera). Las particiones de los extremos no tienen frontera exterior (≤ 15 y ≥ 25 no tienen límite). En el BVA de 3 valores, para cada valor frontera se prueban él y sus dos vecinos: 15 → {14, 15, 16}; 16 → {15, 16, 17}; 24 → {23, 24, 25}; 25 → {24, 25, 26}. La unión es {14, 15, 16, 17, 23, 24, 25, 26} = 8 valores distintos.",
+"razones": {
+"a": "4 es el número de valores frontera (lo que daría el BVA de 2 valores: 15, 16, 24, 25).",
+"b": "Se olvida de algún vecino.",
+"c": "Correcta.",
+"d": "Cuenta los vecinos duplicados (4 fronteras × 3); hay que quitar los repetidos."
+},
+"clave": "En el BVA de 3 valores, quita los duplicados al unir los vecinos."
+},
+{
+"id": "4-05", "cap": 4, "lo": "FL-4.2.2", "k": "K3", "tema": "Cobertura de valores frontera",
+"pregunta": "Un seguro solo se puede contratar con una edad (entera) de 18 a 65 años, ambos incluidos. Se han ejecutado pruebas con las edades 17, 18, 40 y 65. Con el BVA de DOS valores, ¿qué cobertura se ha alcanzado?",
+"opciones": {
+"a": "50 %",
+"b": "75 %",
+"c": "100 %",
+"d": "67 %"
+},
+"correcta": ["b"],
+"explicacion": "Elementos de cobertura del BVA de 2 valores: 17 y 18 (frontera inferior) y 65 y 66 (frontera superior), 4 en total. Las pruebas ejercitan 17, 18 y 65; 40 no es un valor frontera. Cobertura = 3 / 4 = 75 %. Falta 66.",
+"razones": {
+"a": "Contaría solo 2 de 4.",
+"b": "Correcta. 3 de 4 elementos.",
+"c": "Falta el 66.",
+"d": "Sería 2 de 3, que no corresponde a ningún recuento correcto."
+},
+"clave": "Cobertura = elementos ejercitados / elementos identificados. Los valores que no son frontera no suman."
+},
+{
+"id": "4-06", "cap": 4, "lo": "FL-4.2.3", "k": "K3", "tema": "Tabla de decisión",
+"pregunta": "Esta tabla de decisión define el descuento de una tienda:",
+"anexo": "                    R1     R2     R3     R4\nSocio               S      S      N      N\nCompra > 100 €      S      N      S      N\n-------------------------------------------\nDescuento           15 %   10 %   5 %    0 %\n\nPruebas ejecutadas:\nTC1: socio, compra de 150 €\nTC2: no socio, compra de 80 €\nTC3: socio, compra de 120 €",
+"pregunta2": "¿Qué cobertura se ha alcanzado y qué caso de prueba adicional la AUMENTARÍA?",
+"opciones": {
+"a": "50 %; añadir un no socio con una compra de 200 €.",
+"b": "75 %; añadir un socio con una compra de 50 €.",
+"c": "50 %; añadir un socio con una compra de 130 €.",
+"d": "100 %; no hace falta ningún caso más."
+},
+"correcta": ["a"],
+"explicacion": "TC1 (S, S) → R1. TC2 (N, N) → R4. TC3 (S, S) → R1 otra vez. Se han ejercitado 2 de las 4 columnas factibles: 50 %. Un no socio con 200 € cumple (N, S) → R3, columna no cubierta, y la cobertura sube al 75 %. La cobertura de una tabla de decisión es el número de columnas ejercitadas dividido entre el número de columnas factibles.",
+"razones": {
+"a": "Correcta.",
+"b": "La cobertura actual es 50 %, no 75 % (TC3 repite R1).",
+"c": "Un socio con 130 € vuelve a ser R1: no aumenta la cobertura.",
+"d": "Faltan R2 y R3."
+},
+"clave": "Mapea cada caso a su columna; los repetidos no suman cobertura."
+},
+{
+"id": "4-07", "cap": 4, "lo": "FL-4.2.3", "k": "K3", "tema": "Tabla de decisión minimizada",
+"pregunta": "Reglas de una tienda online:\n• Si el usuario NO está registrado, se le pide registrarse (tenga cupón o no).\n• Si está registrado y tiene cupón, se aplica el descuento.\n• Si está registrado y no tiene cupón, se cobra el precio normal.\nCondiciones: 'Registrado' (S/N) y 'Tiene cupón' (S/N). ¿Cuántas columnas tiene la tabla de decisión MINIMIZADA (colapsada)?",
+"opciones": {
+"a": "2",
+"b": "3",
+"c": "4",
+"d": "6"
+},
+"correcta": ["b"],
+"explicacion": "La tabla completa tiene 2² = 4 columnas: (S, S) descuento, (S, N) precio normal, (N, S) pedir registro, (N, N) pedir registro. Las dos últimas tienen la misma acción y solo difieren en una condición que no influye, así que se colapsan en una columna (N, –) donde '–' significa 'indiferente'. La tabla minimizada queda con 3 columnas.",
+"razones": {
+"a": "No se pueden colapsar también las columnas de los usuarios registrados: tienen acciones distintas.",
+"b": "Correcta.",
+"c": "Es la tabla completa, sin minimizar.",
+"d": "No corresponde a ninguna construcción correcta."
+},
+"clave": "Colapsa las columnas con la misma acción que solo difieren en una condición irrelevante (–)."
+},
+{
+"id": "4-08", "cap": 4, "lo": "FL-4.2.4", "k": "K3", "tema": "Prueba de transición de estados",
+"pregunta": "Una tarjeta bancaria tiene este modelo de estados (estado inicial: Inactiva):",
+"anexo": "Inactiva  --activar-->          Activa\nActiva    --3 PIN erróneos-->   Bloqueada\nBloqueada --desbloquear-->      Activa\nActiva    --desactivar-->       Inactiva",
+"pregunta2": "Si todos los casos de prueba deben empezar en el estado Inactiva y pueden tener cualquier longitud, ¿cuál es el número MÍNIMO de casos de prueba para alcanzar el 100 % de cobertura de transiciones válidas (0-switch)?",
+"opciones": {
+"a": "1",
+"b": "2",
+"c": "3",
+"d": "4"
+},
+"correcta": ["a"],
+"explicacion": "Hay 4 transiciones válidas. Todas caben en un solo camino: Inactiva →(activar) Activa →(3 PIN erróneos) Bloqueada →(desbloquear) Activa →(desactivar) Inactiva. Un único caso de prueba ejercita las 4 transiciones, así que el mínimo es 1. La cobertura de transiciones válidas es la más usada; exige ejercitar todas las transiciones válidas al menos una vez.",
+"razones": {
+"a": "Correcta.",
+"b": "Sobra un caso: un solo camino recorre las 4.",
+"c": "Sobran casos.",
+"d": "Sería un caso por transición, pero se pueden encadenar en un camino."
+},
+"clave": "Si no limitan la longitud del caso, busca un camino que encadene todas las transiciones."
+},
+{
+"id": "4-09", "cap": 4, "lo": "FL-4.2.4", "k": "K3", "tema": "Prueba de transición de estados (todas las transiciones)",
+"pregunta": "Con el mismo modelo de la tarjeta (estados: Inactiva, Activa y Bloqueada; eventos: activar, 3 PIN erróneos, desbloquear y desactivar; 4 transiciones válidas), ¿cuántas transiciones INVÁLIDAS hay que intentar para alcanzar el 100 % de cobertura de todas las transiciones?",
+"anexo": "Inactiva  --activar-->          Activa\nActiva    --3 PIN erróneos-->   Bloqueada\nBloqueada --desbloquear-->      Activa\nActiva    --desactivar-->       Inactiva",
+"opciones": {
+"a": "4",
+"b": "8",
+"c": "12",
+"d": "3"
+},
+"correcta": ["b"],
+"explicacion": "La tabla de estados tiene 3 estados × 4 eventos = 12 celdas. 4 son transiciones válidas, así que las otras 12 − 4 = 8 son transiciones inválidas. La cobertura de todas las transiciones exige ejercitar todas las válidas e INTENTAR todas las inválidas. El programa recomienda probar una sola transición inválida por caso de prueba, para evitar el enmascaramiento de defectos.",
+"razones": {
+"a": "Es el número de transiciones válidas.",
+"b": "Correcta.",
+"c": "Es el número total de celdas de la tabla (válidas + inválidas).",
+"d": "Es el número de estados."
+},
+"clave": "Inválidas = estados × eventos − válidas. Una inválida por caso."
+},
+{
+"id": "4-10", "cap": 4, "lo": "FL-4.5.3", "k": "K3", "tema": "ATDD",
+"pregunta": "Historia de usuario: 'Como cliente quiero retirar efectivo del cajero para disponer de dinero.'",
+"anexo": "Criterios de aceptación:\n1. El importe debe ser múltiplo de 10 €.\n2. El máximo diario es de 600 €.\n3. El saldo debe ser suficiente.",
+"pregunta2": "¿Cuál es un caso de prueba NEGATIVO derivado correctamente de los criterios de aceptación?",
+"opciones": {
+"a": "Retirar 100 € con un saldo de 500 €: se entrega el dinero.",
+"b": "Retirar 610 € con un saldo de 1.000 € y nada retirado hoy: se rechaza por superar el límite diario.",
+"c": "Comprobar que el cajero muestra publicidad mientras se procesa la operación.",
+"d": "Retirar 600 € con un saldo de 1.000 €: se entrega el dinero."
+},
+"correcta": ["b"],
+"explicacion": "En ATDD los casos de prueba se derivan de los criterios de aceptación (por ejemplo, en un taller de especificación) antes de implementar la historia. Primero se escriben las pruebas positivas, después las negativas y, por último, las no funcionales. La opción b viola SOLO el criterio 2 (610 sí es múltiplo de 10 y hay saldo suficiente), así que es un caso negativo limpio y aislado.",
+"razones": {
+"a": "Es un caso positivo.",
+"b": "Correcta. Negativo, deriva del criterio 2 y aísla la causa del rechazo.",
+"c": "No deriva de ningún criterio de aceptación.",
+"d": "Es positivo (en la frontera del límite diario)."
+},
+"clave": "En ATDD: positivos → negativos → no funcionales. Un caso negativo debe violar un solo criterio."
+},
+{
+"id": "4-11", "cap": 4, "lo": "FL-4.1.1", "k": "K2", "tema": "Categorías de técnicas",
+"pregunta": "¿Qué afirmación describe correctamente las técnicas de prueba de caja negra?",
+"opciones": {
+"a": "Se basan en el comportamiento especificado del objeto de prueba, sin hacer referencia a su estructura interna, por lo que los casos siguen siendo útiles aunque cambie la implementación pero no el comportamiento.",
+"b": "Se basan en el código y en la arquitectura del objeto de prueba.",
+"c": "Dependen sobre todo de la intuición y la experiencia del probador.",
+"d": "Solo se pueden aplicar en el nivel de prueba de componente."
+},
+"correcta": ["a"],
+"explicacion": "Las técnicas de caja negra (basadas en la especificación) se basan en un análisis del comportamiento especificado del objeto de prueba sin hacer referencia a su estructura interna. Por eso los casos de prueba no dependen de cómo se ha implementado el software, y si la implementación cambia pero el comportamiento requerido se mantiene, los casos siguen siendo útiles. Las de caja blanca se basan en la estructura interna. Las basadas en la experiencia aprovechan el conocimiento y la experiencia de los probadores.",
+"razones": {
+"a": "Correcta.",
+"b": "Describe la caja blanca.",
+"c": "Describe las técnicas basadas en la experiencia.",
+"d": "La caja negra se aplica en todos los niveles."
+},
+"clave": "Caja negra: independiente de la implementación."
+},
+{
+"id": "4-12", "cap": 4, "lo": "FL-4.3.1", "k": "K2", "tema": "Prueba de sentencia",
+"pregunta": "Dado este pseudocódigo:",
+"anexo": "1  leer(importe)\n2  descuento = 0\n3  SI importe > 100 ENTONCES\n4      descuento = 10\n5  FIN SI\n6  total = importe - descuento\n7  mostrar(total)",
+"pregunta2": "¿Qué valor de 'importe', en un ÚNICO caso de prueba, consigue el 100 % de cobertura de sentencia?",
+"opciones": {
+"a": "50",
+"b": "100",
+"c": "150",
+"d": "Cualquier valor, porque todas las sentencias se ejecutan siempre."
+},
+"correcta": ["c"],
+"explicacion": "La cobertura de sentencia es el porcentaje de sentencias ejecutables ejercitadas. La sentencia 4 (descuento = 10) solo se ejecuta si importe > 100. Con 150 se ejecutan todas las sentencias (1, 2, 3, 4, 6 y 7). Con 50 o 100 se salta la 4. Ojo: 100 no es mayor que 100.",
+"razones": {
+"a": "No entra en el SI: la sentencia 4 no se ejecuta.",
+"b": "100 > 100 es falso: no entra en el SI.",
+"c": "Correcta.",
+"d": "La sentencia 4 depende de la condición."
+},
+"clave": "Para la cobertura de sentencia basta con entrar en todos los bloques; no hace falta la rama falsa."
+},
+{
+"id": "4-13", "cap": 4, "lo": "FL-4.3.2", "k": "K2", "tema": "Prueba de rama",
+"pregunta": "Con el mismo pseudocódigo (un único 'SI importe > 100' sin 'SINO'), ¿cuál es el número MÍNIMO de casos de prueba para alcanzar el 100 % de cobertura de rama?",
+"anexo": "1  leer(importe)\n2  descuento = 0\n3  SI importe > 100 ENTONCES\n4      descuento = 10\n5  FIN SI\n6  total = importe - descuento\n7  mostrar(total)",
+"opciones": {
+"a": "1",
+"b": "2",
+"c": "3",
+"d": "4"
+},
+"correcta": ["b"],
+"explicacion": "Una rama es una transferencia de control entre dos nodos del grafo de flujo de control. La decisión de la línea 3 tiene dos resultados: verdadero (entra en la línea 4) y falso (salta a la línea 6). Aunque no haya 'SINO', la rama falsa existe. Hacen falta 2 casos: uno con importe > 100 (por ejemplo, 150) y otro con importe ≤ 100 (por ejemplo, 50).",
+"razones": {
+"a": "Con 1 caso solo cubres una de las dos ramas (cobertura del 50 %).",
+"b": "Correcta.",
+"c": "Sobra un caso.",
+"d": "Sobran casos."
+},
+"clave": "Un IF sin ELSE también tiene rama falsa: 2 casos para la cobertura de rama."
+},
+{
+"id": "4-14", "cap": 4, "lo": "FL-4.3.2", "k": "K2", "tema": "Relación sentencia-rama",
+"pregunta": "¿Qué afirmación sobre la cobertura de sentencia y la de rama es correcta?",
+"opciones": {
+"a": "Alcanzar el 100 % de cobertura de rama implica alcanzar el 100 % de cobertura de sentencia, pero no al revés.",
+"b": "Alcanzar el 100 % de cobertura de sentencia implica el 100 % de cobertura de rama.",
+"c": "Son equivalentes: siempre requieren el mismo número de casos.",
+"d": "Alcanzar el 100 % de cobertura de rama garantiza que se detectan todos los defectos del código."
+},
+"correcta": ["a"],
+"explicacion": "La cobertura de rama subsume a la de sentencia: cualquier conjunto de casos que alcance el 100 % de rama alcanza también el 100 % de sentencia, pero no al revés (un IF sin ELSE se puede cubrir al 100 % en sentencias sin probar la rama falsa). Además, ni siquiera el 100 % de rama garantiza encontrar todos los defectos; por ejemplo, no detecta defectos que dependan de datos concretos (como una división por cero con un valor concreto).",
+"razones": {
+"a": "Correcta.",
+"b": "Es al revés.",
+"c": "La de rama suele necesitar más casos.",
+"d": "Nada garantiza encontrar todos los defectos."
+},
+"clave": "Rama ⇒ sentencia. Sentencia ⇏ rama."
+},
+{
+"id": "4-15", "cap": 4, "lo": "FL-4.3.3", "k": "K2", "tema": "Valor de la prueba de caja blanca",
+"pregunta": "¿Cuál es un punto FUERTE de las técnicas de caja blanca?",
+"opciones": {
+"a": "Pueden detectar defectos aunque la especificación del software sea vaga, esté obsoleta o esté incompleta.",
+"b": "Detectan con facilidad los requisitos que no se han implementado (omisiones).",
+"c": "No necesitan acceder al código ni a la estructura del sistema.",
+"d": "Una cobertura de rama del 100 % asegura que el software cumple los requisitos."
+},
+"correcta": ["a"],
+"explicacion": "Un punto fuerte de la caja blanca es que tiene en cuenta toda la implementación durante la prueba, lo que facilita detectar defectos incluso cuando la especificación es vaga, está obsoleta o incompleta. Un punto débil es que, si el software no implementa uno o más requisitos, la caja blanca puede no detectar los defectos resultantes por omisión. También se puede usar en la prueba estática (por ejemplo, en ejecuciones en seco del código).",
+"razones": {
+"a": "Correcta.",
+"b": "Es su debilidad: lo que no está en el código no se puede cubrir.",
+"c": "Al contrario: necesita la estructura interna.",
+"d": "La cobertura de código no demuestra que se cumplan los requisitos."
+},
+"clave": "Caja blanca: no ve lo que FALTA en el código (omisiones)."
+},
+{
+"id": "4-16", "cap": 4, "lo": "FL-4.4.1", "k": "K2", "tema": "Predicción de errores",
+"pregunta": "¿En qué se basa principalmente la técnica de predicción de errores?",
+"opciones": {
+"a": "En el conocimiento del probador sobre cómo ha funcionado la aplicación en el pasado, los tipos de errores que suelen cometer los desarrolladores y los fallos de aplicaciones similares.",
+"b": "En un análisis formal de las particiones del dominio de entrada.",
+"c": "En la medición de la cobertura de sentencia del código.",
+"d": "En las tablas de decisión derivadas de las reglas de negocio."
+},
+"correcta": ["a"],
+"explicacion": "La predicción de errores anticipa la aparición de errores, defectos y fallos a partir del conocimiento del probador, incluido: cómo ha funcionado la aplicación en el pasado, los tipos de errores que suelen cometer los desarrolladores y los tipos de defectos que resultan de ellos, y los fallos ocurridos en otras aplicaciones similares. Un enfoque metódico es el ataque de faltas (fault attack): crear una lista de posibles errores, defectos y fallos y diseñar pruebas para descubrirlos o provocarlos.",
+"razones": {
+"a": "Correcta.",
+"b": "Es partición de equivalencia (caja negra).",
+"c": "Es caja blanca.",
+"d": "Es la técnica de tabla de decisión."
+},
+"clave": "Predicción de errores = experiencia + listas de defectos típicos (ataque de faltas)."
+},
+{
+"id": "4-17", "cap": 4, "lo": "FL-4.4.2", "k": "K2", "tema": "Prueba exploratoria",
+"pregunta": "¿En qué situación es MÁS apropiada la prueba exploratoria?",
+"opciones": {
+"a": "Cuando las especificaciones son escasas o inadecuadas y hay mucha presión de tiempo.",
+"b": "Cuando la normativa exige casos de prueba detallados y guionizados como evidencia.",
+"c": "Cuando el equipo de prueba no tiene experiencia en el dominio ni en la aplicación.",
+"d": "Cuando el objetivo es alcanzar el 100 % de cobertura de rama."
+},
+"correcta": ["a"],
+"explicacion": "En la prueba exploratoria las pruebas se diseñan, ejecutan y evalúan simultáneamente mientras el probador aprende sobre el objeto de prueba. A veces se hace por sesiones (time-box, carta de prueba y una sesión de puesta en común posterior). Es útil cuando hay pocas especificaciones o son inadecuadas, o cuando hay mucha presión de tiempo, y también para complementar técnicas más formales. Es más eficaz si el probador es experimentado, tiene conocimiento del dominio y buenas habilidades (curiosidad, pensamiento crítico, creatividad).",
+"razones": {
+"a": "Correcta.",
+"b": "La normativa favorece pruebas guionizadas y documentadas.",
+"c": "Es menos eficaz con probadores sin experiencia.",
+"d": "La cobertura de rama se consigue con técnicas de caja blanca."
+},
+"clave": "Exploratoria → poca especificación, poco tiempo y probadores con experiencia."
+},
+{
+"id": "4-18", "cap": 4, "lo": "FL-4.4.3", "k": "K2", "tema": "Prueba basada en listas de comprobación",
+"pregunta": "¿Qué afirmación sobre la prueba basada en listas de comprobación es correcta?",
+"opciones": {
+"a": "Los elementos de la lista deben formularse como preguntas, y no deben incluirse los que se pueden comprobar automáticamente.",
+"b": "La lista debe ser lo más larga y genérica posible para cubrirlo todo.",
+"c": "Una vez creada, la lista no debe modificarse para mantener la consistencia.",
+"d": "Solo sirve para la prueba funcional."
+},
+"correcta": ["a"],
+"explicacion": "En la prueba basada en listas de comprobación, el probador diseña, implementa y ejecuta pruebas para cubrir las condiciones de una lista. Cada elemento se formula como una pregunta y se debe poder comprobar por separado y de forma directa. No se deben incluir elementos que se comprueben automáticamente, que funcionen mejor como criterios de entrada o salida, o que sean demasiado generales. Las listas deben actualizarse con regularidad a partir del análisis de defectos, porque pierden eficacia con el tiempo. Sirven para la prueba funcional y la no funcional. Sin casos de prueba detallados aportan pautas y consistencia; las listas de alto nivel dan cierta variabilidad: más cobertura pero menos repetibilidad.",
+"razones": {
+"a": "Correcta.",
+"b": "No deben ser demasiado largas ni incluir elementos demasiado generales.",
+"c": "Al contrario: deben actualizarse con regularidad.",
+"d": "Sirven para la funcional y la no funcional."
+},
+"clave": "Lista de comprobación: preguntas concretas, actualizadas y nada que ya compruebe una herramienta."
+},
+{
+"id": "4-19", "cap": 4, "lo": "FL-4.5.1", "k": "K2", "tema": "Redacción colaborativa de historias de usuario",
+"pregunta": "Las '3 C' de una historia de usuario son:",
+"opciones": {
+"a": "Tarjeta, Conversación y Confirmación.",
+"b": "Código, Compilación y Cobertura.",
+"c": "Cliente, Contrato y Criterio.",
+"d": "Contexto, Cambio y Control."
+},
+"correcta": ["a"],
+"explicacion": "Una historia de usuario tiene tres aspectos críticos, las '3 C': la Tarjeta (el medio que describe la historia, por ejemplo una ficha o una entrada en un tablero), la Conversación (explica cómo se usará el software; puede documentarse o ser verbal) y la Confirmación (los criterios de aceptación). El formato más común es 'Como [rol], quiero [objetivo] para [valor de negocio]', seguido de los criterios de aceptación.",
+"razones": {
+"a": "Correcta.",
+"b": "Términos técnicos sin relación con las historias de usuario.",
+"c": "Inventado.",
+"d": "Inventado."
+},
+"clave": "Card, Conversation, Confirmation."
+},
+{
+"id": "4-20", "cap": 4, "lo": "FL-4.5.1", "k": "K2", "tema": "INVEST",
+"pregunta": "Una historia de usuario dice: 'El sistema debe ser rápido y fácil de usar'. ¿Qué criterio INVEST incumple de forma MÁS evidente?",
+"opciones": {
+"a": "Independiente.",
+"b": "Negociable.",
+"c": "Pequeña.",
+"d": "Comprobable (Testable)."
+},
+"correcta": ["d"],
+"explicacion": "INVEST: Independiente, Negociable, Valiosa, Estimable, pequeña (Small) y Comprobable (Testable). 'Rápido' y 'fácil de usar' no son medibles: no se puede escribir un criterio de aceptación objetivo para verificarlos, así que la historia no es comprobable. Si las partes interesadas no saben cómo probar una historia, puede indicar que no es lo bastante clara, que no refleja algo de valor o que necesitan ayuda para probarla.",
+"razones": {
+"a": "Nada sugiere que dependa de otras historias.",
+"b": "Es negociable; el problema es que no se puede verificar.",
+"c": "Puede ser grande, pero lo más evidente es que no se puede verificar.",
+"d": "Correcta."
+},
+"clave": "Adjetivos vagos (rápido, fácil, intuitivo) → historia no comprobable."
+},
+{
+"id": "4-21", "cap": 4, "lo": "FL-4.5.2", "k": "K2", "tema": "Criterios de aceptación",
+"pregunta": "¿Cuáles son los dos formatos más habituales para redactar criterios de aceptación?",
+"opciones": {
+"a": "Orientado a escenarios (Dado/Cuando/Entonces) y orientado a reglas (lista de verificación con viñetas o tabla de correspondencia entre entradas y salidas).",
+"b": "Diagrama de clases y diagrama de secuencia.",
+"c": "Casos de prueba de caja blanca y de caja negra.",
+"d": "Historia de usuario y épica."
+},
+"correcta": ["a"],
+"explicacion": "Los criterios de aceptación son las condiciones que debe cumplir una implementación para que las partes interesadas la acepten. Sirven para definir el alcance de la historia, alcanzar consenso, describir escenarios positivos y negativos, servir de base para la prueba de aceptación y permitir una planificación y estimación precisas. Los formatos más comunes son el orientado a escenarios (Dado/Cuando/Entonces, propio de BDD) y el orientado a reglas (listas de verificación o tablas de entradas y salidas). Se admiten otros formatos siempre que los criterios estén bien definidos y no sean ambiguos.",
+"razones": {
+"a": "Correcta.",
+"b": "Son modelos de diseño UML.",
+"c": "Son categorías de técnicas, no formatos de criterios de aceptación.",
+"d": "Son unidades de requisito, no formatos de criterios."
+},
+"clave": "Escenarios (Gherkin) o reglas (lista o tabla)."
+},
+{
+"id": "4-22", "cap": 4, "lo": "FL-4.1.1", "k": "K2", "tema": "Categorías de técnicas",
+"pregunta": "Un probador diseña pruebas a partir de una lista de los defectos más frecuentes en aplicaciones de comercio electrónico en las que ha trabajado antes. ¿A qué categoría pertenece la técnica que usa?",
+"opciones": {
+"a": "Técnica de caja negra.",
+"b": "Técnica de caja blanca.",
+"c": "Técnica basada en la experiencia.",
+"d": "Técnica basada en la colaboración."
+},
+"correcta": ["c"],
+"explicacion": "Las técnicas basadas en la experiencia aprovechan el conocimiento y la experiencia de los probadores para diseñar e implementar casos de prueba. Son la predicción de errores (con su variante metódica, el ataque de faltas a partir de una lista de defectos), la prueba exploratoria y la prueba basada en listas de comprobación. Su eficacia depende en gran medida de las habilidades del probador, y pueden detectar defectos que se escapan a las técnicas de caja negra y de caja blanca.",
+"razones": {
+"a": "La caja negra se basa en la especificación.",
+"b": "La caja blanca se basa en la estructura.",
+"c": "Correcta. Es un ataque de faltas, una forma de predicción de errores.",
+"d": "Los enfoques colaborativos (capítulo 4.5) se centran en las historias de usuario, los criterios de aceptación y ATDD."
+},
+"clave": "Lista de defectos del pasado → predicción de errores o ataque de faltas → experiencia."
+}
+]

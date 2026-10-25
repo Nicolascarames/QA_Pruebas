@@ -1,0 +1,154 @@
+[
+{
+"id": "3-01", "cap": 3, "lo": "FL-3.1.1", "k": "K1", "tema": "Productos examinables por prueba estática",
+"pregunta": "¿Cuál de los siguientes conjuntos de productos de trabajo puede examinarse mediante prueba estática?",
+"opciones": {
+"a": "Solo el código fuente.",
+"b": "Solo los productos ejecutables.",
+"c": "Especificaciones de requisitos, código fuente, planes de prueba, casos de prueba y contratos.",
+"d": "Solo los documentos con una estructura formal que pueda analizar una herramienta."
+},
+"correcta": ["c"],
+"explicacion": "Casi cualquier producto de trabajo puede examinarse con prueba estática: especificaciones de requisitos, código fuente, planes de prueba, casos de prueba, elementos del backlog del producto, cartas de prueba, documentación del proyecto, contratos y modelos. Cualquier producto que pueda leerse y entenderse puede ser objeto de una revisión. El análisis estático, en cambio, necesita productos con una estructura contra la que se pueda comprobar (modelos, código o texto con una sintaxis formal).",
+"razones": {
+"a": "Demasiado restrictivo.",
+"b": "La prueba estática no necesita ejecutar; justamente sirve para productos no ejecutables.",
+"c": "Correcta.",
+"d": "Eso es lo que necesita el ANÁLISIS ESTÁTICO con herramientas, no la revisión."
+},
+"clave": "Revisión → cualquier cosa legible. Análisis estático → necesita una estructura formal."
+},
+{
+"id": "3-02", "cap": 3, "lo": "FL-3.1.2", "k": "K2", "tema": "Valor de la prueba estática",
+"pregunta": "¿Qué defecto se detecta más fácilmente con prueba estática que con prueba dinámica?",
+"opciones": {
+"a": "Un tiempo de respuesta excesivo con 1.000 usuarios.",
+"b": "Una fuga de memoria que aparece tras horas de funcionamiento.",
+"c": "Una variable que se usa antes de haber recibido un valor.",
+"d": "Un fallo intermitente que solo ocurre con cierta configuración de red."
+},
+"correcta": ["c"],
+"explicacion": "La prueba estática encuentra con más facilidad: defectos en los requisitos (inconsistencias, ambigüedades, contradicciones, omisiones, inexactitudes, duplicidades), defectos de diseño (estructuras de base de datos ineficientes, mala modularización), ciertos defectos de codificación (variables con valores no definidos, variables no declaradas, código inalcanzable o duplicado, complejidad excesiva), desviaciones de estándares, especificaciones de interfaz incorrectas, vulnerabilidades de seguridad (por ejemplo, desbordamientos de búfer) y huecos o inexactitudes en la cobertura de la base de prueba.",
+"razones": {
+"a": "El rendimiento depende de la ejecución: prueba dinámica.",
+"b": "Una fuga de memoria con el tiempo se detecta ejecutando.",
+"c": "Correcta. Variable con valor no definido = defecto típico del análisis estático.",
+"d": "Depende de la ejecución en un entorno concreto."
+},
+"clave": "Si hace falta EJECUTAR para verlo (rendimiento, memoria, tiempos) → dinámica."
+},
+{
+"id": "3-03", "cap": 3, "lo": "FL-3.1.3", "k": "K2", "tema": "Prueba estática y dinámica",
+"pregunta": "¿Qué afirmación sobre las diferencias entre la prueba estática y la dinámica es correcta?",
+"opciones": {
+"a": "La prueba estática encuentra defectos directamente, mientras que la dinámica provoca fallos a partir de los cuales se determinan los defectos asociados.",
+"b": "La prueba estática es la más adecuada para medir la eficiencia de desempeño.",
+"c": "La prueba dinámica se puede aplicar a productos de trabajo no ejecutables, como los requisitos.",
+"d": "La prueba estática no puede detectar vulnerabilidades de seguridad."
+},
+"correcta": ["a"],
+"explicacion": "Ambas se complementan, pero: la estática encuentra defectos directamente y la dinámica provoca fallos y luego se analizan los defectos; la estática puede detectar defectos en caminos de código que rara vez se ejecutan o son difíciles de alcanzar; la estática se puede aplicar a productos no ejecutables y la dinámica solo a ejecutables; la estática puede medir características que no dependen de ejecutar el código (por ejemplo, la mantenibilidad) y la dinámica las que sí (por ejemplo, la eficiencia de desempeño).",
+"razones": {
+"a": "Correcta.",
+"b": "La eficiencia de desempeño depende de la ejecución: prueba dinámica.",
+"c": "Es al revés: la estática se aplica a no ejecutables.",
+"d": "Sí puede: por ejemplo, desbordamientos de búfer con análisis estático."
+},
+"clave": "Estática → defectos. Dinámica → fallos."
+},
+{
+"id": "3-04", "cap": 3, "lo": "FL-3.2.1", "k": "K1", "tema": "Retroalimentación temprana",
+"pregunta": "¿Qué beneficio aporta la retroalimentación temprana y frecuente de las partes interesadas?",
+"opciones": {
+"a": "Permite comunicar pronto posibles problemas de calidad y evitar malentendidos sobre los requisitos.",
+"b": "Elimina la necesidad de la prueba de aceptación.",
+"c": "Hace innecesarias las revisiones formales.",
+"d": "Garantiza que no habrá cambios en los requisitos."
+},
+"correcta": ["a"],
+"explicacion": "La retroalimentación temprana y frecuente permite comunicar pronto posibles problemas de calidad. Si las partes interesadas participan poco, el producto puede no cumplir su visión original o actual, lo que provoca retrabajos costosos, plazos incumplidos, culpas y hasta el fracaso del proyecto. La retroalimentación frecuente evita malentendidos sobre los requisitos y asegura que los cambios se entienden y se implementan antes. Ayuda al equipo a centrarse en las funcionalidades que aportan más valor y a reducir riesgos.",
+"razones": {
+"a": "Correcta.",
+"b": "No sustituye la prueba de aceptación.",
+"c": "No elimina las revisiones; se complementan.",
+"d": "No evita los cambios; ayuda a entenderlos e incorporarlos antes."
+},
+"clave": "Retroalimentación temprana → menos malentendidos y menos retrabajo."
+},
+{
+"id": "3-05", "cap": 3, "lo": "FL-3.2.2", "k": "K2", "tema": "Proceso de revisión",
+"pregunta": "Cada revisor examina el documento por su cuenta, usando técnicas como listas de comprobación, y anota anomalías, recomendaciones y preguntas. ¿A qué actividad del proceso de revisión corresponde?",
+"opciones": {
+"a": "Inicio de la revisión.",
+"b": "Revisión individual.",
+"c": "Comunicación y análisis.",
+"d": "Corrección e informe."
+},
+"correcta": ["b"],
+"explicacion": "El proceso genérico de revisión del CTFL 4.0 tiene cinco actividades: 1) planificación (alcance, objetivo, características de calidad, criterios de salida); 2) inicio de la revisión (asegurar que todos están preparados, tienen acceso al producto y entienden su rol); 3) revisión individual (cada revisor evalúa la calidad del producto e identifica anomalías, recomendaciones y preguntas aplicando técnicas como listas de comprobación o revisión basada en escenarios); 4) comunicación y análisis (se analizan las anomalías, se decide su estado, propietario y acciones, normalmente en una reunión, y se evalúa la calidad y se decide si se cumplen los criterios de salida); 5) corrección e informe (se crean informes de defecto, el autor corrige y se comunican los resultados).",
+"razones": {
+"a": "El inicio asegura la preparación y el acceso; no se revisa todavía.",
+"b": "Correcta.",
+"c": "Ahí se analizan conjuntamente las anomalías ya identificadas.",
+"d": "Ahí se corrige y se informa del resultado."
+},
+"clave": "Planificación → Inicio → Revisión individual → Comunicación y análisis → Corrección e informe."
+},
+{
+"id": "3-06", "cap": 3, "lo": "FL-3.2.3", "k": "K1", "tema": "Roles en las revisiones",
+"pregunta": "¿Qué rol de una revisión garantiza el buen desarrollo de las reuniones, incluidas la mediación, la gestión del tiempo y un ambiente seguro en el que todos puedan hablar con libertad?",
+"opciones": {
+"a": "Líder de la revisión.",
+"b": "Moderador (facilitador).",
+"c": "Escriba (registrador).",
+"d": "Gerente."
+},
+"correcta": ["b"],
+"explicacion": "Roles de la revisión en el CTFL 4.0: el gerente decide qué se revisa y aporta recursos (personal y tiempo); el autor crea y corrige el producto; el moderador (facilitador) garantiza el buen desarrollo de las reuniones, incluidas la mediación, la gestión del tiempo y un ambiente seguro; el escriba (registrador) recopila las anomalías y registra la información de la revisión (decisiones, anomalías nuevas); el revisor realiza las revisiones; el líder de la revisión asume la responsabilidad general (decide quién participa y organiza cuándo y dónde).",
+"razones": {
+"a": "El líder tiene la responsabilidad general y organiza, pero no es quien modera la reunión.",
+"b": "Correcta.",
+"c": "El escriba registra; no modera.",
+"d": "El gerente decide qué revisar y aporta recursos."
+},
+"clave": "Moderador = reunión. Líder = organización general. Escriba = registro."
+},
+{
+"id": "3-07", "cap": 3, "lo": "FL-3.2.4", "k": "K2", "tema": "Tipos de revisión",
+"pregunta": "Se necesita el tipo de revisión más formal, que siga el proceso genérico completo, en el que se recopilen métricas y cuyo objetivo principal sea encontrar el máximo número de anomalías. ¿Cuál es?",
+"opciones": {
+"a": "Revisión informal.",
+"b": "Revisión guiada.",
+"c": "Revisión técnica.",
+"d": "Inspección."
+},
+"correcta": ["d"],
+"explicacion": "Tipos de revisión: la revisión informal no sigue un proceso definido ni exige un resultado documentado formal; su objetivo principal es detectar anomalías. La revisión guiada (walkthrough) la dirige el autor y tiene objetivos como evaluar la calidad, generar confianza, formar a los revisores, alcanzar consenso, generar ideas nuevas y detectar anomalías. La revisión técnica la hacen revisores técnicamente cualificados y la dirige un moderador; busca consenso y decisiones sobre problemas técnicos, además de detectar anomalías. La inspección es la más formal: sigue el proceso genérico completo, su objetivo principal es encontrar el máximo número de anomalías, se recopilan métricas para mejorar el proceso, y el autor no puede actuar como líder de la revisión ni como escriba.",
+"razones": {
+"a": "Es la menos formal.",
+"b": "La dirige el autor y tiene objetivos más amplios (formación, consenso...).",
+"c": "Es formal, pero su foco es el consenso y las decisiones técnicas.",
+"d": "Correcta."
+},
+"clave": "Máxima formalidad + métricas + máximo de anomalías = inspección."
+},
+{
+"id": "3-08", "cap": 3, "lo": "FL-3.2.5", "k": "K1", "tema": "Factores de éxito de las revisiones",
+"pregunta": "¿Cuál de los siguientes es un factor de éxito de las revisiones?",
+"opciones": {
+"a": "Usar los resultados de la revisión para evaluar el rendimiento de los participantes.",
+"b": "Revisar el producto en partes pequeñas para que los revisores no pierdan la concentración.",
+"c": "No dejar tiempo de preparación, para que la revisión sea más espontánea.",
+"d": "Que solo la dirección decida si el producto supera la revisión."
+},
+"correcta": ["b"],
+"explicacion": "Factores de éxito según el programa: definir objetivos claros y criterios de salida medibles (la evaluación de los participantes nunca debe ser un objetivo); elegir el tipo de revisión adecuado; hacer revisiones sobre partes pequeñas para que los revisores no pierdan la concentración; proporcionar retroalimentación a las partes interesadas y a los autores para que puedan mejorar; dar tiempo suficiente para prepararse; contar con el apoyo de la dirección; hacer que las revisiones formen parte de la cultura de la organización; dar formación adecuada y facilitar las reuniones.",
+"razones": {
+"a": "Expresamente desaconsejado: evaluar a los participantes nunca debe ser un objetivo.",
+"b": "Correcta.",
+"c": "Al contrario: hay que dar tiempo suficiente para prepararse.",
+"d": "No es un factor de éxito del programa."
+},
+"clave": "Nunca se evalúa a las personas en una revisión: se evalúa el producto."
+}
+]

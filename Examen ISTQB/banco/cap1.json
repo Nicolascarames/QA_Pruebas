@@ -1,0 +1,308 @@
+[
+{
+"id": "1-01", "cap": 1, "lo": "FL-1.1.1", "k": "K1", "tema": "Objetivos de la prueba",
+"pregunta": "¿Cuál de los siguientes es un objetivo típico de la prueba?",
+"opciones": {
+"a": "Depurar el código para eliminar los defectos encontrados.",
+"b": "Provocar fallos y encontrar defectos.",
+"c": "Garantizar que el software no contiene defectos.",
+"d": "Corregir la causa raíz de los fallos detectados en producción."
+},
+"correcta": ["b"],
+"explicacion": "El programa de estudio enumera los objetivos típicos de la prueba: evaluar productos de trabajo, provocar fallos y encontrar defectos, asegurar la cobertura requerida, reducir el nivel de riesgo, verificar que se cumplen los requisitos, verificar el cumplimiento de contratos y normas, proporcionar información a las partes interesadas, generar confianza y validar que el objeto de prueba está completo y funciona como esperan los usuarios. 'Provocar fallos y encontrar defectos' aparece literalmente en esa lista.",
+"razones": {
+"a": "Depurar (localizar, analizar y eliminar las causas) es una actividad de desarrollo, distinta de la prueba.",
+"b": "Correcta. Es uno de los objetivos de la prueba que recoge el programa de estudio.",
+"c": "Imposible: el principio 1 dice que la prueba muestra la presencia de defectos, no su ausencia.",
+"d": "Corregir causas raíz corresponde a la depuración y a la mejora de procesos, no a la prueba."
+},
+"clave": "Si una opción habla de 'garantizar' o 'demostrar ausencia de defectos', casi seguro es falsa."
+},
+{
+"id": "1-02", "cap": 1, "lo": "FL-1.1.2", "k": "K2", "tema": "Prueba y depuración",
+"pregunta": "Un probador ejecuta un caso de prueba que falla y lo registra. Un desarrollador reproduce el fallo, localiza la causa en el código y la corrige. Después, el probador vuelve a ejecutar el caso y comprueba que ya pasa. ¿Qué parte de este escenario corresponde a la depuración?",
+"opciones": {
+"a": "Ejecutar el caso de prueba que falla y registrar el fallo.",
+"b": "Reproducir el fallo, diagnosticar la causa y corregir el código.",
+"c": "Volver a ejecutar el caso para confirmar que la corrección funciona.",
+"d": "Ejecutar pruebas de regresión sobre las zonas cercanas al cambio."
+},
+"correcta": ["b"],
+"explicacion": "La prueba puede provocar fallos (prueba dinámica) o encontrar defectos directamente (prueba estática). La depuración se ocupa de encontrar las causas de esos fallos, analizarlas y eliminarlas. Tras un fallo, la depuración típica es: reproducción, diagnóstico (encontrar la causa raíz) y corrección. Después, el probador realiza la prueba de confirmación y, si procede, la de regresión.",
+"razones": {
+"a": "Es prueba dinámica: provocar y registrar el fallo.",
+"b": "Correcta. Reproducir, diagnosticar y corregir son las tres fases de la depuración.",
+"c": "Es prueba de confirmación, una actividad de prueba posterior a la depuración.",
+"d": "Es prueba de regresión, también actividad de prueba."
+},
+"clave": "Prueba = encontrar o provocar. Depuración = reproducir, diagnosticar y corregir."
+},
+{
+"id": "1-03", "cap": 1, "lo": "FL-1.2.1", "k": "K2", "tema": "Por qué es necesaria la prueba",
+"pregunta": "¿Cuál de las siguientes situaciones es el MEJOR ejemplo de cómo la prueba contribuye al éxito de un proyecto?",
+"opciones": {
+"a": "Los probadores participan en la revisión de los requisitos y detectan ambigüedades antes de que se implementen.",
+"b": "Los probadores garantizan que el producto entregado tendrá una calidad alta.",
+"c": "Los probadores corrigen los defectos para reducir la carga de trabajo de los desarrolladores.",
+"d": "La prueba sustituye la necesidad de aplicar aseguramiento de la calidad en la organización."
+},
+"correcta": ["a"],
+"explicacion": "La prueba ofrece un medio rentable de detectar defectos, que luego se eliminan (por depuración). También permite evaluar directamente la calidad del objeto de prueba en distintas fases del ciclo de vida. Implicar a los probadores pronto, por ejemplo en las revisiones de requisitos, detecta defectos cuando corregirlos es más barato y reduce el riesgo de desarrollar funcionalidad incorrecta.",
+"razones": {
+"a": "Correcta. Es la contribución directa y temprana que describe el programa (prueba estática y shift-left).",
+"b": "La prueba no garantiza la calidad: la mide y aporta información para mejorarla.",
+"c": "Corregir defectos es tarea de desarrollo (depuración), no de los probadores.",
+"d": "La prueba es una forma de control de calidad y no sustituye al aseguramiento de la calidad (QA)."
+},
+"clave": "La prueba aporta información y detección temprana; nunca 'garantiza' calidad."
+},
+{
+"id": "1-04", "cap": 1, "lo": "FL-1.2.2", "k": "K2", "tema": "Prueba y aseguramiento de la calidad",
+"pregunta": "¿Qué afirmación describe correctamente la relación entre la prueba y el aseguramiento de la calidad (QA)?",
+"opciones": {
+"a": "El QA se orienta al producto y es correctivo; la prueba se orienta a los procesos y es preventiva.",
+"b": "La prueba es una forma de control de calidad, orientada al producto y correctiva; el QA se orienta a los procesos y es preventivo.",
+"c": "La prueba y el QA son sinónimos y los realiza siempre el mismo equipo.",
+"d": "El QA solo se aplica al final del proyecto, cuando ya han terminado todas las pruebas."
+},
+"correcta": ["b"],
+"explicacion": "El programa distingue entre control de calidad (QC) y aseguramiento de la calidad (QA). El QC es un enfoque correctivo orientado al producto, centrado en las actividades que ayudan a alcanzar niveles de calidad adecuados; la prueba es una forma importante de QC. El QA es un enfoque preventivo orientado a los procesos: si se sigue un buen proceso, se obtiene un buen producto. Los resultados de la prueba se usan en ambos: en el QC para corregir defectos y en el QA como retroalimentación sobre el rendimiento de los procesos.",
+"razones": {
+"a": "Está al revés: es justo la opción trampa.",
+"b": "Correcta. La prueba es QC, orientado al producto y correctivo; el QA, a los procesos y preventivo.",
+"c": "No son sinónimos; además, el QA es responsabilidad de todos en el proyecto.",
+"d": "El QA abarca todo el ciclo de vida y se centra en la implantación y mejora de los procesos."
+},
+"clave": "QA = procesos y prevención. QC (prueba) = producto y corrección."
+},
+{
+"id": "1-05", "cap": 1, "lo": "FL-1.2.3", "k": "K2", "tema": "Error, defecto y fallo",
+"pregunta": "Un desarrollador entiende mal un requisito y escribe 'edad > 18' en lugar de 'edad >= 18'. Al usar la aplicación, un cliente de exactamente 18 años no puede registrarse. ¿Qué opción identifica correctamente el error, el defecto y el fallo?",
+"opciones": {
+"a": "Error: la condición 'edad > 18'. Defecto: el malentendido del requisito. Fallo: el cliente no puede registrarse.",
+"b": "Error: el malentendido del requisito. Defecto: la condición 'edad > 18' en el código. Fallo: el cliente de 18 años no puede registrarse.",
+"c": "Error: el cliente no puede registrarse. Defecto: el malentendido. Fallo: la condición en el código.",
+"d": "Error y defecto son lo mismo (la condición incorrecta). Fallo: el cliente no puede registrarse."
+},
+"correcta": ["b"],
+"explicacion": "Las personas cometen errores (equivocaciones), que producen defectos (faltas o bugs) en el código o en otros productos de trabajo. Si se ejecuta el código con el defecto, el sistema puede no hacer lo que debería, o hacer algo que no debería: eso es un fallo. Aquí la equivocación humana es el malentendido, el defecto es la condición '>' y el fallo es lo que observa el usuario.",
+"razones": {
+"a": "Intercambia error y defecto. El error es la acción humana; el defecto, su resultado en el producto.",
+"b": "Correcta. La cadena es error (humano) → defecto (en el producto) → fallo (comportamiento observable).",
+"c": "Mezcla los tres conceptos al revés.",
+"d": "Error y defecto son conceptos distintos en el programa de estudio."
+},
+"clave": "Error (persona) → defecto (en el producto) → fallo (en ejecución, visible)."
+},
+{
+"id": "1-06", "cap": 1, "lo": "FL-1.2.3", "k": "K1", "tema": "Causa raíz",
+"pregunta": "¿Qué término designa la razón fundamental por la que aparece un problema, por ejemplo una situación que conduce a un error?",
+"opciones": {
+"a": "Fallo.",
+"b": "Defecto.",
+"c": "Causa raíz.",
+"d": "Incidencia."
+},
+"correcta": ["c"],
+"explicacion": "Una causa raíz es la razón fundamental de la aparición de un problema (por ejemplo, la situación que lleva a cometer un error). Se identifican mediante el análisis de causa raíz, que normalmente se hace cuando ocurre un fallo o se detecta un defecto. Eliminar la causa raíz evita que vuelvan a aparecer fallos o defectos similares.",
+"razones": {
+"a": "Un fallo es el comportamiento incorrecto observable al ejecutar.",
+"b": "Un defecto es la imperfección en el producto de trabajo.",
+"c": "Correcta. Es la definición de causa raíz.",
+"d": "'Incidencia' es un término genérico para un evento que requiere investigación; no es la razón fundamental."
+},
+"clave": "Causa raíz = el porqué de fondo (presión de plazos, falta de formación, requisitos ambiguos...)."
+},
+{
+"id": "1-07", "cap": 1, "lo": "FL-1.3.1", "k": "K2", "tema": "Siete principios",
+"pregunta": "Un equipo lleva dos años ejecutando la misma suite de regresión sin cambios. Ya no detecta ningún defecto, pero los usuarios siguen informando de fallos nuevos. ¿Qué principio de la prueba ilustra mejor esta situación?",
+"opciones": {
+"a": "Los defectos se agrupan.",
+"b": "Las pruebas se desgastan.",
+"c": "La prueba exhaustiva es imposible.",
+"d": "La falacia de la ausencia de errores."
+},
+"correcta": ["b"],
+"explicacion": "El principio 'las pruebas se desgastan' (antes llamado 'paradoja del pesticida') dice que, si se repiten muchas veces las mismas pruebas, cada vez detectan menos defectos nuevos. Para superarlo hay que modificar las pruebas y los datos existentes y quizá escribir pruebas nuevas. Hay una excepción: en la regresión automatizada, la repetición puede ser beneficiosa, porque confirma que no hay efectos indeseados.",
+"razones": {
+"a": "Ese principio habla de que la mayoría de los defectos están en pocos componentes, no de repetir pruebas.",
+"b": "Correcta. La suite repetida ha perdido eficacia para encontrar defectos nuevos.",
+"c": "Es cierto en general, pero no explica por qué una suite repetida deja de encontrar defectos.",
+"d": "Ese principio trata de un sistema sin defectos que no satisface las necesidades del usuario."
+},
+"clave": "Mismas pruebas una y otra vez → encuentran cada vez menos: 'se desgastan'."
+},
+{
+"id": "1-08", "cap": 1, "lo": "FL-1.3.1", "k": "K1", "tema": "Siete principios",
+"pregunta": "¿Cuál de los siguientes es uno de los siete principios de la prueba?",
+"opciones": {
+"a": "La prueba demuestra la ausencia de defectos.",
+"b": "La prueba temprana ahorra tiempo y dinero.",
+"c": "La prueba independiente siempre es más eficaz que la realizada por el autor.",
+"d": "Todas las pruebas deben automatizarse para ser fiables."
+},
+"correcta": ["b"],
+"explicacion": "Los siete principios del CTFL 4.0 son: 1) La prueba muestra la presencia, no la ausencia de defectos. 2) La prueba exhaustiva es imposible. 3) La prueba temprana ahorra tiempo y dinero. 4) Los defectos se agrupan. 5) Las pruebas se desgastan. 6) La prueba depende del contexto. 7) Falacia de la ausencia de errores.",
+"razones": {
+"a": "Es lo contrario del principio 1.",
+"b": "Correcta. Es el principio 3: los defectos eliminados pronto no provocan defectos derivados y son más baratos de corregir.",
+"c": "La independencia tiene ventajas e inconvenientes, pero no es un principio ni es 'siempre' más eficaz.",
+"d": "No es un principio; además, no todo es apropiado para automatizar."
+},
+"clave": "Memoriza los 7 principios en orden; aparecen en casi todos los exámenes."
+},
+{
+"id": "1-09", "cap": 1, "lo": "FL-1.3.1", "k": "K2", "tema": "Siete principios",
+"pregunta": "Un sistema supera todas las pruebas planificadas y no tiene defectos conocidos, pero los usuarios lo rechazan porque no se ajusta a su forma de trabajar. ¿Qué principio describe esta situación?",
+"opciones": {
+"a": "La prueba depende del contexto.",
+"b": "Los defectos se agrupan.",
+"c": "La falacia de la ausencia de errores.",
+"d": "La prueba muestra la presencia, no la ausencia de defectos."
+},
+"correcta": ["c"],
+"explicacion": "La falacia de la ausencia de errores es la idea equivocada de que la verificación del software asegura el éxito de un sistema. Probar a fondo todos los requisitos especificados y corregir todos los defectos encontrados puede producir un sistema que no satisface las necesidades y expectativas de los usuarios. Por eso, además de verificar, hay que validar.",
+"razones": {
+"a": "Habla de adaptar la prueba a cada contexto, no de un sistema sin defectos que no sirve.",
+"b": "Trata de la concentración de defectos en pocos componentes.",
+"c": "Correcta. 'Sin defectos' no significa 'útil para el usuario'.",
+"d": "Habla de que la prueba no puede demostrar que no hay defectos; aquí el problema es la validación."
+},
+"clave": "'Sin defectos pero los usuarios no lo quieren' = falacia de la ausencia de errores."
+},
+{
+"id": "1-10", "cap": 1, "lo": "FL-1.4.1", "k": "K2", "tema": "Actividades de prueba",
+"pregunta": "¿En qué actividad de prueba se analiza la base de prueba para identificar las condiciones de prueba ('qué probar') y se evalúa su comprobabilidad, pudiendo encontrar defectos en ella?",
+"opciones": {
+"a": "Análisis de la prueba.",
+"b": "Diseño de la prueba.",
+"c": "Implementación de la prueba.",
+"d": "Ejecución de la prueba."
+},
+"correcta": ["a"],
+"explicacion": "El análisis de la prueba responde a '¿qué probar?': se analiza la base de prueba para identificar características comprobables, definir y priorizar las condiciones de prueba asociadas teniendo en cuenta los riesgos, y evaluar la base de prueba y los objetos de prueba para identificar defectos y su comprobabilidad. El diseño responde a '¿cómo probar?'.",
+"razones": {
+"a": "Correcta. 'Qué probar', condiciones de prueba y evaluación de la base de prueba son tareas del análisis.",
+"b": "El diseño elabora casos de prueba, elementos de cobertura y requisitos de datos y de entorno ('cómo probar').",
+"c": "La implementación crea los productos de prueba necesarios para la ejecución (procedimientos, juegos, entorno).",
+"d": "La ejecución ejecuta las pruebas y compara los resultados."
+},
+"clave": "Análisis = QUÉ (condiciones). Diseño = CÓMO (casos de prueba)."
+},
+{
+"id": "1-11", "cap": 1, "lo": "FL-1.4.1", "k": "K2", "tema": "Actividades de prueba",
+"pregunta": "¿Cuál de las siguientes tareas pertenece a la implementación de la prueba?",
+"opciones": {
+"a": "Derivar casos de prueba a partir de las condiciones de prueba.",
+"b": "Organizar los procedimientos de prueba en juegos de prueba y preparar el calendario de ejecución.",
+"c": "Comparar los resultados reales con los esperados.",
+"d": "Archivar los productos de prueba para su uso futuro."
+},
+"correcta": ["b"],
+"explicacion": "La implementación de la prueba crea o adquiere los productos de prueba necesarios para la ejecución (por ejemplo, los datos de prueba). Los casos de prueba se organizan en procedimientos de prueba, que a menudo se agrupan en juegos de prueba; se crean scripts de prueba manuales y automatizados; se priorizan y ordenan los procedimientos en un calendario de ejecución, y se construye y verifica el entorno de prueba.",
+"razones": {
+"a": "Es diseño de la prueba.",
+"b": "Correcta. Juegos de prueba y calendario de ejecución son tareas de implementación.",
+"c": "Es ejecución de la prueba.",
+"d": "Es compleción de la prueba."
+},
+"clave": "Implementación = dejar todo listo para ejecutar: procedimientos, juegos, scripts, calendario y entorno."
+},
+{
+"id": "1-12", "cap": 1, "lo": "FL-1.4.1", "k": "K2", "tema": "Actividades de prueba",
+"pregunta": "¿Qué tarea es característica de la compleción de la prueba?",
+"opciones": {
+"a": "Registrar los resultados de la ejecución y notificar los defectos.",
+"b": "Identificar lecciones aprendidas, archivar los productos de prueba y elaborar el informe de compleción.",
+"c": "Identificar los requisitos de entorno y de datos de prueba.",
+"d": "Evaluar la comprobabilidad de la base de prueba."
+},
+"correcta": ["b"],
+"explicacion": "La compleción de la prueba suele producirse en los hitos del proyecto (por ejemplo, en una entrega, al final de una iteración o al completar un nivel de prueba). Incluye: crear solicitudes de cambio o elementos de backlog para los defectos no resueltos; identificar, archivar o entregar los productos de prueba que puedan ser útiles en el futuro; desactivar el entorno de prueba; analizar las actividades para extraer lecciones aprendidas y mejoras, y crear y comunicar el informe de compleción de la prueba.",
+"razones": {
+"a": "Es ejecución de la prueba.",
+"b": "Correcta. Las tres tareas son típicas de la compleción.",
+"c": "Es diseño de la prueba.",
+"d": "Es análisis de la prueba."
+},
+"clave": "Compleción = cerrar: archivar, lecciones aprendidas, informe final, apagar el entorno."
+},
+{
+"id": "1-13", "cap": 1, "lo": "FL-1.4.2", "k": "K2", "tema": "El proceso de prueba en contexto",
+"pregunta": "¿Qué factor de contexto es MÁS probable que haga que el proceso de prueba sea más formal y esté más documentado?",
+"opciones": {
+"a": "El sistema está sujeto a una normativa de seguridad (por ejemplo, un dispositivo médico).",
+"b": "El equipo es pequeño y trabaja en la misma oficina.",
+"c": "El producto es un prototipo interno de vida corta.",
+"d": "El plazo de entrega es muy corto."
+},
+"correcta": ["a"],
+"explicacion": "La forma de probar depende de factores de contexto como: las partes interesadas (necesidades, expectativas, requisitos, disposición a cooperar), los miembros del equipo (habilidades, conocimientos, experiencia), el dominio del negocio (criticidad del objeto de prueba, riesgos identificados, necesidades del mercado, normativas legales específicas), los factores técnicos, las restricciones del proyecto (alcance, tiempo, presupuesto, recursos), los factores organizativos y el ciclo de vida. Las exigencias regulatorias suelen obligar a más formalidad, trazabilidad y evidencias documentadas.",
+"razones": {
+"a": "Correcta. La normativa exige evidencias, trazabilidad y un proceso documentado.",
+"b": "Un equipo pequeño y co-ubicado tiende a ser menos formal.",
+"c": "Un prototipo de vida corta justifica menos formalidad.",
+"d": "Un plazo corto suele empujar a menos documentación, no a más."
+},
+"clave": "Regulación y criticidad → más formalidad. Prototipos y equipos pequeños → menos."
+},
+{
+"id": "1-14", "cap": 1, "lo": "FL-1.4.4", "k": "K2", "tema": "Trazabilidad",
+"pregunta": "¿Cuál es un beneficio de mantener la trazabilidad entre la base de prueba y los productos de prueba?",
+"opciones": {
+"a": "Permite hacer análisis de impacto de los cambios y evaluar la cobertura.",
+"b": "Elimina la necesidad de la prueba de regresión.",
+"c": "Garantiza que el producto no tiene defectos.",
+"d": "Reduce automáticamente el número de casos de prueba necesarios."
+},
+"correcta": ["a"],
+"explicacion": "Una trazabilidad precisa respalda la evaluación de la cobertura; por ejemplo, la trazabilidad de los casos de prueba con los requisitos permite verificar si los requisitos están cubiertos. Además facilita el análisis de impacto de los cambios, las auditorías y el cumplimiento de criterios de gobernanza, hace los informes de avance y compleción más comprensibles y ayuda a comunicar los aspectos técnicos de la prueba a las partes interesadas.",
+"razones": {
+"a": "Correcta. Cobertura y análisis de impacto son los beneficios principales.",
+"b": "La trazabilidad ayuda a elegir qué regresión ejecutar, pero no la elimina.",
+"c": "Nada garantiza la ausencia de defectos.",
+"d": "No reduce casos por sí misma; ayuda a saber qué cubre cada uno."
+},
+"clave": "Trazabilidad → cobertura + análisis de impacto + auditoría + informes comprensibles."
+},
+{
+"id": "1-15", "cap": 1, "lo": "FL-1.4.5", "k": "K1", "tema": "Roles en la prueba",
+"pregunta": "Según el programa de estudio, ¿qué rol asume la responsabilidad general del proceso de prueba, del equipo y del liderazgo de las actividades, centrándose sobre todo en la planificación, la monitorización y control, y la compleción?",
+"opciones": {
+"a": "El rol de gestión de la prueba.",
+"b": "El rol de prueba.",
+"c": "El propietario del producto.",
+"d": "El moderador."
+},
+"correcta": ["a"],
+"explicacion": "El CTFL 4.0 describe dos roles principales. El rol de gestión de la prueba asume la responsabilidad general del proceso de prueba, del equipo y del liderazgo de las actividades, y se centra en la planificación, la monitorización y control, y la compleción. El rol de prueba asume la responsabilidad del aspecto de ingeniería (técnico) y se centra en el análisis, el diseño, la implementación y la ejecución. Una misma persona puede asumir ambos roles, y en ágil parte de la gestión la puede hacer el propio equipo.",
+"razones": {
+"a": "Correcta.",
+"b": "El rol de prueba se centra en el análisis, el diseño, la implementación y la ejecución.",
+"c": "El propietario del producto es un rol de Scrum, no uno de los dos roles de prueba del programa.",
+"d": "El moderador es un rol de las revisiones (capítulo 3)."
+},
+"clave": "Gestión → planificar, controlar, cerrar. Prueba → analizar, diseñar, implementar, ejecutar."
+},
+{
+"id": "1-16", "cap": 1, "lo": "FL-1.5.3", "k": "K2", "tema": "Independencia de la prueba",
+"pregunta": "¿Cuáles de los siguientes son posibles INCONVENIENTES de la independencia de la prueba? (Selecciona DOS)",
+"opciones": {
+"a": "Los probadores independientes pueden quedar aislados del equipo de desarrollo, con falta de colaboración y problemas de comunicación.",
+"b": "Los probadores independientes detectan tipos de fallos distintos porque tienen otra formación y otras perspectivas.",
+"c": "Los desarrolladores pueden perder el sentido de responsabilidad sobre la calidad.",
+"d": "Los probadores independientes pueden cuestionar o refutar las suposiciones de las partes interesadas.",
+"e": "La prueba independiente reduce los sesgos del autor sobre su propio trabajo."
+},
+"correcta": ["a", "c"],
+"explicacion": "Beneficio principal de la independencia: los probadores independientes tienen más probabilidad de reconocer distintos tipos de fallos y defectos, porque tienen formación, perspectivas técnicas y sesgos diferentes, y pueden verificar, cuestionar o refutar las suposiciones hechas durante la especificación y la implementación. Inconvenientes: pueden quedar aislados del equipo de desarrollo (falta de colaboración, problemas de comunicación o una relación de enfrentamiento), los desarrolladores pueden perder el sentido de responsabilidad sobre la calidad, y los probadores pueden verse como un cuello de botella o ser culpados de los retrasos.",
+"razones": {
+"a": "Correcta. Aislamiento y problemas de comunicación son un inconveniente.",
+"b": "Es un beneficio, no un inconveniente.",
+"c": "Correcta. Es un inconveniente que recoge explícitamente el programa.",
+"d": "Es un beneficio.",
+"e": "Es un beneficio (menos sesgo del autor)."
+},
+"clave": "En las preguntas 'Selecciona DOS' solo puntúas si aciertas las dos. Clasifica cada opción como beneficio o inconveniente."
+}
+]

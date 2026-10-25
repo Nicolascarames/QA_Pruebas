@@ -1,0 +1,78 @@
+[
+{
+"id": "6-01", "cap": 6, "lo": "FL-6.1.1", "k": "K1", "tema": "Herramientas de prueba",
+"pregunta": "¿Qué tipo de herramienta aumenta la eficiencia del proceso de prueba facilitando la gestión del ciclo de vida de desarrollo, los requisitos, las pruebas, los defectos y la configuración?",
+"opciones": {
+"a": "Herramientas de gestión de la prueba.",
+"b": "Herramientas de prueba estática.",
+"c": "Herramientas de prueba no funcional.",
+"d": "Herramientas de colaboración."
+},
+"correcta": ["a"],
+"explicacion": "Tipos de herramientas que recoge el programa: de gestión (gestión del ciclo de vida, de requisitos, pruebas, defectos y configuración); de prueba estática (revisiones y análisis estático); de diseño e implementación de la prueba (generan casos, datos y procedimientos); de ejecución y cobertura (ejecución automatizada y medición de cobertura); de prueba no funcional (pruebas difíciles o imposibles de hacer a mano); DevOps (pipeline, seguimiento del flujo de trabajo, construcción automatizada, CI/CD); de colaboración (facilitan la comunicación); de escalabilidad y estandarización del despliegue (máquinas virtuales, contenedores), y cualquier otra que ayude a la prueba (en este sentido, una hoja de cálculo también es una herramienta de prueba).",
+"razones": {
+"a": "Correcta.",
+"b": "Apoyan revisiones y análisis estático.",
+"c": "Ejecutan pruebas no funcionales como carga o seguridad.",
+"d": "Facilitan la comunicación."
+},
+"clave": "Gestión = requisitos + pruebas + defectos + configuración + trazabilidad."
+},
+{
+"id": "6-02", "cap": 6, "lo": "FL-6.1.1", "k": "K1", "tema": "Herramientas de prueba",
+"pregunta": "¿Qué herramientas apoyan la escalabilidad y la estandarización del despliegue?",
+"opciones": {
+"a": "Las máquinas virtuales y las herramientas de contenedores.",
+"b": "Las herramientas de revisión de código.",
+"c": "Las herramientas de gestión de defectos.",
+"d": "Las herramientas de medición de cobertura de código."
+},
+"correcta": ["a"],
+"explicacion": "El programa incluye una categoría específica: herramientas que facilitan la escalabilidad y la estandarización del despliegue, por ejemplo las máquinas virtuales y las herramientas de contenedores. Permiten levantar entornos de prueba reproducibles y desplegarlos de forma homogénea.",
+"razones": {
+"a": "Correcta.",
+"b": "Son herramientas de prueba estática.",
+"c": "Son herramientas de gestión.",
+"d": "Son herramientas de ejecución y cobertura."
+},
+"clave": "Contenedores y máquinas virtuales → escalabilidad y estandarización del despliegue."
+},
+{
+"id": "6-03", "cap": 6, "lo": "FL-6.2.1", "k": "K2", "tema": "Beneficios de la automatización",
+"pregunta": "¿Cuál de los siguientes es un BENEFICIO de la automatización de la prueba?",
+"opciones": {
+"a": "Ahorra tiempo al reducir el trabajo manual repetitivo, como ejecutar la regresión o comparar resultados esperados y reales.",
+"b": "Sustituye la necesidad del pensamiento crítico del probador.",
+"c": "Los scripts automatizados no necesitan mantenimiento.",
+"d": "El retorno de la inversión es inmediato desde el primer día."
+},
+"correcta": ["a"],
+"explicacion": "Beneficios de la automatización: ahorro de tiempo al reducir el trabajo manual repetitivo (ejecutar regresiones, volver a introducir los mismos datos, comparar resultados esperados y reales, comprobar el cumplimiento de estándares de codificación); prevención de errores humanos simples gracias a más consistencia y repetibilidad; evaluación más objetiva (por ejemplo, de la cobertura) y medidas demasiado complejas para hacerlas a mano; acceso más fácil a la información sobre la prueba; tiempos de ejecución más cortos, con detección más temprana de defectos, retroalimentación más rápida y menos tiempo hasta el mercado; y más tiempo para que los probadores diseñen pruebas nuevas, más profundas y más eficaces.",
+"razones": {
+"a": "Correcta.",
+"b": "Confiar demasiado en la herramienta e ignorar el pensamiento crítico es un RIESGO.",
+"c": "Subestimar el mantenimiento de los scripts es un riesgo.",
+"d": "Esperar beneficios inmediatos es una expectativa poco realista (riesgo)."
+},
+"clave": "Automatizar = menos trabajo repetitivo, más consistencia y retroalimentación más rápida."
+},
+{
+"id": "6-04", "cap": 6, "lo": "FL-6.2.1", "k": "K2", "tema": "Riesgos de la automatización",
+"pregunta": "¿Cuál de los siguientes es un RIESGO de la automatización de la prueba?",
+"opciones": {
+"a": "Expectativas poco realistas sobre la funcionalidad y la facilidad de uso de la herramienta.",
+"b": "Mayor consistencia y repetibilidad de las pruebas.",
+"c": "Medición más objetiva de la cobertura.",
+"d": "Retroalimentación más rápida sobre la calidad del software."
+},
+"correcta": ["a"],
+"explicacion": "Riesgos de la automatización: expectativas poco realistas sobre los beneficios (funcionalidad, facilidad de uso); estimaciones inexactas del tiempo, el coste y el esfuerzo de introducir la herramienta, mantener los scripts y cambiar el proceso manual; usar una herramienta cuando la prueba manual es más adecuada; confiar demasiado en la herramienta, ignorando la necesidad del pensamiento crítico humano; dependencia del proveedor (que puede cerrar, retirar la herramienta, venderla o dar mal soporte); usar software libre que puede abandonarse; incompatibilidad con la plataforma de desarrollo, y elegir una herramienta inadecuada que no cumple los requisitos normativos o de seguridad.",
+"razones": {
+"a": "Correcta.",
+"b": "Es un beneficio.",
+"c": "Es un beneficio.",
+"d": "Es un beneficio."
+},
+"clave": "Cuando 3 opciones son beneficios evidentes, la que suena a problema es el riesgo."
+}
+]
