@@ -1,0 +1,1026 @@
+[
+ {
+  "id": "B-ASE-01",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "concepto",
+  "pregunta": "¿Qué diferencia hay entre `toHaveText` y `toContainText` sobre un locator?",
+  "opciones": {
+   "a": "`toHaveText` exige coincidir con todo el texto del elemento (con string); `toContainText` acepta una parte del texto.",
+   "b": "`toHaveText` solo funciona con inputs y `toContainText` con párrafos.",
+   "c": "`toHaveText` no reintenta y `toContainText` sí.",
+   "d": "No hay diferencia: son alias exactos."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveText compara el texto completo del elemento, mientras que toContainText busca una subcadena.",
+  "explicacion": [
+   "Con un string, toHaveText normaliza espacios y compara el texto completo.",
+   "toContainText acepta que el texto sea solo una parte del contenido.",
+   "Ambos son aserciones web-first y reintentan.",
+   "También admiten expresiones regulares."
+  ],
+  "razones": {
+   "a": "Correcta. Completo frente a subcadena.",
+   "b": "Ambos sirven para cualquier elemento con texto; para inputs se usa toHaveValue.",
+   "c": "Los dos reintentan hasta el timeout.",
+   "d": "Se comportan distinto: uno exige coincidencia total."
+  },
+  "clave": "Have = entero; Contain = trozo.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-02",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "error",
+  "pregunta": "Este test es inestable cuando el título tarda en cargarse. ¿Por qué?",
+  "codigo": "test('título', async ({ page }) => {\n  await page.goto('/');\n  const text = await page.locator('h1').textContent();\n  expect(text).toBe('Bienvenido');\n});",
+  "opciones": {
+   "a": "`textContent()` devuelve el valor de ese instante y `toBe` no reintenta; debería usarse `await expect(locator).toHaveText(...)`.",
+   "b": "`toBe` solo funciona con números.",
+   "c": "`goto` no admite rutas relativas.",
+   "d": "Falta `await` delante de `expect(text).toBe(...)`, y con eso se arregla todo."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las aserciones genéricas sobre un valor ya leído no reintentan; las web-first sobre un locator sí.",
+  "explicacion": [
+   "await textContent() lee el texto una sola vez, en ese instante.",
+   "expect(valor).toBe() es genérico y no reintenta.",
+   "expect(locator).toHaveText() reintenta hasta que coincide o vence el timeout.",
+   "Añadir await a toBe no cambia nada: es síncrono."
+  ],
+  "razones": {
+   "a": "Correcta. Se lee una vez y se compara sin reintentos.",
+   "b": "toBe compara cualquier valor con Object.is.",
+   "c": "Con baseURL configurado, las rutas relativas son válidas.",
+   "d": "toBe es síncrono; await no lo vuelve reintentable."
+  },
+  "clave": "Si lees el valor antes de expect, pierdes el reintento.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-03",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué aserción comprueba que una lista tiene exactamente 5 elementos?",
+  "opciones": {
+   "a": "`await expect(page.getByRole('listitem')).toHaveCount(5);`",
+   "b": "`await expect(page.getByRole('listitem')).toHaveLength(5);`",
+   "c": "`await expect(page.getByRole('listitem').count()).toBe(5);`",
+   "d": "`await expect(page.getByRole('listitem')).toBeCount(5);`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveCount es la aserción web-first que verifica cuántos elementos coinciden con un locator.",
+  "explicacion": [
+   "toHaveCount(n) reintenta hasta que el número de coincidencias es n.",
+   "toHaveLength existe en expect genérico para arrays, no para locators.",
+   "count() devuelve un número puntual y no reintenta."
+  ],
+  "razones": {
+   "a": "Correcta. Matcher web-first para el número de elementos.",
+   "b": "toHaveLength sirve para arrays o strings, no para un Locator.",
+   "c": "count() no reintenta, por lo que puede dar un falso fallo.",
+   "d": "toBeCount no existe en Playwright."
+  },
+  "clave": "Elementos de un locator: toHaveCount.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-04",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Tras iniciar sesión se redirige a cualquier URL que termine en `/dashboard`. ¿Qué va en el hueco?",
+  "codigo": "test('login', async ({ page }) => {\n  await page.getByRole('button', { name: 'Entrar' }).click();\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(page).toHaveURL(/\\/dashboard$/);`",
+   "b": "`await expect(page.url()).toHaveURL(/\\/dashboard$/);`",
+   "c": "`await expect(page).toHaveTitle(/\\/dashboard$/);`",
+   "d": "`await expect(page).toBeURL('/dashboard');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveURL se aplica sobre la page y acepta string o RegExp, reintentando hasta que la URL coincide.",
+  "explicacion": [
+   "expect(page).toHaveURL(regex) espera a que la URL cumpla el patrón.",
+   "page.url() es un string sin reintento y no tiene toHaveURL.",
+   "toHaveTitle comprueba el título, no la URL.",
+   "toBeURL no existe."
+  ],
+  "razones": {
+   "a": "Correcta. Aserción web-first sobre page con una RegExp.",
+   "b": "toHaveURL no se aplica sobre un string: page.url() ya no es la page.",
+   "c": "toHaveTitle valida el título del documento.",
+   "d": "toBeURL no existe en Playwright."
+  },
+  "clave": "URL con expect(page).toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-05",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "como",
+  "pregunta": "¿Cómo se comprueba que un spinner de carga ya no está visible en pantalla?",
+  "opciones": {
+   "a": "`await expect(page.getByTestId('spinner')).toBeHidden();`",
+   "b": "`expect(page.getByTestId('spinner')).toBeHidden();`",
+   "c": "`await expect(page.getByTestId('spinner')).toBeVisible(false);`",
+   "d": "`await page.getByTestId('spinner').waitForHidden();`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toBeHidden (o .not.toBeVisible()) espera a que el elemento desaparezca o no esté visible.",
+  "explicacion": [
+   "toBeHidden reintenta hasta que el elemento no existe o no es visible.",
+   "Equivale a expect(locator).not.toBeVisible().",
+   "Sin await, la comprobación queda suelta.",
+   "No existe un método waitForHidden en el locator."
+  ],
+  "razones": {
+   "a": "Correcta. Con await y matcher web-first.",
+   "b": "Sin await la aserción no se espera.",
+   "c": "toBeVisible admite { visible: false } en vez de un booleano posicional, y se prefiere toBeHidden.",
+   "d": "Locator no tiene waitForHidden; existe waitFor({ state: 'hidden' })."
+  },
+  "clave": "Que ya no esté: toBeHidden.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-06",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Quieres verificar que el campo email contiene el valor «ana@test.com». ¿Qué va en el hueco?",
+  "codigo": "test('email', async ({ page }) => {\n  await page.getByLabel('Email').fill('ana@test.com');\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(page.getByLabel('Email')).toHaveValue('ana@test.com');`",
+   "b": "`await expect(page.getByLabel('Email')).toHaveText('ana@test.com');`",
+   "c": "`await expect(page.getByLabel('Email')).toContainValue('ana@test.com');`",
+   "d": "`await expect(page.getByLabel('Email')).toBeFilled('ana@test.com');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveValue comprueba el valor actual de un input, textarea o select.",
+  "explicacion": [
+   "Los inputs guardan su contenido en value, no en el texto del nodo.",
+   "toHaveText mira el contenido textual, que en un input está vacío.",
+   "toContainValue y toBeFilled no existen."
+  ],
+  "razones": {
+   "a": "Correcta. toHaveValue es el matcher para inputs.",
+   "b": "toHaveText no lee el value de un input.",
+   "c": "toContainValue no existe en Playwright.",
+   "d": "toBeFilled no existe; para vacío existe toBeEmpty."
+  },
+  "clave": "Input = toHaveValue.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-07",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "concepto",
+  "pregunta": "¿Cuánto espera por defecto una aserción web-first como `toBeVisible()` y dónde se cambia globalmente?",
+  "opciones": {
+   "a": "5 segundos; en `expect: { timeout }` de `playwright.config.ts`.",
+   "b": "30 segundos; en `use.timeout`.",
+   "c": "No espera nada; hay que usar `waitForTimeout`.",
+   "d": "5 segundos; en `use.expectTimeout`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El timeout por defecto de expect es 5 s y se configura con la clave expect.timeout en la configuración.",
+  "explicacion": [
+   "Las aserciones web-first reintentan hasta 5 s por defecto.",
+   "El test completo tiene su propio timeout, 30 s por defecto.",
+   "Se cambia con expect: { timeout: 10_000 } en defineConfig.",
+   "También se puede por aserción: toBeVisible({ timeout: 10_000 })."
+  ],
+  "razones": {
+   "a": "Correcta. Valor por defecto y clave de configuración.",
+   "b": "30 s es el timeout del test, y use.timeout no existe.",
+   "c": "Las aserciones web-first sí esperan automáticamente.",
+   "d": "use.expectTimeout no existe; es expect.timeout."
+  },
+  "clave": "expect: 5 s; test: 30 s.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ASE-08",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Hay que comprobar que el botón Enviar sigue deshabilitado. ¿Qué va en el hueco?",
+  "codigo": "test('formulario vacío', async ({ page }) => {\n  await page.goto('/registro');\n  const enviar = page.getByRole('button', { name: 'Enviar' });\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(enviar).toBeDisabled();`",
+   "b": "`await expect(enviar).not.toBeEnabled;`",
+   "c": "`await expect(enviar.isDisabled()).toBeTruthy();`",
+   "d": "`await expect(enviar).toHaveText('Enviar');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toBeDisabled y toBeEnabled son matchers web-first que reintentan sobre el estado del elemento.",
+  "explicacion": [
+   "toBeDisabled reintenta hasta que el elemento está deshabilitado.",
+   "`.not.toBeEnabled` sin paréntesis no ejecuta nada.",
+   "isDisabled() devuelve un booleano puntual sin reintentos.",
+   "toHaveText comprueba el contenido textual, no el estado del control."
+  ],
+  "razones": {
+   "a": "Correcta. Matcher específico y con await.",
+   "b": "Falta invocar toBeEnabled(); sin paréntesis no se comprueba nada.",
+   "c": "isDisabled() no reintenta y toBeTruthy es genérico.",
+   "d": "toHaveText comprueba el texto del botón, no si está deshabilitado."
+  },
+  "clave": "Estado del control: toBeEnabled / toBeDisabled.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-EST-01",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "¿Qué línea va en la primera línea de un fichero `.spec.ts` para poder usar `test` y `expect`?",
+  "opciones": {
+   "a": "`import { test, expect } from '@playwright/test';`",
+   "b": "`import { test, expect } from 'playwright';`",
+   "c": "`import test from '@playwright/test';`",
+   "d": "`const { test } = require('playwright-test');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El runner de Playwright exporta test y expect desde el paquete @playwright/test.",
+  "explicacion": [
+   "@playwright/test es el paquete del test runner.",
+   "El paquete 'playwright' es la librería de automatización, sin runner.",
+   "expect es una exportación con nombre; lo estándar es importar ambos con nombre: import { test, expect }."
+  ],
+  "razones": {
+   "a": "Correcta. Importación con nombre desde el paquete del runner.",
+   "b": "El paquete 'playwright' no incluye el runner de tests.",
+   "c": "Solo importa test (que sí es la exportación por defecto) y falta expect, que se importa con nombre.",
+   "d": "El paquete 'playwright-test' no es el oficial."
+  },
+  "clave": "Runner = @playwright/test.",
+  "docs": "https://playwright.dev/docs/writing-tests"
+ },
+ {
+  "id": "B-EST-02",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "Todos los tests de un grupo deben empezar en `/carrito`. ¿Qué va en el hueco?",
+  "codigo": "test.describe('Carrito', () => {\n  ___(async ({ page }) => {\n    await page.goto('/carrito');\n  });\n\n  test('vacío', async ({ page }) => { /* ... */ });\n  test('con producto', async ({ page }) => { /* ... */ });\n});",
+  "opciones": {
+   "a": "`test.beforeEach`",
+   "b": "`test.beforeAll`",
+   "c": "`test.before`",
+   "d": "`test.setup`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "test.beforeEach se ejecuta antes de cada test del bloque y recibe fixtures como page.",
+  "explicacion": [
+   "beforeEach corre antes de cada test, con su propia page nueva.",
+   "beforeAll corre una vez por worker y no recibe page.",
+   "before y setup no existen como hooks de test."
+  ],
+  "razones": {
+   "a": "Correcta. Se ejecuta antes de cada test del describe.",
+   "b": "beforeAll corre una sola vez y no puede usar la fixture page.",
+   "c": "test.before no existe.",
+   "d": "test.setup no existe; setup es un concepto de proyectos."
+  },
+  "clave": "Antes de cada uno: beforeEach.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-03",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "funcion",
+  "pregunta": "Estás depurando y quieres ejecutar solo un test del fichero sin tocar la CLI. ¿Qué se usa?",
+  "opciones": {
+   "a": "`test.only('nombre', async ({ page }) => { ... })`",
+   "b": "`test.single('nombre', ...)`",
+   "c": "`test.focus('nombre', ...)`",
+   "d": "`test.solo('nombre', ...)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "test.only hace que solo se ejecuten los tests marcados con él.",
+  "explicacion": [
+   "test.only limita la ejecución a ese test.",
+   "Conviene quitarlo antes de subir el código.",
+   "Con forbidOnly: true en CI, un test.only hace fallar la ejecución."
+  ],
+  "razones": {
+   "a": "Correcta. test.only aísla el test.",
+   "b": "test.single no existe.",
+   "c": "test.focus no existe (es de otros runners).",
+   "d": "test.solo no existe."
+  },
+  "clave": "Uno solo: only.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-04",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "¿Cuál es la diferencia entre `test.skip` y `test.fixme`?",
+  "opciones": {
+   "a": "Ambos omiten el test; `fixme` indica que el test está roto y hay que arreglarlo, `skip` que no aplica.",
+   "b": "`skip` ejecuta el test sin aserciones y `fixme` lo borra.",
+   "c": "`fixme` ejecuta el test y `skip` no.",
+   "d": "`skip` solo funciona dentro de `test.describe`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "skip y fixme omiten el test; fixme documenta que está pendiente de arreglar.",
+  "explicacion": [
+   "Ninguno de los dos ejecuta el cuerpo del test.",
+   "test.fixme marca un test roto que se debe reparar.",
+   "test.skip marca un test que no aplica, por ejemplo según el navegador.",
+   "Aparecen como omitidos en el informe."
+  ],
+  "razones": {
+   "a": "Correcta. Mismo efecto de omitir, distinta intención.",
+   "b": "Ninguno ejecuta el test ni lo borra.",
+   "c": "Ninguno de los dos ejecuta el test.",
+   "d": "test.skip se puede usar también a nivel de fichero o dentro del test."
+  },
+  "clave": "fixme = pendiente de arreglar.",
+  "docs": "https://playwright.dev/docs/test-annotations"
+ },
+ {
+  "id": "B-EST-05",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "Quieres hacer una llamada HTTP directa a la API dentro de un test, sin abrir el navegador. ¿Qué fixture se pide?",
+  "codigo": "test('API', async ({ ___ }) => {\n  const res = await request.get('/api/health');\n  expect(res.ok()).toBeTruthy();\n});",
+  "opciones": {
+   "a": "`request`",
+   "b": "`page`",
+   "c": "`browser`",
+   "d": "`http`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La fixture request proporciona un APIRequestContext para hacer peticiones HTTP sin navegador.",
+  "explicacion": [
+   "Los fixtures se piden por nombre con destructuring.",
+   "request da get, post, put, delete, etc.",
+   "page y browser abren o representan un navegador.",
+   "http no es una fixture integrada."
+  ],
+  "razones": {
+   "a": "Correcta. Cliente HTTP integrado.",
+   "b": "page es una pestaña de navegador y no tiene get() de API.",
+   "c": "browser representa la instancia del navegador.",
+   "d": "http no es una fixture integrada."
+  },
+  "clave": "HTTP sin navegador: request.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-EST-06",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "Un test deja una cookie de sesión en su `page`. ¿Qué pasa con el siguiente test?",
+  "opciones": {
+   "a": "No la ve: cada test recibe un `context` y una `page` nuevos y aislados.",
+   "b": "La ve siempre, porque comparten navegador y contexto.",
+   "c": "La ve solo si ambos tests están en el mismo fichero.",
+   "d": "La ve solo si se ejecutan con `--headed`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Playwright crea un BrowserContext nuevo por cada test, lo que aísla cookies, almacenamiento y sesión.",
+  "explicacion": [
+   "Cada test tiene su propio context, como un perfil de navegador limpio.",
+   "Se evita que un test contamine a otro.",
+   "Compartir sesión requiere storageState explícito.",
+   "El modo headed no cambia el aislamiento."
+  ],
+  "razones": {
+   "a": "Correcta. Aislamiento por test.",
+   "b": "El contexto no se comparte entre tests.",
+   "c": "Estar en el mismo fichero no comparte contexto.",
+   "d": "--headed solo muestra el navegador."
+  },
+  "clave": "Un test, un context limpio.",
+  "docs": "https://playwright.dev/docs/browser-contexts"
+ },
+ {
+  "id": "B-EST-07",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "¿Cuándo se ejecuta `test.beforeAll` dentro de un `test.describe`?",
+  "opciones": {
+   "a": "Una vez antes de todos los tests del bloque, por cada worker.",
+   "b": "Antes de cada test del bloque.",
+   "c": "Una vez al terminar todos los tests.",
+   "d": "Solo antes del primer test del proyecto, aunque haya más describes."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "beforeAll se ejecuta una vez por worker antes de los tests de su ámbito; beforeEach se ejecuta antes de cada test.",
+  "explicacion": [
+   "beforeAll sirve para preparación costosa y compartida.",
+   "No recibe la fixture page, solo fixtures de ámbito worker.",
+   "afterAll hace el cierre equivalente al final.",
+   "beforeEach repite la acción antes de cada test."
+  ],
+  "razones": {
+   "a": "Correcta. Una vez por worker y por bloque.",
+   "b": "Eso es beforeEach.",
+   "c": "Eso sería afterAll.",
+   "d": "Su ámbito es el describe en el que se declara, no todo el proyecto."
+  },
+  "clave": "All = una vez; Each = cada vez.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-08",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "error",
+  "pregunta": "Este test falla con un error de TypeScript o al ejecutarse. ¿Qué está mal?",
+  "codigo": "test('abre inicio', async (page) => {\n  await page.goto('/');\n  await expect(page).toHaveTitle(/Inicio/);\n});",
+  "opciones": {
+   "a": "El argumento es el objeto de fixtures; debe desestructurarse: `async ({ page }) =>`.",
+   "b": "`toHaveTitle` no admite expresiones regulares.",
+   "c": "Falta `test.describe` alrededor del test.",
+   "d": "`goto('/')` no se puede usar en el primer test."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El callback de test recibe un único objeto de fixtures, del que se extraen page, context, etc., por desestructuración.",
+  "explicacion": [
+   "El primer argumento es un objeto con todas las fixtures.",
+   "Hay que escribir ({ page }) para extraer la que se necesita.",
+   "Con (page), el objeto entero se llama page y goto no existe en él."
+  ],
+  "razones": {
+   "a": "Correcta. Falta desestructurar { page }.",
+   "b": "toHaveTitle admite string o RegExp.",
+   "c": "describe es opcional.",
+   "d": "goto('/') es válido en cualquier test."
+  },
+  "clave": "Fixtures entre llaves: ({ page }).",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-CLI-01",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Qué comando crea un proyecto nuevo de Playwright Test con su configuración y un test de ejemplo?",
+  "opciones": {
+   "a": "`npm init playwright@latest`",
+   "b": "`npx playwright create`",
+   "c": "`npm install playwright-init`",
+   "d": "`npx playwright new project`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "npm init playwright@latest lanza el asistente que instala @playwright/test y genera playwright.config.ts y tests de ejemplo.",
+  "explicacion": [
+   "Pregunta lenguaje, carpeta de tests y si instalar navegadores.",
+   "Genera playwright.config.ts, tests/ y un example.spec.ts.",
+   "Es el método recomendado en la documentación de instalación."
+  ],
+  "razones": {
+   "a": "Correcta. Es el inicializador oficial.",
+   "b": "No existe el subcomando create.",
+   "c": "Ese paquete no es oficial.",
+   "d": "No existe el subcomando new."
+  },
+  "clave": "init playwright@latest.",
+  "docs": "https://playwright.dev/docs/intro"
+ },
+ {
+  "id": "B-CLI-02",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas solo los tests cuyo título contiene «login»?",
+  "opciones": {
+   "a": "`npx playwright test -g login`",
+   "b": "`npx playwright test --title login`",
+   "c": "`npx playwright test --filter login`",
+   "d": "`npx playwright test -t login`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La opción -g (--grep) filtra los tests por una expresión sobre su título.",
+  "explicacion": [
+   "-g es la forma corta de --grep.",
+   "Acepta una RegExp contra el título completo del test.",
+   "--grep-invert (-gv) hace el filtro contrario."
+  ],
+  "razones": {
+   "a": "Correcta. -g / --grep filtra por título.",
+   "b": "--title no es una opción de la CLI.",
+   "c": "--filter no existe en playwright test.",
+   "d": "-t no es un flag de playwright test."
+  },
+  "clave": "Por título: -g.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-CLI-03",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas únicamente el test que empieza en la línea 25 de `tests/login.spec.ts`?",
+  "opciones": {
+   "a": "`npx playwright test tests/login.spec.ts:25`",
+   "b": "`npx playwright test tests/login.spec.ts --line 25`",
+   "c": "`npx playwright test tests/login.spec.ts#25`",
+   "d": "`npx playwright test tests/login.spec.ts@25`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Se puede apuntar a un test concreto añadiendo :línea a la ruta del fichero.",
+  "explicacion": [
+   "La sintaxis es fichero:línea.",
+   "Sin la línea, se ejecutan todos los tests del fichero.",
+   "Es útil para repetir rápido un test que falla."
+  ],
+  "razones": {
+   "a": "Correcta. Sintaxis fichero:línea.",
+   "b": "--line no existe.",
+   "c": "El separador # no se admite.",
+   "d": "El separador @ no se admite."
+  },
+  "clave": "fichero:línea.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-CLI-04",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "funcion",
+  "pregunta": "¿Qué comando abre el navegador y graba tus acciones generando código de test automáticamente?",
+  "opciones": {
+   "a": "`npx playwright codegen`",
+   "b": "`npx playwright record`",
+   "c": "`npx playwright test --record`",
+   "d": "`npx playwright generate`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "codegen abre un navegador y el inspector, y escribe el código del test mientras interactúas con la página.",
+  "explicacion": [
+   "Se puede pasar una URL: npx playwright codegen https://ejemplo.com.",
+   "Elige localizadores como getByRole siempre que puede.",
+   "El código generado conviene revisarlo y añadirle aserciones."
+  ],
+  "razones": {
+   "a": "Correcta. Es el generador de tests.",
+   "b": "record no es un subcomando de playwright.",
+   "c": "--record no existe en test.",
+   "d": "generate no es un subcomando."
+  },
+  "clave": "Grabar a código: codegen.",
+  "docs": "https://playwright.dev/docs/codegen"
+ },
+ {
+  "id": "B-CLI-05",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Queremos que los tests naveguen con rutas relativas como `page.goto('/login')`. ¿Dónde se configura `baseURL`?",
+  "codigo": "import { defineConfig } from '@playwright/test';\n\nexport default defineConfig({\n  testDir: './tests',\n  ___\n});",
+  "opciones": {
+   "a": "`use: { baseURL: 'http://localhost:3000' },`",
+   "b": "`baseURL: 'http://localhost:3000',`",
+   "c": "`projects: { baseURL: 'http://localhost:3000' },`",
+   "d": "`webServer: { baseURL: 'http://localhost:3000' },`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "baseURL es una opción de use, y por tanto va dentro de use (global o de un proyecto).",
+  "explicacion": [
+   "Las opciones de contexto de los tests van dentro de use.",
+   "goto('/login') se resuelve contra baseURL.",
+   "webServer también admite url, pero no define baseURL."
+  ],
+  "razones": {
+   "a": "Correcta. baseURL se define dentro de use.",
+   "b": "A nivel raíz de la configuración no es una opción válida.",
+   "c": "projects es un array, no un objeto con baseURL.",
+   "d": "webServer arranca un servidor; la base de los tests es use.baseURL."
+  },
+  "clave": "Opciones de test: dentro de use.",
+  "docs": "https://playwright.dev/docs/test-use-options"
+ },
+ {
+  "id": "B-CLI-06",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Completa la configuración para ejecutar los tests en Chromium con la configuración de escritorio de Chrome.",
+  "codigo": "import { defineConfig, devices } from '@playwright/test';\n\nexport default defineConfig({\n  projects: [\n    {\n      name: 'chromium',\n      use: { ...___ },\n    },\n  ],\n});",
+  "opciones": {
+   "a": "`devices['Desktop Chrome']`",
+   "b": "`devices.chromium`",
+   "c": "`devices('Desktop Chrome')`",
+   "d": "`device['Desktop Chrome']`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El objeto devices contiene descriptores de dispositivos indexados por nombre, que se expanden dentro de use.",
+  "explicacion": [
+   "devices se importa de @playwright/test.",
+   "Se accede con corchetes y el nombre: devices['Desktop Chrome'].",
+   "El spread (...) copia sus opciones dentro de use.",
+   "Cada entrada de projects genera una ejecución separada."
+  ],
+  "razones": {
+   "a": "Correcta. Indexado por nombre del descriptor.",
+   "b": "devices no tiene la clave chromium.",
+   "c": "devices es un objeto, no una función.",
+   "d": "El nombre importado es devices, en plural."
+  },
+  "clave": "...devices['Desktop Chrome'].",
+  "docs": "https://playwright.dev/docs/test-projects"
+ },
+ {
+  "id": "B-CLI-07",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Quieres 2 reintentos solo en CI y trazas únicamente cuando un test se reintenta. ¿Qué configuración es correcta?",
+  "codigoOpciones": true,
+  "opciones": {
+   "a": "export default defineConfig({\n  retries: process.env.CI ? 2 : 0,\n  use: { trace: 'on-first-retry' },\n});",
+   "b": "export default defineConfig({\n  use: { retries: 2, trace: 'on-first-retry' },\n});",
+   "c": "export default defineConfig({\n  retries: process.env.CI ? 2 : 0,\n  trace: 'on-first-retry',\n});",
+   "d": "export default defineConfig({\n  retries: 2,\n  use: { trace: 'first-retry' },\n});"
+  },
+  "correcta": [
+   "a"
+  ],
+  "concepto": "retries va en el nivel raíz de la configuración, mientras que trace es una opción de use con valores como 'on-first-retry'.",
+  "explicacion": [
+   "retries es una opción del runner, a nivel raíz.",
+   "trace pertenece a use.",
+   "'on-first-retry' graba la traza solo en el primer reintento.",
+   "'first-retry' no es un valor válido."
+  ],
+  "razones": {
+   "a": "Correcta. retries en la raíz y trace dentro de use.",
+   "b": "retries no es una opción de use.",
+   "c": "trace debe ir dentro de use.",
+   "d": "'first-retry' no es válido; el valor es 'on-first-retry'."
+  },
+  "clave": "retries fuera, trace dentro de use.",
+  "docs": "https://playwright.dev/docs/trace-viewer"
+ },
+ {
+  "id": "B-CLI-08",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas los tests con el navegador visible y solo en el proyecto `chromium`?",
+  "opciones": {
+   "a": "`npx playwright test --headed --project=chromium`",
+   "b": "`npx playwright test --visible --browser=chromium`",
+   "c": "`npx playwright test --head --project chromium-only`",
+   "d": "`npx playwright test --ui=headed --project=chrome`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "--headed muestra el navegador y --project selecciona un proyecto definido en la configuración.",
+  "explicacion": [
+   "Por defecto los tests se ejecutan en modo headless.",
+   "--headed abre las ventanas del navegador.",
+   "--project=nombre usa el name de un proyecto de la configuración.",
+   "--ui abre el modo UI, que es otra herramienta."
+  ],
+  "razones": {
+   "a": "Correcta. Ambos flags existen.",
+   "b": "--visible no existe (el flag es --headed), y --browser elige el motor, no un proyecto de la configuración.",
+   "c": "--head no es un flag válido de test.",
+   "d": "--ui no admite ese valor y el proyecto debe existir con ese nombre."
+  },
+  "clave": "Ver el navegador: --headed.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-TS-01",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "error",
+  "pregunta": "Este test es poco fiable: a veces falla de forma intermitente y otras muestra errores que no apuntan a la línea culpable. ¿Qué falla?",
+  "codigo": "test('enviar', async ({ page }) => {\n  await page.goto('/form');\n  page.getByRole('button', { name: 'Enviar' }).click();\n  await expect(page.getByText('Enviado')).toBeVisible();\n});",
+  "opciones": {
+   "a": "Falta `await` en `click()`: la promesa queda suelta y no se espera la acción ni su error.",
+   "b": "`getByRole` no admite `name`.",
+   "c": "`toBeVisible` debe ir sin `await`.",
+   "d": "`async` no puede usarse en tests."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las acciones de Playwright devuelven promesas; sin await el test sigue sin esperar el resultado ni los errores.",
+  "explicacion": [
+   "click() es asíncrono y devuelve una Promise.",
+   "Sin await, el flujo continúa antes de que termine el clic.",
+   "Un fallo en la promesa suelta puede perderse o aparecer tarde.",
+   "Hay que usar await en acciones y aserciones."
+  ],
+  "razones": {
+   "a": "Correcta. Falta await en la acción.",
+   "b": "getByRole admite la opción name.",
+   "c": "Las aserciones web-first sí llevan await.",
+   "d": "Los tests de Playwright son funciones async."
+  },
+  "clave": "Promesa sin await = se pierde.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+ },
+ {
+  "id": "B-TS-02",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Un helper realiza acciones y no devuelve ningún valor. ¿Qué tipo de retorno se anota?",
+  "codigo": "async function iniciarSesion(page: Page, user: string): ___ {\n  await page.goto('/login');\n  await page.getByLabel('Usuario').fill(user);\n  await page.getByRole('button', { name: 'Entrar' }).click();\n}",
+  "opciones": {
+   "a": "`Promise<void>`",
+   "b": "`void`",
+   "c": "`Promise<string>`",
+   "d": "`Page`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una función async siempre devuelve una Promise; si no devuelve valor, su tipo es Promise<void>.",
+  "explicacion": [
+   "async envuelve el resultado en una Promise.",
+   "Sin valor de retorno, el tipo interno es void.",
+   "Anotar solo void en una función async da error de TypeScript."
+  ],
+  "razones": {
+   "a": "Correcta. Función async sin valor devuelto.",
+   "b": "Una función async no puede declarar simplemente void: debe ser Promise<...>.",
+   "c": "La función no devuelve un string.",
+   "d": "No devuelve la Page."
+  },
+  "clave": "async sin retorno: Promise<void>.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+ },
+ {
+  "id": "B-TS-03",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Quieres construir la URL de un producto a partir de su id. ¿Qué sintaxis es correcta?",
+  "codigo": "const id = 42;\nawait page.goto(___);",
+  "opciones": {
+   "a": "`` `/productos/${id}` ``",
+   "b": "`'/productos/${id}'`",
+   "c": "`\"/productos/\" . id`",
+   "d": "`/productos/${id}`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los template literals usan comillas invertidas y ${} para interpolar valores.",
+  "explicacion": [
+   "Se delimitan con comillas invertidas (backticks).",
+   "Dentro, ${expresión} inserta su valor.",
+   "Con comillas simples o dobles, ${id} se queda como texto literal."
+  ],
+  "razones": {
+   "a": "Correcta. Backticks con interpolación.",
+   "b": "Con comillas simples no se interpola: la URL contendría ${id} literal.",
+   "c": "El punto no concatena en TypeScript; se usa +.",
+   "d": "Sin comillas ni backticks no es una expresión válida."
+  },
+  "clave": "Backticks + ${}.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+ },
+ {
+  "id": "B-TS-04",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Para tipar los datos de un usuario de prueba, ¿qué declaración es correcta?",
+  "codigoOpciones": true,
+  "opciones": {
+   "a": "interface Usuario {\n  nombre: string;\n  edad: number;\n  activo: boolean;\n}",
+   "b": "interface Usuario {\n  nombre = string;\n  edad = number;\n}",
+   "c": "interface Usuario(\n  nombre: string,\n  edad: number\n)",
+   "d": "interface Usuario {\n  nombre: 'string',\n  edad: 'number'\n}"
+  },
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una interface describe la forma de un objeto con propiedades y sus tipos, separadas por ; o ,.",
+  "explicacion": [
+   "Las propiedades se declaran con nombre: tipo.",
+   "Los tipos básicos son string, number y boolean.",
+   "Las comillas en 'string' crean un tipo literal, no el tipo string.",
+   "Se usa luego como const u: Usuario = {...}."
+  ],
+  "razones": {
+   "a": "Correcta. Sintaxis estándar de interface.",
+   "b": "Se usa dos puntos, no =.",
+   "c": "No se declara con paréntesis como una función.",
+   "d": "'string' entre comillas es el literal 'string', no el tipo."
+  },
+  "clave": "propiedad: tipo.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+ },
+ {
+  "id": "B-TS-05",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Un helper recibe la página como parámetro y solo se usa como tipo. ¿Qué import es correcto?",
+  "codigo": "___\n\nexport async function abrirInicio(page: Page): Promise<void> {\n  await page.goto('/');\n}",
+  "opciones": {
+   "a": "`import type { Page } from '@playwright/test';`",
+   "b": "`import { Page } from 'playwright-types';`",
+   "c": "`import type Page from '@playwright/test/page';`",
+   "d": "`import { type } from '@playwright/test';`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "import type importa solo tipos, sin código en tiempo de ejecución; Page y Locator se exportan de @playwright/test.",
+  "explicacion": [
+   "Page y Locator son tipos exportados por @playwright/test.",
+   "import type se borra al compilar.",
+   "Se usan para anotar parámetros de helpers y Page Objects."
+  ],
+  "razones": {
+   "a": "Correcta. Import de solo tipo desde el paquete oficial.",
+   "b": "playwright-types no es el paquete oficial.",
+   "c": "Esa ruta interna no existe como exportación.",
+   "d": "type no es un miembro exportado."
+  },
+  "clave": "Tipos: import type { Page }.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/modules/reference.html"
+ },
+ {
+  "id": "B-TS-06",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Para generar un test por cada usuario de un array, ¿qué palabra va en el hueco?",
+  "codigo": "const usuarios: string[] = ['ana', 'luis', 'eva'];\n\nfor (const usuario ___ usuarios) {\n  test(`login de ${usuario}`, async ({ page }) => {\n    await page.goto(`/login?user=${usuario}`);\n  });\n}",
+  "opciones": {
+   "a": "`of`",
+   "b": "`in`",
+   "c": "`as`",
+   "d": "`from`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "for...of recorre los valores de un array, y permite declarar un test por cada dato.",
+  "explicacion": [
+   "for...of itera los valores del array.",
+   "for...in itera las claves (índices '0', '1', ...), no los valores.",
+   "Cada test debe tener un título único: por eso se interpola el dato."
+  ],
+  "razones": {
+   "a": "Correcta. Itera sobre los valores.",
+   "b": "for...in da los índices como strings, no los nombres.",
+   "c": "as es para aserciones de tipo, no para bucles.",
+   "d": "from no es sintaxis de bucle."
+  },
+  "clave": "Valores del array: of.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+ },
+ {
+  "id": "B-TS-07",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "concepto",
+  "pregunta": "En un test, ¿cuándo conviene declarar una variable con `const` en vez de `let`?",
+  "opciones": {
+   "a": "Cuando la variable no se reasigna, como un locator o un dato fijo.",
+   "b": "Cuando la variable es de tipo number.",
+   "c": "Solo dentro de funciones async.",
+   "d": "Nunca: `let` es siempre preferible en TypeScript."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "const impide reasignar la variable, así que se usa por defecto y let solo cuando el valor cambia.",
+  "explicacion": [
+   "const evita reasignaciones accidentales.",
+   "Un objeto const sigue siendo mutable en sus propiedades.",
+   "let se reserva para contadores o valores que cambian.",
+   "El tipo de dato no determina la elección."
+  ],
+  "razones": {
+   "a": "Correcta. Se usa const salvo que haya reasignación.",
+   "b": "Cualquier tipo puede ir con const o let.",
+   "c": "No depende de que la función sea async.",
+   "d": "La buena práctica es const por defecto."
+  },
+  "clave": "const por defecto, let si cambia.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/variable-declarations.html"
+ },
+ {
+  "id": "B-TS-08",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "El campo `telefono` es opcional y puede no existir. ¿Cómo lees su longitud sin que falle si es `undefined`?",
+  "codigo": "interface Cliente {\n  nombre: string;\n  telefono?: string;\n}\n\nconst c: Cliente = { nombre: 'Ana' };\nconst longitud = ___;",
+  "opciones": {
+   "a": "`c.telefono?.length`",
+   "b": "`c.telefono.length`",
+   "c": "`c.telefono?length`",
+   "d": "`c?.telefono!.length`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El encadenamiento opcional ?. devuelve undefined en lugar de lanzar error si el valor anterior es null o undefined.",
+  "explicacion": [
+   "telefono?: string significa string | undefined.",
+   "c.telefono.length da error de compilación y fallaría en ejecución.",
+   "?. corta la cadena y devuelve undefined.",
+   "El operador ! afirma que existe y no lo comprueba."
+  ],
+  "razones": {
+   "a": "Correcta. Acceso seguro a una propiedad opcional.",
+   "b": "Con telefono undefined lanzaría TypeError, y TS lo marca.",
+   "c": "Sintaxis inválida: falta el punto de ?.",
+   "d": "El ! fuerza el tipo y provocaría un fallo en ejecución al ser undefined."
+  },
+  "clave": "?. evita el crash con undefined.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+ }
+]

@@ -1,0 +1,4075 @@
+[
+ {
+  "id": "B-ACC-01",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método usas para escribir un valor en un input, reemplazando su contenido?",
+  "opciones": {
+   "a": "`locator.write()`",
+   "b": "`locator.fill()`",
+   "c": "`locator.setValue()`",
+   "d": "`locator.insertText()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "fill establece el valor del campo y dispara los eventos de entrada correspondientes.",
+  "explicacion": [
+   "fill limpia el campo y asigna el texto de una vez.",
+   "Para teclear carácter a carácter se usa pressSequentially.",
+   "write y setValue no existen en Locator."
+  ],
+  "razones": {
+   "a": "No existe locator.write.",
+   "b": "Correcta. Es el método estándar para rellenar inputs.",
+   "c": "No existe locator.setValue.",
+   "d": "No existe locator.insertText."
+  },
+  "clave": "Rellenar = fill.",
+  "docs": "https://playwright.dev/docs/input#text-input"
+ },
+ {
+  "id": "B-ACC-02",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Necesitas simular pulsaciones de teclas una a una (p. ej. un autocompletado). Completa el hueco.",
+  "codigo": "await page.getByLabel('Ciudad').___('Madrid', { delay: 100 });",
+  "opciones": {
+   "a": "pressSequentially",
+   "b": "fill",
+   "c": "setValue",
+   "d": "typeAll"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "pressSequentially teclea carácter a carácter y permite un delay entre pulsaciones.",
+  "explicacion": [
+   "fill asigna el valor de golpe, sin pulsaciones reales.",
+   "pressSequentially acepta delay.",
+   "Úsalo solo si la página reacciona a cada tecla."
+  ],
+  "razones": {
+   "a": "Correcta. Pulsa cada tecla con el delay indicado.",
+   "b": "fill no admite la opción delay.",
+   "c": "No existe setValue.",
+   "d": "No existe typeAll."
+  },
+  "clave": "Tecla a tecla = pressSequentially.",
+  "docs": "https://playwright.dev/docs/input#type-characters"
+ },
+ {
+  "id": "B-ACC-03",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Quieres seleccionar todo el texto de un campo. Completa el código.",
+  "codigo": "const campo = page.getByRole('textbox');\nawait campo.press('___');",
+  "opciones": {
+   "a": "Ctrl-A",
+   "b": "Control A",
+   "c": "ControlA",
+   "d": "Control+A"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "press admite combinaciones con modificadores unidos por +, p. ej. Control+A.",
+  "explicacion": [
+   "Las teclas se nombran como en KeyboardEvent.key.",
+   "Las combinaciones usan + sin espacios.",
+   "ControlOrMeta+A sirve para ser multiplataforma."
+  ],
+  "razones": {
+   "a": "Ctrl-A no es una sintaxis reconocida.",
+   "b": "Los espacios no son separador válido.",
+   "c": "Faltaría el + entre teclas.",
+   "d": "Correcta. Formato correcto de combinación."
+  },
+  "clave": "Combinación: Tecla+Tecla.",
+  "docs": "https://playwright.dev/docs/input#keys-and-shortcuts"
+ },
+ {
+  "id": "B-ACC-04",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "como",
+  "pregunta": "¿Cómo marcas un checkbox asegurando que queda marcado, sin importar su estado previo?",
+  "opciones": {
+   "a": "`await page.getByLabel('Acepto').click()` siempre",
+   "b": "`await page.getByLabel('Acepto').toggle()`",
+   "c": "`await page.getByLabel('Acepto').check()`",
+   "d": "`await page.getByLabel('Acepto').select()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "check es idempotente: marca el checkbox si no lo está y verifica el resultado.",
+  "explicacion": [
+   "check solo hace clic si hace falta.",
+   "click alternaría el estado y podría desmarcarlo.",
+   "setChecked(valor) fija un estado concreto."
+  ],
+  "razones": {
+   "a": "click invierte el estado, no lo fija.",
+   "b": "toggle no existe en Locator.",
+   "c": "Correcta. Garantiza el estado marcado.",
+   "d": "select no es un método de Locator."
+  },
+  "clave": "Estado marcado = check, no click.",
+  "docs": "https://playwright.dev/docs/input#checkboxes-and-radio-buttons"
+ },
+ {
+  "id": "B-ACC-05",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para elegir la opción por su texto visible.",
+  "codigo": "// <select id=\"pais\"><option value=\"es\">España</option></select>\nawait page.locator('#pais').selectOption({ ___: 'España' });",
+  "opciones": {
+   "a": "text",
+   "b": "label",
+   "c": "name",
+   "d": "title"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "selectOption acepta value, label o index para elegir la opción.",
+  "explicacion": [
+   "Se puede pasar un string (valor) o un objeto { label }.",
+   "También admite { index } y arrays para multiselect.",
+   "No existe la clave text."
+  ],
+  "razones": {
+   "a": "text no es una clave válida.",
+   "b": "Correcta. label selecciona por el texto visible de la opción.",
+   "c": "name no es una clave válida.",
+   "d": "title no es una clave válida."
+  },
+  "clave": "Texto visible = { label }.",
+  "docs": "https://playwright.dev/docs/input#select-options"
+ },
+ {
+  "id": "B-ACC-06",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método sube un archivo a un input de tipo file?",
+  "opciones": {
+   "a": "`locator.setInputFiles()`",
+   "b": "`locator.upload()`",
+   "c": "`locator.fill()` con la ruta",
+   "d": "`page.attachFile()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "setInputFiles establece los ficheros seleccionados en un input de tipo file.",
+  "explicacion": [
+   "Acepta una ruta, un array de rutas o buffers.",
+   "Con [] se vacía la selección.",
+   "fill no sirve para inputs file."
+  ],
+  "razones": {
+   "a": "Correcta. Método oficial para subir archivos.",
+   "b": "locator.upload no existe.",
+   "c": "fill no funciona con inputs de archivo.",
+   "d": "page.attachFile no existe."
+  },
+  "clave": "Subir archivo = setInputFiles.",
+  "docs": "https://playwright.dev/docs/input#upload-files"
+ },
+ {
+  "id": "B-ACC-07",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para hacer clic derecho con la tecla Shift pulsada.",
+  "codigo": "await page.getByText('Fila 1').click({\n  button: '___',\n  modifiers: ['Shift'],\n});",
+  "opciones": {
+   "a": "context",
+   "b": "secondary",
+   "c": "menu",
+   "d": "right"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "La opción button de click acepta left, right o middle.",
+  "explicacion": [
+   "button: left, right o middle.",
+   "modifiers admite Shift, Control, Alt, Meta, ControlOrMeta.",
+   "force omite las comprobaciones de actionability; úsalo con cuidado."
+  ],
+  "razones": {
+   "a": "context no es un valor válido.",
+   "b": "secondary no es un valor válido.",
+   "c": "menu no es un valor válido.",
+   "d": "Correcta. Valor válido para el botón derecho."
+  },
+  "clave": "button: left | right | middle.",
+  "docs": "https://playwright.dev/docs/api/class-locator#locator-click"
+ },
+ {
+  "id": "B-ACC-08",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este código?",
+  "codigo": "await page.locator('#origen').dragTo(page.locator('#destino'));",
+  "opciones": {
+   "a": "Mueve el destino al origen",
+   "b": "Hace clic en ambos elementos",
+   "c": "Arrastra el elemento origen y lo suelta sobre el destino",
+   "d": "Copia el texto de origen al destino"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "dragTo realiza arrastrar y soltar desde un locator hasta otro.",
+  "explicacion": [
+   "Se invoca sobre el elemento de origen.",
+   "El argumento es el locator de destino.",
+   "Equivale a hover, mouse down, mover y mouse up."
+  ],
+  "razones": {
+   "a": "La dirección es al revés.",
+   "b": "No hace clics independientes.",
+   "c": "Correcta. Es el comportamiento de dragTo.",
+   "d": "No copia texto; simula el arrastre."
+  },
+  "clave": "origen.dragTo(destino).",
+  "docs": "https://playwright.dev/docs/input#drag-and-drop"
+ },
+ {
+  "id": "B-ASE-01",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "concepto",
+  "pregunta": "¿Qué diferencia hay entre `toHaveText` y `toContainText` sobre un locator?",
+  "opciones": {
+   "a": "`toHaveText` exige coincidir con todo el texto del elemento (con string); `toContainText` acepta una parte del texto.",
+   "b": "`toHaveText` solo funciona con inputs y `toContainText` con párrafos.",
+   "c": "`toHaveText` no reintenta y `toContainText` sí.",
+   "d": "No hay diferencia: son alias exactos."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveText compara el texto completo del elemento, mientras que toContainText busca una subcadena.",
+  "explicacion": [
+   "Con un string, toHaveText normaliza espacios y compara el texto completo.",
+   "toContainText acepta que el texto sea solo una parte del contenido.",
+   "Ambos son aserciones web-first y reintentan.",
+   "También admiten expresiones regulares."
+  ],
+  "razones": {
+   "a": "Correcta. Completo frente a subcadena.",
+   "b": "Ambos sirven para cualquier elemento con texto; para inputs se usa toHaveValue.",
+   "c": "Los dos reintentan hasta el timeout.",
+   "d": "Se comportan distinto: uno exige coincidencia total."
+  },
+  "clave": "Have = entero; Contain = trozo.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-02",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "error",
+  "pregunta": "Este test es inestable cuando el título tarda en cargarse. ¿Por qué?",
+  "codigo": "test('título', async ({ page }) => {\n  await page.goto('/');\n  const text = await page.locator('h1').textContent();\n  expect(text).toBe('Bienvenido');\n});",
+  "opciones": {
+   "a": "`textContent()` devuelve el valor de ese instante y `toBe` no reintenta; debería usarse `await expect(locator).toHaveText(...)`.",
+   "b": "`toBe` solo funciona con números.",
+   "c": "`goto` no admite rutas relativas.",
+   "d": "Falta `await` delante de `expect(text).toBe(...)`, y con eso se arregla todo."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las aserciones genéricas sobre un valor ya leído no reintentan; las web-first sobre un locator sí.",
+  "explicacion": [
+   "await textContent() lee el texto una sola vez, en ese instante.",
+   "expect(valor).toBe() es genérico y no reintenta.",
+   "expect(locator).toHaveText() reintenta hasta que coincide o vence el timeout.",
+   "Añadir await a toBe no cambia nada: es síncrono."
+  ],
+  "razones": {
+   "a": "Correcta. Se lee una vez y se compara sin reintentos.",
+   "b": "toBe compara cualquier valor con Object.is.",
+   "c": "Con baseURL configurado, las rutas relativas son válidas.",
+   "d": "toBe es síncrono; await no lo vuelve reintentable."
+  },
+  "clave": "Si lees el valor antes de expect, pierdes el reintento.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-03",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué aserción comprueba que una lista tiene exactamente 5 elementos?",
+  "opciones": {
+   "a": "`await expect(page.getByRole('listitem')).toHaveCount(5);`",
+   "b": "`await expect(page.getByRole('listitem')).toHaveLength(5);`",
+   "c": "`await expect(page.getByRole('listitem').count()).toBe(5);`",
+   "d": "`await expect(page.getByRole('listitem')).toBeCount(5);`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveCount es la aserción web-first que verifica cuántos elementos coinciden con un locator.",
+  "explicacion": [
+   "toHaveCount(n) reintenta hasta que el número de coincidencias es n.",
+   "toHaveLength existe en expect genérico para arrays, no para locators.",
+   "count() devuelve un número puntual y no reintenta."
+  ],
+  "razones": {
+   "a": "Correcta. Matcher web-first para el número de elementos.",
+   "b": "toHaveLength sirve para arrays o strings, no para un Locator.",
+   "c": "count() no reintenta, por lo que puede dar un falso fallo.",
+   "d": "toBeCount no existe en Playwright."
+  },
+  "clave": "Elementos de un locator: toHaveCount.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-04",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Tras iniciar sesión se redirige a cualquier URL que termine en `/dashboard`. ¿Qué va en el hueco?",
+  "codigo": "test('login', async ({ page }) => {\n  await page.getByRole('button', { name: 'Entrar' }).click();\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(page).toHaveURL(/\\/dashboard$/);`",
+   "b": "`await expect(page.url()).toHaveURL(/\\/dashboard$/);`",
+   "c": "`await expect(page).toHaveTitle(/\\/dashboard$/);`",
+   "d": "`await expect(page).toBeURL('/dashboard');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveURL se aplica sobre la page y acepta string o RegExp, reintentando hasta que la URL coincide.",
+  "explicacion": [
+   "expect(page).toHaveURL(regex) espera a que la URL cumpla el patrón.",
+   "page.url() es un string sin reintento y no tiene toHaveURL.",
+   "toHaveTitle comprueba el título, no la URL.",
+   "toBeURL no existe."
+  ],
+  "razones": {
+   "a": "Correcta. Aserción web-first sobre page con una RegExp.",
+   "b": "toHaveURL no se aplica sobre un string: page.url() ya no es la page.",
+   "c": "toHaveTitle valida el título del documento.",
+   "d": "toBeURL no existe en Playwright."
+  },
+  "clave": "URL con expect(page).toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-05",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "como",
+  "pregunta": "¿Cómo se comprueba que un spinner de carga ya no está visible en pantalla?",
+  "opciones": {
+   "a": "`await expect(page.getByTestId('spinner')).toBeHidden();`",
+   "b": "`expect(page.getByTestId('spinner')).toBeHidden();`",
+   "c": "`await expect(page.getByTestId('spinner')).toBeVisible(false);`",
+   "d": "`await page.getByTestId('spinner').waitForHidden();`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toBeHidden (o .not.toBeVisible()) espera a que el elemento desaparezca o no esté visible.",
+  "explicacion": [
+   "toBeHidden reintenta hasta que el elemento no existe o no es visible.",
+   "Equivale a expect(locator).not.toBeVisible().",
+   "Sin await, la comprobación queda suelta.",
+   "No existe un método waitForHidden en el locator."
+  ],
+  "razones": {
+   "a": "Correcta. Con await y matcher web-first.",
+   "b": "Sin await la aserción no se espera.",
+   "c": "toBeVisible admite { visible: false } en vez de un booleano posicional, y se prefiere toBeHidden.",
+   "d": "Locator no tiene waitForHidden; existe waitFor({ state: 'hidden' })."
+  },
+  "clave": "Que ya no esté: toBeHidden.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-06",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Quieres verificar que el campo email contiene el valor «ana@test.com». ¿Qué va en el hueco?",
+  "codigo": "test('email', async ({ page }) => {\n  await page.getByLabel('Email').fill('ana@test.com');\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(page.getByLabel('Email')).toHaveValue('ana@test.com');`",
+   "b": "`await expect(page.getByLabel('Email')).toHaveText('ana@test.com');`",
+   "c": "`await expect(page.getByLabel('Email')).toContainValue('ana@test.com');`",
+   "d": "`await expect(page.getByLabel('Email')).toBeFilled('ana@test.com');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toHaveValue comprueba el valor actual de un input, textarea o select.",
+  "explicacion": [
+   "Los inputs guardan su contenido en value, no en el texto del nodo.",
+   "toHaveText mira el contenido textual, que en un input está vacío.",
+   "toContainValue y toBeFilled no existen."
+  ],
+  "razones": {
+   "a": "Correcta. toHaveValue es el matcher para inputs.",
+   "b": "toHaveText no lee el value de un input.",
+   "c": "toContainValue no existe en Playwright.",
+   "d": "toBeFilled no existe; para vacío existe toBeEmpty."
+  },
+  "clave": "Input = toHaveValue.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ASE-07",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "concepto",
+  "pregunta": "¿Cuánto espera por defecto una aserción web-first como `toBeVisible()` y dónde se cambia globalmente?",
+  "opciones": {
+   "a": "5 segundos; en `expect: { timeout }` de `playwright.config.ts`.",
+   "b": "30 segundos; en `use.timeout`.",
+   "c": "No espera nada; hay que usar `waitForTimeout`.",
+   "d": "5 segundos; en `use.expectTimeout`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El timeout por defecto de expect es 5 s y se configura con la clave expect.timeout en la configuración.",
+  "explicacion": [
+   "Las aserciones web-first reintentan hasta 5 s por defecto.",
+   "El test completo tiene su propio timeout, 30 s por defecto.",
+   "Se cambia con expect: { timeout: 10_000 } en defineConfig.",
+   "También se puede por aserción: toBeVisible({ timeout: 10_000 })."
+  ],
+  "razones": {
+   "a": "Correcta. Valor por defecto y clave de configuración.",
+   "b": "30 s es el timeout del test, y use.timeout no existe.",
+   "c": "Las aserciones web-first sí esperan automáticamente.",
+   "d": "use.expectTimeout no existe; es expect.timeout."
+  },
+  "clave": "expect: 5 s; test: 30 s.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ASE-08",
+  "nivel": "basico",
+  "tema": "Aserciones",
+  "tipo": "codigo",
+  "pregunta": "Hay que comprobar que el botón Enviar sigue deshabilitado. ¿Qué va en el hueco?",
+  "codigo": "test('formulario vacío', async ({ page }) => {\n  await page.goto('/registro');\n  const enviar = page.getByRole('button', { name: 'Enviar' });\n  ___\n});",
+  "opciones": {
+   "a": "`await expect(enviar).toBeDisabled();`",
+   "b": "`await expect(enviar).not.toBeEnabled;`",
+   "c": "`await expect(enviar.isDisabled()).toBeTruthy();`",
+   "d": "`await expect(enviar).toHaveText('Enviar');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "toBeDisabled y toBeEnabled son matchers web-first que reintentan sobre el estado del elemento.",
+  "explicacion": [
+   "toBeDisabled reintenta hasta que el elemento está deshabilitado.",
+   "`.not.toBeEnabled` sin paréntesis no ejecuta nada.",
+   "isDisabled() devuelve un booleano puntual sin reintentos.",
+   "toHaveText comprueba el contenido textual, no el estado del control."
+  ],
+  "razones": {
+   "a": "Correcta. Matcher específico y con await.",
+   "b": "Falta invocar toBeEnabled(); sin paréntesis no se comprueba nada.",
+   "c": "isDisabled() no reintenta y toBeTruthy es genérico.",
+   "d": "toHaveText comprueba el texto del botón, no si está deshabilitado."
+  },
+  "clave": "Estado del control: toBeEnabled / toBeDisabled.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-CLI-01",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Qué comando crea un proyecto nuevo de Playwright Test con su configuración y un test de ejemplo?",
+  "opciones": {
+   "a": "`npm init playwright@latest`",
+   "b": "`npx playwright create`",
+   "c": "`npm install playwright-init`",
+   "d": "`npx playwright new project`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "npm init playwright@latest lanza el asistente que instala @playwright/test y genera playwright.config.ts y tests de ejemplo.",
+  "explicacion": [
+   "Pregunta lenguaje, carpeta de tests y si instalar navegadores.",
+   "Genera playwright.config.ts, tests/ y un example.spec.ts.",
+   "Es el método recomendado en la documentación de instalación."
+  ],
+  "razones": {
+   "a": "Correcta. Es el inicializador oficial.",
+   "b": "No existe el subcomando create.",
+   "c": "Ese paquete no es oficial.",
+   "d": "No existe el subcomando new."
+  },
+  "clave": "init playwright@latest.",
+  "docs": "https://playwright.dev/docs/intro"
+ },
+ {
+  "id": "B-CLI-02",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas solo los tests cuyo título contiene «login»?",
+  "opciones": {
+   "a": "`npx playwright test -g login`",
+   "b": "`npx playwright test --title login`",
+   "c": "`npx playwright test --filter login`",
+   "d": "`npx playwright test -t login`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La opción -g (--grep) filtra los tests por una expresión sobre su título.",
+  "explicacion": [
+   "-g es la forma corta de --grep.",
+   "Acepta una RegExp contra el título completo del test.",
+   "--grep-invert (-gv) hace el filtro contrario."
+  ],
+  "razones": {
+   "a": "Correcta. -g / --grep filtra por título.",
+   "b": "--title no es una opción de la CLI.",
+   "c": "--filter no existe en playwright test.",
+   "d": "-t no es un flag de playwright test."
+  },
+  "clave": "Por título: -g.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-CLI-03",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas únicamente el test que empieza en la línea 25 de `tests/login.spec.ts`?",
+  "opciones": {
+   "a": "`npx playwright test tests/login.spec.ts:25`",
+   "b": "`npx playwright test tests/login.spec.ts --line 25`",
+   "c": "`npx playwright test tests/login.spec.ts#25`",
+   "d": "`npx playwright test tests/login.spec.ts@25`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Se puede apuntar a un test concreto añadiendo :línea a la ruta del fichero.",
+  "explicacion": [
+   "La sintaxis es fichero:línea.",
+   "Sin la línea, se ejecutan todos los tests del fichero.",
+   "Es útil para repetir rápido un test que falla."
+  ],
+  "razones": {
+   "a": "Correcta. Sintaxis fichero:línea.",
+   "b": "--line no existe.",
+   "c": "El separador # no se admite.",
+   "d": "El separador @ no se admite."
+  },
+  "clave": "fichero:línea.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-CLI-04",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "funcion",
+  "pregunta": "¿Qué comando abre el navegador y graba tus acciones generando código de test automáticamente?",
+  "opciones": {
+   "a": "`npx playwright codegen`",
+   "b": "`npx playwright record`",
+   "c": "`npx playwright test --record`",
+   "d": "`npx playwright generate`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "codegen abre un navegador y el inspector, y escribe el código del test mientras interactúas con la página.",
+  "explicacion": [
+   "Se puede pasar una URL: npx playwright codegen https://ejemplo.com.",
+   "Elige localizadores como getByRole siempre que puede.",
+   "El código generado conviene revisarlo y añadirle aserciones."
+  ],
+  "razones": {
+   "a": "Correcta. Es el generador de tests.",
+   "b": "record no es un subcomando de playwright.",
+   "c": "--record no existe en test.",
+   "d": "generate no es un subcomando."
+  },
+  "clave": "Grabar a código: codegen.",
+  "docs": "https://playwright.dev/docs/codegen"
+ },
+ {
+  "id": "B-CLI-05",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Queremos que los tests naveguen con rutas relativas como `page.goto('/login')`. ¿Dónde se configura `baseURL`?",
+  "codigo": "import { defineConfig } from '@playwright/test';\n\nexport default defineConfig({\n  testDir: './tests',\n  ___\n});",
+  "opciones": {
+   "a": "`use: { baseURL: 'http://localhost:3000' },`",
+   "b": "`baseURL: 'http://localhost:3000',`",
+   "c": "`projects: { baseURL: 'http://localhost:3000' },`",
+   "d": "`webServer: { baseURL: 'http://localhost:3000' },`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "baseURL es una opción de use, y por tanto va dentro de use (global o de un proyecto).",
+  "explicacion": [
+   "Las opciones de contexto de los tests van dentro de use.",
+   "goto('/login') se resuelve contra baseURL.",
+   "webServer también admite url, pero no define baseURL."
+  ],
+  "razones": {
+   "a": "Correcta. baseURL se define dentro de use.",
+   "b": "A nivel raíz de la configuración no es una opción válida.",
+   "c": "projects es un array, no un objeto con baseURL.",
+   "d": "webServer arranca un servidor; la base de los tests es use.baseURL."
+  },
+  "clave": "Opciones de test: dentro de use.",
+  "docs": "https://playwright.dev/docs/test-use-options"
+ },
+ {
+  "id": "B-CLI-06",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Completa la configuración para ejecutar los tests en Chromium con la configuración de escritorio de Chrome.",
+  "codigo": "import { defineConfig, devices } from '@playwright/test';\n\nexport default defineConfig({\n  projects: [\n    {\n      name: 'chromium',\n      use: { ...___ },\n    },\n  ],\n});",
+  "opciones": {
+   "a": "`devices['Desktop Chrome']`",
+   "b": "`devices.chromium`",
+   "c": "`devices('Desktop Chrome')`",
+   "d": "`device['Desktop Chrome']`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El objeto devices contiene descriptores de dispositivos indexados por nombre, que se expanden dentro de use.",
+  "explicacion": [
+   "devices se importa de @playwright/test.",
+   "Se accede con corchetes y el nombre: devices['Desktop Chrome'].",
+   "El spread (...) copia sus opciones dentro de use.",
+   "Cada entrada de projects genera una ejecución separada."
+  ],
+  "razones": {
+   "a": "Correcta. Indexado por nombre del descriptor.",
+   "b": "devices no tiene la clave chromium.",
+   "c": "devices es un objeto, no una función.",
+   "d": "El nombre importado es devices, en plural."
+  },
+  "clave": "...devices['Desktop Chrome'].",
+  "docs": "https://playwright.dev/docs/test-projects"
+ },
+ {
+  "id": "B-CLI-07",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "codigo",
+  "pregunta": "Quieres 2 reintentos solo en CI y trazas únicamente cuando un test se reintenta. ¿Qué configuración es correcta?",
+  "codigoOpciones": true,
+  "opciones": {
+   "a": "export default defineConfig({\n  retries: process.env.CI ? 2 : 0,\n  use: { trace: 'on-first-retry' },\n});",
+   "b": "export default defineConfig({\n  use: { retries: 2, trace: 'on-first-retry' },\n});",
+   "c": "export default defineConfig({\n  retries: process.env.CI ? 2 : 0,\n  trace: 'on-first-retry',\n});",
+   "d": "export default defineConfig({\n  retries: 2,\n  use: { trace: 'first-retry' },\n});"
+  },
+  "correcta": [
+   "a"
+  ],
+  "concepto": "retries va en el nivel raíz de la configuración, mientras que trace es una opción de use con valores como 'on-first-retry'.",
+  "explicacion": [
+   "retries es una opción del runner, a nivel raíz.",
+   "trace pertenece a use.",
+   "'on-first-retry' graba la traza solo en el primer reintento.",
+   "'first-retry' no es un valor válido."
+  ],
+  "razones": {
+   "a": "Correcta. retries en la raíz y trace dentro de use.",
+   "b": "retries no es una opción de use.",
+   "c": "trace debe ir dentro de use.",
+   "d": "'first-retry' no es válido; el valor es 'on-first-retry'."
+  },
+  "clave": "retries fuera, trace dentro de use.",
+  "docs": "https://playwright.dev/docs/trace-viewer"
+ },
+ {
+  "id": "B-CLI-08",
+  "nivel": "basico",
+  "tema": "CLI y configuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo ejecutas los tests con el navegador visible y solo en el proyecto `chromium`?",
+  "opciones": {
+   "a": "`npx playwright test --headed --project=chromium`",
+   "b": "`npx playwright test --visible --browser=chromium`",
+   "c": "`npx playwright test --head --project chromium-only`",
+   "d": "`npx playwright test --ui=headed --project=chrome`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "--headed muestra el navegador y --project selecciona un proyecto definido en la configuración.",
+  "explicacion": [
+   "Por defecto los tests se ejecutan en modo headless.",
+   "--headed abre las ventanas del navegador.",
+   "--project=nombre usa el name de un proyecto de la configuración.",
+   "--ui abre el modo UI, que es otra herramienta."
+  ],
+  "razones": {
+   "a": "Correcta. Ambos flags existen.",
+   "b": "--visible no existe (el flag es --headed), y --browser elige el motor, no un proyecto de la configuración.",
+   "c": "--head no es un flag válido de test.",
+   "d": "--ui no admite ese valor y el proyecto debe existir con ese nombre."
+  },
+  "clave": "Ver el navegador: --headed.",
+  "docs": "https://playwright.dev/docs/test-cli"
+ },
+ {
+  "id": "B-ESP-01",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué comprobaciones hace Playwright antes de ejecutar un click?",
+  "opciones": {
+   "a": "Solo que el elemento exista en el DOM",
+   "b": "Visible, estable, habilitado y que recibe eventos",
+   "c": "Que el elemento tenga un id",
+   "d": "Que la página haya disparado el evento load"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Antes de actuar, Playwright espera a que el elemento cumpla las comprobaciones de actionability.",
+  "explicacion": [
+   "Visible: tiene caja no vacía y no está oculto.",
+   "Stable: sin animación en curso.",
+   "Enabled y Receives Events: no deshabilitado ni tapado por otro elemento."
+  ],
+  "razones": {
+   "a": "La existencia por sí sola no basta.",
+   "b": "Correcta. Son las comprobaciones reales.",
+   "c": "El id no es requisito.",
+   "d": "No espera al evento load."
+  },
+  "clave": "Visible, stable, enabled, receives events.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-02",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "error",
+  "pregunta": "¿Qué problema tiene este código?",
+  "codigo": "await page.getByText('Guardar').click();\nawait page.waitForTimeout(3000);\nawait expect(page.getByText('Guardado')).toBeVisible();",
+  "opciones": {
+   "a": "waitForTimeout es una pausa fija: lenta o frágil; expect ya reintenta",
+   "b": "Falta await en expect",
+   "c": "toBeVisible no existe",
+   "d": "click no admite getByText"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las pausas fijas hacen tests lentos y poco fiables; las aserciones web-first reintentan solas.",
+  "explicacion": [
+   "expect(...).toBeVisible() espera hasta su timeout.",
+   "waitForTimeout se desaconseja salvo depuración.",
+   "Quita la pausa y deja la aserción."
+  ],
+  "razones": {
+   "a": "Correcta. Es el antipatrón.",
+   "b": "El await ya está presente.",
+   "c": "toBeVisible existe.",
+   "d": "click funciona con cualquier locator."
+  },
+  "clave": "No duermas: aserta.",
+  "docs": "https://playwright.dev/docs/best-practices"
+ },
+ {
+  "id": "B-ESP-03",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué timeout por defecto tiene cada test completo en Playwright Test?",
+  "opciones": {
+   "a": "5 segundos",
+   "b": "60 segundos",
+   "c": "Sin límite",
+   "d": "30 segundos"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "El timeout del test es de 30 000 ms por defecto e incluye hooks y fixtures.",
+  "explicacion": [
+   "Test: 30 s por defecto.",
+   "expect: 5 s por defecto.",
+   "Las acciones no tienen timeout propio por defecto, pero el del test las limita."
+  ],
+  "razones": {
+   "a": "5 s es el de expect.",
+   "b": "60 s no es el valor por defecto.",
+   "c": "Sí existe límite.",
+   "d": "Correcta. Valor por defecto del test."
+  },
+  "clave": "Test 30 s, expect 5 s.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ESP-04",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "codigo",
+  "pregunta": "Completa para subir el timeout de las aserciones expect a 10 segundos.",
+  "codigo": "// playwright.config.ts\nexport default defineConfig({\n  ___: { timeout: 10_000 },\n});",
+  "opciones": {
+   "a": "assertions",
+   "b": "timeouts",
+   "c": "expect",
+   "d": "use"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La clave expect de la configuración fija el timeout de las aserciones.",
+  "explicacion": [
+   "Config: expect: { timeout }.",
+   "Una aserción concreta admite { timeout } en sus opciones.",
+   "No confundir con el timeout de test."
+  ],
+  "razones": {
+   "a": "No existe esa clave.",
+   "b": "No existe esa clave.",
+   "c": "Correcta. Clave real de la configuración.",
+   "d": "use contiene opciones de contexto, no el timeout de expect."
+  },
+  "clave": "expect: { timeout }.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ESP-05",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "Un botón está tapado por un modal. ¿Qué ocurre con click()?",
+  "opciones": {
+   "a": "Hace clic igualmente sobre el modal",
+   "b": "Playwright reintenta hasta que reciba eventos o venza el timeout",
+   "c": "Falla inmediatamente",
+   "d": "Cierra el modal"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Si otro elemento intercepta el clic, no se cumple Receives Events y Playwright sigue reintentando.",
+  "explicacion": [
+   "Receives Events: el punto de clic debe ser alcanzable.",
+   "Si se agota el timeout, el error indica el elemento que lo intercepta.",
+   "force: true omite el chequeo, pero puede ocultar bugs."
+  ],
+  "razones": {
+   "a": "No clicaría sobre un elemento distinto.",
+   "b": "Correcta. Comportamiento de actionability.",
+   "c": "Reintenta antes de fallar.",
+   "d": "No cierra nada por su cuenta."
+  },
+  "clave": "Tapado: reintenta, no clica.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-06",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "funcion",
+  "pregunta": "¿Qué aserción espera a que un elemento aparezca en pantalla?",
+  "opciones": {
+   "a": "`await expect(locator).toBeVisible()`",
+   "b": "`expect(await locator.isVisible()).toBe(true)`",
+   "c": "`await page.waitForTimeout(1000)`",
+   "d": "`expect(locator.visible).toBe(true)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las aserciones web-first con locator reintentan hasta cumplirse o agotar el timeout.",
+  "explicacion": [
+   "isVisible() devuelve el estado al instante, sin esperar.",
+   "expect(locator) con matchers reintenta.",
+   "visible no es propiedad de Locator."
+  ],
+  "razones": {
+   "a": "Correcta. Aserción con reintentos.",
+   "b": "isVisible no espera; puede dar falso antes de aparecer.",
+   "c": "Pausa fija.",
+   "d": "Locator no tiene propiedad visible."
+  },
+  "clave": "Web-first: await expect(locator).",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ESP-07",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué pasa con fill() sobre un input deshabilitado?",
+  "opciones": {
+   "a": "Rellena el valor ignorando disabled",
+   "b": "Falla al instante",
+   "c": "Lo habilita automáticamente",
+   "d": "Playwright espera a que esté habilitado y falla al agotar el timeout"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "Las acciones esperan a que el elemento esté Enabled antes de ejecutarse.",
+  "explicacion": [
+   "Enabled significa que no tiene disabled.",
+   "fill además exige que sea editable.",
+   "El timeout de acción acaba produciendo el error."
+  ],
+  "razones": {
+   "a": "No ignora disabled.",
+   "b": "Antes reintenta.",
+   "c": "No modifica atributos.",
+   "d": "Correcta. Comportamiento de auto-espera."
+  },
+  "clave": "Enabled es requisito de la acción.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-08",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para limitar a 3 segundos una acción concreta.",
+  "codigo": "await page.getByRole('button', { name: 'Enviar' }).click({ ___: 3000 });",
+  "opciones": {
+   "a": "wait",
+   "b": "maxTime",
+   "c": "timeout",
+   "d": "delay"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La mayoría de acciones aceptan la opción timeout en milisegundos.",
+  "explicacion": [
+   "timeout en acción: sobrescribe el valor global.",
+   "delay en click es la pausa entre mousedown y mouseup.",
+   "Si vence, la acción falla con TimeoutError."
+  ],
+  "razones": {
+   "a": "wait no existe como opción.",
+   "b": "maxTime no existe.",
+   "c": "Correcta. Opción real de las acciones.",
+   "d": "delay es otra cosa: pausa entre pulsaciones."
+  },
+  "clave": "Acción con límite: { timeout }.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-EST-01",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "¿Qué línea va en la primera línea de un fichero `.spec.ts` para poder usar `test` y `expect`?",
+  "opciones": {
+   "a": "`import { test, expect } from '@playwright/test';`",
+   "b": "`import { test, expect } from 'playwright';`",
+   "c": "`import test from '@playwright/test';`",
+   "d": "`const { test } = require('playwright-test');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El runner de Playwright exporta test y expect desde el paquete @playwright/test.",
+  "explicacion": [
+   "@playwright/test es el paquete del test runner.",
+   "El paquete 'playwright' es la librería de automatización, sin runner.",
+   "expect es una exportación con nombre; lo estándar es importar ambos con nombre: import { test, expect }."
+  ],
+  "razones": {
+   "a": "Correcta. Importación con nombre desde el paquete del runner.",
+   "b": "El paquete 'playwright' no incluye el runner de tests.",
+   "c": "Solo importa test (que sí es la exportación por defecto) y falta expect, que se importa con nombre.",
+   "d": "El paquete 'playwright-test' no es el oficial."
+  },
+  "clave": "Runner = @playwright/test.",
+  "docs": "https://playwright.dev/docs/writing-tests"
+ },
+ {
+  "id": "B-EST-02",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "Todos los tests de un grupo deben empezar en `/carrito`. ¿Qué va en el hueco?",
+  "codigo": "test.describe('Carrito', () => {\n  ___(async ({ page }) => {\n    await page.goto('/carrito');\n  });\n\n  test('vacío', async ({ page }) => { /* ... */ });\n  test('con producto', async ({ page }) => { /* ... */ });\n});",
+  "opciones": {
+   "a": "`test.beforeEach`",
+   "b": "`test.beforeAll`",
+   "c": "`test.before`",
+   "d": "`test.setup`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "test.beforeEach se ejecuta antes de cada test del bloque y recibe fixtures como page.",
+  "explicacion": [
+   "beforeEach corre antes de cada test, con su propia page nueva.",
+   "beforeAll corre una vez por worker y no recibe page.",
+   "before y setup no existen como hooks de test."
+  ],
+  "razones": {
+   "a": "Correcta. Se ejecuta antes de cada test del describe.",
+   "b": "beforeAll corre una sola vez y no puede usar la fixture page.",
+   "c": "test.before no existe.",
+   "d": "test.setup no existe; setup es un concepto de proyectos."
+  },
+  "clave": "Antes de cada uno: beforeEach.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-03",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "funcion",
+  "pregunta": "Estás depurando y quieres ejecutar solo un test del fichero sin tocar la CLI. ¿Qué se usa?",
+  "opciones": {
+   "a": "`test.only('nombre', async ({ page }) => { ... })`",
+   "b": "`test.single('nombre', ...)`",
+   "c": "`test.focus('nombre', ...)`",
+   "d": "`test.solo('nombre', ...)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "test.only hace que solo se ejecuten los tests marcados con él.",
+  "explicacion": [
+   "test.only limita la ejecución a ese test.",
+   "Conviene quitarlo antes de subir el código.",
+   "Con forbidOnly: true en CI, un test.only hace fallar la ejecución."
+  ],
+  "razones": {
+   "a": "Correcta. test.only aísla el test.",
+   "b": "test.single no existe.",
+   "c": "test.focus no existe (es de otros runners).",
+   "d": "test.solo no existe."
+  },
+  "clave": "Uno solo: only.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-04",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "¿Cuál es la diferencia entre `test.skip` y `test.fixme`?",
+  "opciones": {
+   "a": "Ambos omiten el test; `fixme` indica que el test está roto y hay que arreglarlo, `skip` que no aplica.",
+   "b": "`skip` ejecuta el test sin aserciones y `fixme` lo borra.",
+   "c": "`fixme` ejecuta el test y `skip` no.",
+   "d": "`skip` solo funciona dentro de `test.describe`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "skip y fixme omiten el test; fixme documenta que está pendiente de arreglar.",
+  "explicacion": [
+   "Ninguno de los dos ejecuta el cuerpo del test.",
+   "test.fixme marca un test roto que se debe reparar.",
+   "test.skip marca un test que no aplica, por ejemplo según el navegador.",
+   "Aparecen como omitidos en el informe."
+  ],
+  "razones": {
+   "a": "Correcta. Mismo efecto de omitir, distinta intención.",
+   "b": "Ninguno ejecuta el test ni lo borra.",
+   "c": "Ninguno de los dos ejecuta el test.",
+   "d": "test.skip se puede usar también a nivel de fichero o dentro del test."
+  },
+  "clave": "fixme = pendiente de arreglar.",
+  "docs": "https://playwright.dev/docs/test-annotations"
+ },
+ {
+  "id": "B-EST-05",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "codigo",
+  "pregunta": "Quieres hacer una llamada HTTP directa a la API dentro de un test, sin abrir el navegador. ¿Qué fixture se pide?",
+  "codigo": "test('API', async ({ ___ }) => {\n  const res = await request.get('/api/health');\n  expect(res.ok()).toBeTruthy();\n});",
+  "opciones": {
+   "a": "`request`",
+   "b": "`page`",
+   "c": "`browser`",
+   "d": "`http`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La fixture request proporciona un APIRequestContext para hacer peticiones HTTP sin navegador.",
+  "explicacion": [
+   "Los fixtures se piden por nombre con destructuring.",
+   "request da get, post, put, delete, etc.",
+   "page y browser abren o representan un navegador.",
+   "http no es una fixture integrada."
+  ],
+  "razones": {
+   "a": "Correcta. Cliente HTTP integrado.",
+   "b": "page es una pestaña de navegador y no tiene get() de API.",
+   "c": "browser representa la instancia del navegador.",
+   "d": "http no es una fixture integrada."
+  },
+  "clave": "HTTP sin navegador: request.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-EST-06",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "Un test deja una cookie de sesión en su `page`. ¿Qué pasa con el siguiente test?",
+  "opciones": {
+   "a": "No la ve: cada test recibe un `context` y una `page` nuevos y aislados.",
+   "b": "La ve siempre, porque comparten navegador y contexto.",
+   "c": "La ve solo si ambos tests están en el mismo fichero.",
+   "d": "La ve solo si se ejecutan con `--headed`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Playwright crea un BrowserContext nuevo por cada test, lo que aísla cookies, almacenamiento y sesión.",
+  "explicacion": [
+   "Cada test tiene su propio context, como un perfil de navegador limpio.",
+   "Se evita que un test contamine a otro.",
+   "Compartir sesión requiere storageState explícito.",
+   "El modo headed no cambia el aislamiento."
+  ],
+  "razones": {
+   "a": "Correcta. Aislamiento por test.",
+   "b": "El contexto no se comparte entre tests.",
+   "c": "Estar en el mismo fichero no comparte contexto.",
+   "d": "--headed solo muestra el navegador."
+  },
+  "clave": "Un test, un context limpio.",
+  "docs": "https://playwright.dev/docs/browser-contexts"
+ },
+ {
+  "id": "B-EST-07",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "concepto",
+  "pregunta": "¿Cuándo se ejecuta `test.beforeAll` dentro de un `test.describe`?",
+  "opciones": {
+   "a": "Una vez antes de todos los tests del bloque, por cada worker.",
+   "b": "Antes de cada test del bloque.",
+   "c": "Una vez al terminar todos los tests.",
+   "d": "Solo antes del primer test del proyecto, aunque haya más describes."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "beforeAll se ejecuta una vez por worker antes de los tests de su ámbito; beforeEach se ejecuta antes de cada test.",
+  "explicacion": [
+   "beforeAll sirve para preparación costosa y compartida.",
+   "No recibe la fixture page, solo fixtures de ámbito worker.",
+   "afterAll hace el cierre equivalente al final.",
+   "beforeEach repite la acción antes de cada test."
+  ],
+  "razones": {
+   "a": "Correcta. Una vez por worker y por bloque.",
+   "b": "Eso es beforeEach.",
+   "c": "Eso sería afterAll.",
+   "d": "Su ámbito es el describe en el que se declara, no todo el proyecto."
+  },
+  "clave": "All = una vez; Each = cada vez.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "B-EST-08",
+  "nivel": "basico",
+  "tema": "Estructura del test",
+  "tipo": "error",
+  "pregunta": "Este test falla con un error de TypeScript o al ejecutarse. ¿Qué está mal?",
+  "codigo": "test('abre inicio', async (page) => {\n  await page.goto('/');\n  await expect(page).toHaveTitle(/Inicio/);\n});",
+  "opciones": {
+   "a": "El argumento es el objeto de fixtures; debe desestructurarse: `async ({ page }) =>`.",
+   "b": "`toHaveTitle` no admite expresiones regulares.",
+   "c": "Falta `test.describe` alrededor del test.",
+   "d": "`goto('/')` no se puede usar en el primer test."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El callback de test recibe un único objeto de fixtures, del que se extraen page, context, etc., por desestructuración.",
+  "explicacion": [
+   "El primer argumento es un objeto con todas las fixtures.",
+   "Hay que escribir ({ page }) para extraer la que se necesita.",
+   "Con (page), el objeto entero se llama page y goto no existe en él."
+  ],
+  "razones": {
+   "a": "Correcta. Falta desestructurar { page }.",
+   "b": "toHaveTitle admite string o RegExp.",
+   "c": "describe es opcional.",
+   "d": "goto('/') es válido en cualquier test."
+  },
+  "clave": "Fixtures entre llaves: ({ page }).",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-LOC-01",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "localizador",
+  "pregunta": "Tienes este campo. ¿Qué localizador recomienda Playwright para rellenarlo?",
+  "codigo": "<label for=\"email\">Correo electrónico</label>\n<input id=\"email\" type=\"email\">",
+  "opciones": {
+   "a": "`page.getByText('Correo electrónico')`",
+   "b": "`page.getByLabel('Correo electrónico')`",
+   "c": "`page.getByTitle('email')`",
+   "d": "`page.$('#email')`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "getByLabel localiza controles de formulario por el texto de su etiqueta asociada.",
+  "explicacion": [
+   "getByLabel encuentra el input a través del label asociado.",
+   "Es como el usuario identifica el campo.",
+   "getByText devolvería la etiqueta, no el input."
+  ],
+  "razones": {
+   "a": "getByText devuelve el elemento label, no el input que se quiere rellenar.",
+   "b": "Correcta. Localiza el input por el texto de su label.",
+   "c": "getByTitle busca el atributo title, que aquí no existe.",
+   "d": "page.$ es la API antigua de ElementHandle, desaconsejada."
+  },
+  "clave": "Campo con label visible: getByLabel.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-label"
+ },
+ {
+  "id": "B-LOC-02",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para localizar el campo por su texto de ayuda.",
+  "codigo": "// <input placeholder=\"Buscar productos\">\nawait page.___('Buscar productos').fill('zapatillas');",
+  "opciones": {
+   "a": "getByPlaceholder",
+   "b": "getByLabel",
+   "c": "getByAltText",
+   "d": "getByTitle"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "getByPlaceholder localiza inputs por el texto de su atributo placeholder.",
+  "explicacion": [
+   "getByPlaceholder busca por el atributo placeholder.",
+   "getByLabel requiere un label asociado.",
+   "getByAltText es para imágenes y áreas."
+  ],
+  "razones": {
+   "a": "Correcta. Busca justo por el atributo placeholder.",
+   "b": "Busca por texto de etiqueta, no por placeholder.",
+   "c": "getByAltText mira el atributo alt, propio de imágenes.",
+   "d": "getByTitle mira el atributo title."
+  },
+  "clave": "Placeholder = getByPlaceholder.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-placeholder"
+ },
+ {
+  "id": "B-LOC-03",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "localizador",
+  "pregunta": "¿Qué localizador busca esta imagen por su texto alternativo?",
+  "codigo": "<img src=\"logo.png\" alt=\"Logotipo de Acme\">",
+  "opciones": {
+   "a": "`page.getByText('Logotipo de Acme')`",
+   "b": "`page.getByTitle('Logotipo de Acme')`",
+   "c": "`page.getByLabel('Logotipo de Acme')`",
+   "d": "`page.getByAltText('Logotipo de Acme')`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "getByAltText localiza elementos, normalmente imágenes, por su texto alternativo.",
+  "explicacion": [
+   "alt es el texto alternativo de la imagen.",
+   "getByText solo ve contenido de texto, no atributos.",
+   "Otra opción válida sería getByRole('img', { name })."
+  ],
+  "razones": {
+   "a": "El alt no es texto del DOM; getByText no lo encuentra.",
+   "b": "getByTitle busca el atributo title, no alt.",
+   "c": "getByLabel busca controles con etiqueta, no imágenes.",
+   "d": "Correcta. alt es el atributo que usa getByAltText."
+  },
+  "clave": "Imagen con alt: getByAltText.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-alt-text"
+ },
+ {
+  "id": "B-LOC-04",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "Tu equipo usa data-qa en lugar de data-testid. ¿Qué opción de config hace que getByTestId lo reconozca?",
+  "codigo": "// playwright.config.ts\nexport default defineConfig({\n  use: { ___: 'data-qa' },\n});",
+  "opciones": {
+   "a": "testIdSelector",
+   "b": "dataTestId",
+   "c": "testIdAttribute",
+   "d": "selectorAttribute"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La opción use.testIdAttribute cambia el atributo que getByTestId usa para localizar.",
+  "explicacion": [
+   "Por defecto getByTestId usa data-testid.",
+   "use.testIdAttribute lo cambia globalmente.",
+   "También existe selectors.setTestIdAttribute() en código."
+  ],
+  "razones": {
+   "a": "No existe una opción con ese nombre.",
+   "b": "No existe; es un nombre inventado.",
+   "c": "Correcta. Es el nombre real de la opción de configuración.",
+   "d": "No existe como opción de use."
+  },
+  "clave": "testIdAttribute: el atributo del test id.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-test-id"
+ },
+ {
+  "id": "B-LOC-05",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "error",
+  "pregunta": "Este test falla con «strict mode violation». ¿Por qué?",
+  "codigo": "// La página tiene 3 botones «Añadir»\nawait page.getByRole('button', { name: 'Añadir' }).click();",
+  "opciones": {
+   "a": "getByRole no admite la opción name",
+   "b": "El locator resuelve a varios elementos y click exige exactamente uno",
+   "c": "click necesita un timeout explícito",
+   "d": "Falta await antes de page.getByRole"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Los locators son estrictos: una acción sobre un locator que coincide con varios elementos lanza error.",
+  "explicacion": [
+   "Strict mode obliga a que la acción apunte a un solo elemento.",
+   "Soluciones: afinar el locator, first(), nth() o filter().",
+   "Es una protección frente a clics en el elemento equivocado."
+  ],
+  "razones": {
+   "a": "name es una opción válida de getByRole.",
+   "b": "Correcta. Es justo lo que describe el modo estricto.",
+   "c": "click usa el timeout por defecto; no es obligatorio indicarlo.",
+   "d": "Los locators se crean sin await; el await va en la acción."
+  },
+  "clave": "Varios matches + acción = strict mode violation.",
+  "docs": "https://playwright.dev/docs/locators#strictness"
+ },
+ {
+  "id": "B-LOC-06",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "¿Qué ocurre en el momento de ejecutar esta línea?",
+  "codigo": "const boton = page.getByRole('button', { name: 'Guardar' });",
+  "opciones": {
+   "a": "Nada: el locator es perezoso y solo busca el elemento al usarlo en una acción o aserción",
+   "b": "Playwright espera hasta que el botón exista en el DOM",
+   "c": "Devuelve un ElementHandle con el elemento",
+   "d": "Lanza error si el botón no está visible"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un Locator es una descripción perezosa; no consulta el DOM hasta que se actúa sobre él.",
+  "explicacion": [
+   "Crear un locator no hace ninguna consulta ni espera.",
+   "Se resuelve cada vez que se usa, así que siempre está actualizado.",
+   "Por eso no lleva await."
+  ],
+  "razones": {
+   "a": "Correcta. Es la definición de locator perezoso.",
+   "b": "La espera ocurre al ejecutar una acción, no al crearlo.",
+   "c": "Devuelve un Locator, no un ElementHandle.",
+   "d": "No valida nada en la creación."
+  },
+  "clave": "Locator = receta, no resultado.",
+  "docs": "https://playwright.dev/docs/locators"
+ },
+ {
+  "id": "B-LOC-07",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "concepto",
+  "pregunta": "¿Cuál es el orden de preferencia recomendado para localizar elementos?",
+  "opciones": {
+   "a": "CSS, luego XPath y por último getByRole",
+   "b": "XPath primero porque es el más preciso",
+   "c": "Siempre getByTestId antes que cualquier otro",
+   "d": "Roles y texto visibles para el usuario, luego test id y, como último recurso, CSS/XPath"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "La guía recomienda localizar como el usuario: rol/texto primero, test id después y CSS/XPath al final.",
+  "explicacion": [
+   "Prioriza lo que ve el usuario: getByRole, getByLabel, getByText.",
+   "getByTestId es la alternativa estable si no hay atributos accesibles.",
+   "CSS y XPath se acoplan a la implementación."
+  ],
+  "razones": {
+   "a": "Invierte la recomendación.",
+   "b": "XPath es frágil ante cambios del DOM.",
+   "c": "El test id es útil, pero no es la primera opción.",
+   "d": "Correcta. Coincide con la guía de buenas prácticas."
+  },
+  "clave": "Usuario > test id > CSS/XPath.",
+  "docs": "https://playwright.dev/docs/best-practices#prefer-user-facing-attributes-to-xpath-or-css-selectors"
+ },
+ {
+  "id": "B-LOC-08",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "¿Qué localizador XPath es válido en Playwright para esta lista?",
+  "codigo": "<ul><li class=\"item\">Uno</li></ul>",
+  "opciones": {
+   "a": "`page.getByXPath('//li')`",
+   "b": "`page.xpath('//li')`",
+   "c": "`page.locator('xpath=//li[@class=\"item\"]')`",
+   "d": "`page.locator('//li', { type: 'xpath' })`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.locator acepta XPath con el prefijo xpath= o si el selector empieza por //.",
+  "explicacion": [
+   "locator() detecta XPath por el prefijo xpath= o por empezar con //.",
+   "No existe un método getByXPath.",
+   "Aun así, CSS/XPath son el último recurso."
+  ],
+  "razones": {
+   "a": "getByXPath no existe en Playwright.",
+   "b": "page.xpath no existe.",
+   "c": "Correcta. Sintaxis válida de selector XPath.",
+   "d": "locator no tiene una opción type."
+  },
+  "clave": "locator(\"xpath=...\") o empieza por //.",
+  "docs": "https://playwright.dev/docs/other-locators#xpath-locator"
+ },
+ {
+  "id": "B-NAV-01",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Con baseURL configurada en use, ¿qué valor va en el hueco para navegar a https://miapp.test/login?",
+  "codigo": "// playwright.config.ts: use: { baseURL: 'https://miapp.test' }\ntest('login', async ({ page }) => {\n  await page.goto('___');\n});",
+  "opciones": {
+   "a": "baseURL/login",
+   "b": "/login",
+   "c": "{baseURL}/login",
+   "d": "miapp.test:/login"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Con baseURL, goto acepta rutas relativas que se resuelven contra ella.",
+  "explicacion": [
+   "La ruta relativa se une a baseURL.",
+   "Evita repetir el dominio en cada test.",
+   "Sin baseURL habría que usar la URL completa."
+  ],
+  "razones": {
+   "a": "baseURL no se interpola en el texto.",
+   "b": "Correcta. Se resuelve como https://miapp.test/login.",
+   "c": "No hay interpolación con llaves.",
+   "d": "No es una URL válida."
+  },
+  "clave": "baseURL + ruta relativa.",
+  "docs": "https://playwright.dev/docs/test-use-options"
+ },
+ {
+  "id": "B-NAV-02",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método vuelve a la página anterior del historial?",
+  "opciones": {
+   "a": "`page.goBack()`",
+   "b": "`page.back()`",
+   "c": "`page.history.back()`",
+   "d": "`page.previous()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "page.goBack navega a la entrada anterior del historial.",
+  "explicacion": [
+   "goBack y goForward recorren el historial.",
+   "page.reload() recarga la página actual.",
+   "Devuelven la respuesta o null."
+  ],
+  "razones": {
+   "a": "Correcta. Es el método existente.",
+   "b": "page.back no existe.",
+   "c": "page.history no existe.",
+   "d": "page.previous no existe."
+  },
+  "clave": "Atrás = goBack.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-go-back"
+ },
+ {
+  "id": "B-NAV-03",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Completa el código para comprobar la URL actual tras iniciar sesión.",
+  "codigo": "await page.getByRole('button', { name: 'Entrar' }).click();\nawait expect(page).___(/dashboard/);",
+  "opciones": {
+   "a": "toBeURL",
+   "b": "toContainURL",
+   "c": "toHavePath",
+   "d": "toHaveURL"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "toHaveURL es una aserción con reintentos que verifica la URL de la página.",
+  "explicacion": [
+   "Acepta string, RegExp o predicado.",
+   "Reintenta hasta cumplirse o agotar el timeout.",
+   "page.url() devuelve la URL sin reintentos."
+  ],
+  "razones": {
+   "a": "No existe toBeURL.",
+   "b": "No existe toContainURL.",
+   "c": "No existe toHavePath.",
+   "d": "Correcta. Aserción real de página."
+  },
+  "clave": "URL en aserción = toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-NAV-04",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "error",
+  "pregunta": "Este test es poco fiable. ¿Qué problema tiene?",
+  "codigo": "await page.getByText('Entrar').click();\nexpect(page.url()).toBe('https://miapp.test/home');",
+  "opciones": {
+   "a": "url() es asíncrono y falta await",
+   "b": "toBe no compara cadenas",
+   "c": "page.url() es instantáneo y no reintenta; la URL puede no haber cambiado aún",
+   "d": "getByText no puede hacer click"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.url() devuelve la URL actual al instante; para esperar el cambio usa toHaveURL o waitForURL.",
+  "explicacion": [
+   "La navegación puede tardar tras el click.",
+   "await expect(page).toHaveURL(...) reintenta.",
+   "url() es síncrono."
+  ],
+  "razones": {
+   "a": "url() es síncrono, no necesita await.",
+   "b": "toBe compara cadenas con normalidad.",
+   "c": "Correcta. Describe la condición de carrera.",
+   "d": "click funciona sobre cualquier locator."
+  },
+  "clave": "Para URLs que cambian: toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-NAV-05",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método espera a que la página navegue a una URL que cumple un patrón?",
+  "opciones": {
+   "a": "`page.waitForNavigation()`",
+   "b": "`page.waitForURL()`",
+   "c": "`page.waitForTimeout()`",
+   "d": "`page.waitForLocation()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "page.waitForURL espera a que la URL cumpla un string, patrón o predicado.",
+  "explicacion": [
+   "waitForNavigation está obsoleto.",
+   "waitForTimeout es una pausa fija: evítala.",
+   "waitForURL admite glob, RegExp o función."
+  ],
+  "razones": {
+   "a": "Obsoleto y desaconsejado.",
+   "b": "Correcta. Método actual recomendado.",
+   "c": "Es solo una pausa fija.",
+   "d": "No existe."
+  },
+  "clave": "Esperar URL = waitForURL.",
+  "docs": "https://playwright.dev/docs/navigations"
+ },
+ {
+  "id": "B-NAV-06",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Completa para esperar a que no haya actividad de red durante 500 ms.",
+  "codigo": "await page.goto('/informes');\nawait page.waitForLoadState('___');",
+  "opciones": {
+   "a": "networkidle",
+   "b": "complete",
+   "c": "ready",
+   "d": "idle"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "waitForLoadState admite load, domcontentloaded y networkidle.",
+  "explicacion": [
+   "load es el valor por defecto.",
+   "networkidle se desaconseja en tests; prefiere aserciones web-first.",
+   "domcontentloaded espera al HTML parseado."
+  ],
+  "razones": {
+   "a": "Correcta. Valor válido de estado de carga.",
+   "b": "complete no es un valor válido.",
+   "c": "ready no es un valor válido.",
+   "d": "idle no es un valor válido."
+  },
+  "clave": "Estados: load, domcontentloaded, networkidle.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-wait-for-load-state"
+ },
+ {
+  "id": "B-NAV-07",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "como",
+  "pregunta": "¿Cómo obtiene un test de @playwright/test la página con la que trabajar?",
+  "opciones": {
+   "a": "Con `new Page()` dentro del test",
+   "b": "Llamando a `chromium.launch()` en cada test",
+   "c": "Con `require('page')`",
+   "d": "Destructurándola como fixture: `test('x', async ({ page }) => {})`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "page es un fixture que Playwright Test crea aislado para cada test.",
+  "explicacion": [
+   "Se pide destructurando en los argumentos del test.",
+   "Cada test recibe un contexto y página nuevos.",
+   "No hace falta lanzar ni cerrar el navegador a mano."
+  ],
+  "razones": {
+   "a": "Page no se instancia con new.",
+   "b": "El runner gestiona el navegador.",
+   "c": "No existe ese módulo.",
+   "d": "Correcta. Es la forma estándar con fixtures."
+  },
+  "clave": "async ({ page }) => ...",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-NAV-08",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "¿Qué expresión completa correctamente el código para obtener el título?",
+  "codigo": "const titulo = ___;\nexpect(titulo).toBe('Inicio');",
+  "opciones": {
+   "a": "page.title",
+   "b": "page.getTitle()",
+   "c": "await page.title()",
+   "d": "await page.document.title"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.title() devuelve de forma asíncrona el título del documento.",
+  "explicacion": [
+   "Es un método asíncrono: requiere await.",
+   "Para esperar a que cambie usa await expect(page).toHaveTitle().",
+   "No hay getTitle."
+  ],
+  "razones": {
+   "a": "Sin paréntesis sería una referencia a la función.",
+   "b": "getTitle no existe.",
+   "c": "Correcta. Método real y asíncrono.",
+   "d": "page.document no existe."
+  },
+  "clave": "title() con await.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-title"
+ },
+ {
+  "id": "B-TS-01",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "error",
+  "pregunta": "Este test es poco fiable: a veces falla de forma intermitente y otras muestra errores que no apuntan a la línea culpable. ¿Qué falla?",
+  "codigo": "test('enviar', async ({ page }) => {\n  await page.goto('/form');\n  page.getByRole('button', { name: 'Enviar' }).click();\n  await expect(page.getByText('Enviado')).toBeVisible();\n});",
+  "opciones": {
+   "a": "Falta `await` en `click()`: la promesa queda suelta y no se espera la acción ni su error.",
+   "b": "`getByRole` no admite `name`.",
+   "c": "`toBeVisible` debe ir sin `await`.",
+   "d": "`async` no puede usarse en tests."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las acciones de Playwright devuelven promesas; sin await el test sigue sin esperar el resultado ni los errores.",
+  "explicacion": [
+   "click() es asíncrono y devuelve una Promise.",
+   "Sin await, el flujo continúa antes de que termine el clic.",
+   "Un fallo en la promesa suelta puede perderse o aparecer tarde.",
+   "Hay que usar await en acciones y aserciones."
+  ],
+  "razones": {
+   "a": "Correcta. Falta await en la acción.",
+   "b": "getByRole admite la opción name.",
+   "c": "Las aserciones web-first sí llevan await.",
+   "d": "Los tests de Playwright son funciones async."
+  },
+  "clave": "Promesa sin await = se pierde.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+ },
+ {
+  "id": "B-TS-02",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Un helper realiza acciones y no devuelve ningún valor. ¿Qué tipo de retorno se anota?",
+  "codigo": "async function iniciarSesion(page: Page, user: string): ___ {\n  await page.goto('/login');\n  await page.getByLabel('Usuario').fill(user);\n  await page.getByRole('button', { name: 'Entrar' }).click();\n}",
+  "opciones": {
+   "a": "`Promise<void>`",
+   "b": "`void`",
+   "c": "`Promise<string>`",
+   "d": "`Page`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una función async siempre devuelve una Promise; si no devuelve valor, su tipo es Promise<void>.",
+  "explicacion": [
+   "async envuelve el resultado en una Promise.",
+   "Sin valor de retorno, el tipo interno es void.",
+   "Anotar solo void en una función async da error de TypeScript."
+  ],
+  "razones": {
+   "a": "Correcta. Función async sin valor devuelto.",
+   "b": "Una función async no puede declarar simplemente void: debe ser Promise<...>.",
+   "c": "La función no devuelve un string.",
+   "d": "No devuelve la Page."
+  },
+  "clave": "async sin retorno: Promise<void>.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/functions.html"
+ },
+ {
+  "id": "B-TS-03",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Quieres construir la URL de un producto a partir de su id. ¿Qué sintaxis es correcta?",
+  "codigo": "const id = 42;\nawait page.goto(___);",
+  "opciones": {
+   "a": "`` `/productos/${id}` ``",
+   "b": "`'/productos/${id}'`",
+   "c": "`\"/productos/\" . id`",
+   "d": "`/productos/${id}`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los template literals usan comillas invertidas y ${} para interpolar valores.",
+  "explicacion": [
+   "Se delimitan con comillas invertidas (backticks).",
+   "Dentro, ${expresión} inserta su valor.",
+   "Con comillas simples o dobles, ${id} se queda como texto literal."
+  ],
+  "razones": {
+   "a": "Correcta. Backticks con interpolación.",
+   "b": "Con comillas simples no se interpola: la URL contendría ${id} literal.",
+   "c": "El punto no concatena en TypeScript; se usa +.",
+   "d": "Sin comillas ni backticks no es una expresión válida."
+  },
+  "clave": "Backticks + ${}.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+ },
+ {
+  "id": "B-TS-04",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Para tipar los datos de un usuario de prueba, ¿qué declaración es correcta?",
+  "codigoOpciones": true,
+  "opciones": {
+   "a": "interface Usuario {\n  nombre: string;\n  edad: number;\n  activo: boolean;\n}",
+   "b": "interface Usuario {\n  nombre = string;\n  edad = number;\n}",
+   "c": "interface Usuario(\n  nombre: string,\n  edad: number\n)",
+   "d": "interface Usuario {\n  nombre: 'string',\n  edad: 'number'\n}"
+  },
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una interface describe la forma de un objeto con propiedades y sus tipos, separadas por ; o ,.",
+  "explicacion": [
+   "Las propiedades se declaran con nombre: tipo.",
+   "Los tipos básicos son string, number y boolean.",
+   "Las comillas en 'string' crean un tipo literal, no el tipo string.",
+   "Se usa luego como const u: Usuario = {...}."
+  ],
+  "razones": {
+   "a": "Correcta. Sintaxis estándar de interface.",
+   "b": "Se usa dos puntos, no =.",
+   "c": "No se declara con paréntesis como una función.",
+   "d": "'string' entre comillas es el literal 'string', no el tipo."
+  },
+  "clave": "propiedad: tipo.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+ },
+ {
+  "id": "B-TS-05",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Un helper recibe la página como parámetro y solo se usa como tipo. ¿Qué import es correcto?",
+  "codigo": "___\n\nexport async function abrirInicio(page: Page): Promise<void> {\n  await page.goto('/');\n}",
+  "opciones": {
+   "a": "`import type { Page } from '@playwright/test';`",
+   "b": "`import { Page } from 'playwright-types';`",
+   "c": "`import type Page from '@playwright/test/page';`",
+   "d": "`import { type } from '@playwright/test';`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "import type importa solo tipos, sin código en tiempo de ejecución; Page y Locator se exportan de @playwright/test.",
+  "explicacion": [
+   "Page y Locator son tipos exportados por @playwright/test.",
+   "import type se borra al compilar.",
+   "Se usan para anotar parámetros de helpers y Page Objects."
+  ],
+  "razones": {
+   "a": "Correcta. Import de solo tipo desde el paquete oficial.",
+   "b": "playwright-types no es el paquete oficial.",
+   "c": "Esa ruta interna no existe como exportación.",
+   "d": "type no es un miembro exportado."
+  },
+  "clave": "Tipos: import type { Page }.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/modules/reference.html"
+ },
+ {
+  "id": "B-TS-06",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "Para generar un test por cada usuario de un array, ¿qué palabra va en el hueco?",
+  "codigo": "const usuarios: string[] = ['ana', 'luis', 'eva'];\n\nfor (const usuario ___ usuarios) {\n  test(`login de ${usuario}`, async ({ page }) => {\n    await page.goto(`/login?user=${usuario}`);\n  });\n}",
+  "opciones": {
+   "a": "`of`",
+   "b": "`in`",
+   "c": "`as`",
+   "d": "`from`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "for...of recorre los valores de un array, y permite declarar un test por cada dato.",
+  "explicacion": [
+   "for...of itera los valores del array.",
+   "for...in itera las claves (índices '0', '1', ...), no los valores.",
+   "Cada test debe tener un título único: por eso se interpola el dato."
+  ],
+  "razones": {
+   "a": "Correcta. Itera sobre los valores.",
+   "b": "for...in da los índices como strings, no los nombres.",
+   "c": "as es para aserciones de tipo, no para bucles.",
+   "d": "from no es sintaxis de bucle."
+  },
+  "clave": "Valores del array: of.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+ },
+ {
+  "id": "B-TS-07",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "concepto",
+  "pregunta": "En un test, ¿cuándo conviene declarar una variable con `const` en vez de `let`?",
+  "opciones": {
+   "a": "Cuando la variable no se reasigna, como un locator o un dato fijo.",
+   "b": "Cuando la variable es de tipo number.",
+   "c": "Solo dentro de funciones async.",
+   "d": "Nunca: `let` es siempre preferible en TypeScript."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "const impide reasignar la variable, así que se usa por defecto y let solo cuando el valor cambia.",
+  "explicacion": [
+   "const evita reasignaciones accidentales.",
+   "Un objeto const sigue siendo mutable en sus propiedades.",
+   "let se reserva para contadores o valores que cambian.",
+   "El tipo de dato no determina la elección."
+  ],
+  "razones": {
+   "a": "Correcta. Se usa const salvo que haya reasignación.",
+   "b": "Cualquier tipo puede ir con const o let.",
+   "c": "No depende de que la función sea async.",
+   "d": "La buena práctica es const por defecto."
+  },
+  "clave": "const por defecto, let si cambia.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/variable-declarations.html"
+ },
+ {
+  "id": "B-TS-08",
+  "nivel": "basico",
+  "tema": "TypeScript para tests",
+  "tipo": "codigo",
+  "pregunta": "El campo `telefono` es opcional y puede no existir. ¿Cómo lees su longitud sin que falle si es `undefined`?",
+  "codigo": "interface Cliente {\n  nombre: string;\n  telefono?: string;\n}\n\nconst c: Cliente = { nombre: 'Ana' };\nconst longitud = ___;",
+  "opciones": {
+   "a": "`c.telefono?.length`",
+   "b": "`c.telefono.length`",
+   "c": "`c.telefono?length`",
+   "d": "`c?.telefono!.length`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El encadenamiento opcional ?. devuelve undefined en lugar de lanzar error si el valor anterior es null o undefined.",
+  "explicacion": [
+   "telefono?: string significa string | undefined.",
+   "c.telefono.length da error de compilación y fallaría en ejecución.",
+   "?. corta la cadena y devuelve undefined.",
+   "El operador ! afirma que existe y no lo comprueba."
+  ],
+  "razones": {
+   "a": "Correcta. Acceso seguro a una propiedad opcional.",
+   "b": "Con telefono undefined lanzaría TypeError, y TS lo marca.",
+   "c": "Sintaxis inválida: falta el punto de ?.",
+   "d": "El ! fuerza el tipo y provocaría un fallo en ejecución al ser undefined."
+  },
+  "clave": "?. evita el crash con undefined.",
+  "docs": "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+ },
+ {
+  "id": "M-API-01",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "codigo",
+  "pregunta": "¿Qué petición realiza este test?",
+  "codigo": "test('lista', async ({ request }) => {\n  const response = await request.get('/api/users', {\n    params: { page: 2 },\n  });\n  await expect(response).toBeOK();\n});",
+  "opciones": {
+   "a": "GET `/api/users` con un body `{ page: 2 }`.",
+   "b": "POST `/api/users?page=2`.",
+   "c": "GET `/api/users?page=2`.",
+   "d": "GET `/api/users` y falla porque `params` no existe."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La opción params de request.get añade los pares clave-valor como query string.",
+  "explicacion": [
+   "params construye ?page=2 en la URL.",
+   "toBeOK() comprueba que el status esté entre 200 y 299.",
+   "La ruta relativa se resuelve con la baseURL de la config."
+  ],
+  "razones": {
+   "a": "Un GET no lleva body; params va a la query.",
+   "b": "El método es GET, no POST.",
+   "c": "Correcta. params se serializa en la query.",
+   "d": "params es una opción válida de request.get."
+  },
+  "clave": "params = query string.",
+  "docs": "https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-get"
+ },
+ {
+  "id": "M-API-02",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "codigo",
+  "pregunta": "¿Qué se envía en esta petición?",
+  "codigo": "const response = await request.post('/api/users', {\n  data: { name: 'Ana', role: 'admin' },\n});\nexpect(response.status()).toBe(201);",
+  "opciones": {
+   "a": "Un body JSON con `Content-Type: application/json`.",
+   "b": "Un formulario `multipart/form-data`.",
+   "c": "Una query `?name=Ana&role=admin`.",
+   "d": "Nada: `data` se ignora en POST."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "En request.post, data con un objeto se serializa como JSON y se pone Content-Type: application/json.",
+  "explicacion": [
+   "data acepta objeto, string o Buffer.",
+   "Un objeto se envía como JSON.",
+   "form y multipart son opciones distintas para otros formatos."
+  ],
+  "razones": {
+   "a": "Correcta. El objeto va como JSON.",
+   "b": "Multipart se logra con la opción `multipart`.",
+   "c": "La query se pasa con `params`.",
+   "d": "`data` es la opción estándar para el cuerpo."
+  },
+  "clave": "data = JSON; form y multipart para otros formatos.",
+  "docs": "https://playwright.dev/docs/api-testing#writing-api-test"
+ },
+ {
+  "id": "M-API-03",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "error",
+  "pregunta": "El test falla con `undefined` aunque la API devuelve el nombre. ¿Qué falla?",
+  "codigo": "const response = await request.get('/api/users/1');\nconst user = response.json();\nexpect(user.name).toBe('Ana');",
+  "opciones": {
+   "a": "`json()` solo existe en `page.request`.",
+   "b": "`expect` necesita `await`.",
+   "c": "`name` es una propiedad reservada.",
+   "d": "Falta `await` en `response.json()`: `user` es una promesa y `user.name` es `undefined`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "response.json() es asíncrono y devuelve una promesa que hay que esperar.",
+  "explicacion": [
+   "json() devuelve Promise<any>.",
+   "Sin await, user.name es undefined.",
+   "Correcto: const user = await response.json();"
+  ],
+  "razones": {
+   "a": "json() existe en cualquier APIResponse.",
+   "b": "expect con un valor síncrono no necesita await.",
+   "c": "`name` no es una propiedad reservada.",
+   "d": "Correcta. Falta `await` en json()."
+  },
+  "clave": "response.json() siempre con await.",
+  "docs": "https://playwright.dev/docs/api/class-apiresponse#api-response-json"
+ },
+ {
+  "id": "M-API-04",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "codigo",
+  "pregunta": "¿Qué garantiza esta tipificación con la interface `User`?",
+  "codigo": "interface User { id: number; name: string }\n\nconst response = await request.get('/api/users/1');\nconst user: User = await response.json();\nexpect(user.name).toBe('Ana');",
+  "opciones": {
+   "a": "Que el servidor devuelve un objeto con esa forma, validado en ejecución.",
+   "b": "Que el test falla si el JSON tiene campos extra.",
+   "c": "Solo ayuda en compilación y autocompletado; no valida la respuesta en tiempo de ejecución.",
+   "d": "Que `response.json()` convierte el JSON a una clase `User`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "Las interfaces de TypeScript se borran al compilar: dan tipado estático, no validación en ejecución.",
+  "explicacion": [
+   "La anotación : User es una aserción de tipo estática.",
+   "No hay comprobación en runtime de los campos.",
+   "Para validar de verdad, usa expect sobre los campos o una librería de esquemas."
+  ],
+  "razones": {
+   "a": "No se valida en ejecución: la interface no existe en runtime.",
+   "b": "Los campos extra no provocan fallo.",
+   "c": "Correcta. Solo aporta tipado en compilación.",
+   "d": "json() devuelve un objeto plano, no una instancia de clase."
+  },
+  "clave": "Interface = tipos en compilación, no validación.",
+  "docs": "https://playwright.dev/docs/api-testing"
+ },
+ {
+  "id": "M-API-05",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "como",
+  "pregunta": "Con esta configuración, ¿qué hace `request.get('/users')` en un test?",
+  "codigo": "export default defineConfig({\n  use: {\n    baseURL: 'https://api.example.com',\n    extraHTTPHeaders: {\n      Authorization: `Bearer ${process.env.API_TOKEN}`,\n    },\n  },\n});",
+  "opciones": {
+   "a": "Pide `https://api.example.com/users` sin cabeceras extra.",
+   "b": "Falla: `baseURL` solo aplica a `page.goto`.",
+   "c": "Solo envía el `Authorization` en `page.goto`.",
+   "d": "Pide `https://api.example.com/users` enviando la cabecera `Authorization`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "baseURL y extraHTTPHeaders de use se aplican también a la fixture request.",
+  "explicacion": [
+   "baseURL se concatena a las rutas relativas.",
+   "extraHTTPHeaders se añaden a cada petición del contexto.",
+   "Así no se repite el token en cada llamada."
+  ],
+  "razones": {
+   "a": "Las cabeceras extra sí se envían.",
+   "b": "baseURL también aplica a la fixture request.",
+   "c": "También las peticiones de la fixture request llevan la cabecera.",
+   "d": "Correcta. Se aplican URL base y cabecera."
+  },
+  "clave": "baseURL + extraHTTPHeaders en config = menos repetición.",
+  "docs": "https://playwright.dev/docs/api-testing#configuration"
+ },
+ {
+  "id": "M-API-06",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "funcion",
+  "pregunta": "Creas un contexto de API propio fuera de las fixtures. ¿Qué debes hacer al terminar?",
+  "codigo": "import { request } from '@playwright/test';\n\nconst api = await request.newContext({\n  baseURL: 'https://api.example.com',\n  extraHTTPHeaders: { Accept: 'application/json' },\n});\nawait api.get('/health');\n// ...",
+  "opciones": {
+   "a": "Llamar a `api.dispose()` para liberar recursos.",
+   "b": "Llamar a `api.close()`, igual que un navegador.",
+   "c": "Nada: se libera solo al terminar el test.",
+   "d": "Llamar a `request.reset()`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un APIRequestContext creado con request.newContext() se libera con dispose().",
+  "explicacion": [
+   "request.newContext() crea un contexto independiente de las fixtures.",
+   "dispose() libera recursos y limpia respuestas almacenadas.",
+   "Se suele hacer en afterAll o en un fixture propio."
+  ],
+  "razones": {
+   "a": "Correcta. `dispose()` cierra el APIRequestContext.",
+   "b": "`close()` es de Browser/Page; APIRequestContext usa dispose().",
+   "c": "No se libera automáticamente si lo creas tú.",
+   "d": "`request.reset()` no existe."
+  },
+  "clave": "newContext de API -> dispose().",
+  "docs": "https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-dispose"
+ },
+ {
+  "id": "M-API-07",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "codigo",
+  "pregunta": "¿Qué estrategia ilustra este test y qué ventaja tiene?",
+  "codigo": "test('muestra la tarea', async ({ page, request }) => {\n  const res = await request.post('/api/todos', {\n    data: { title: 'Comprar pan' },\n  });\n  expect(res.ok()).toBeTruthy();\n  await page.goto('/todos');\n  await expect(page.getByText('Comprar pan')).toBeVisible();\n});",
+  "opciones": {
+   "a": "Mock de la API: evita usar el servidor.",
+   "b": "Preparar datos por API y verificar por UI: es más rápido y estable que crearlos desde la interfaz.",
+   "c": "Test de rendimiento: mide la latencia del POST.",
+   "d": "Test visual: compara capturas de pantalla."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Crear el estado inicial por API y verificar solo la parte relevante por UI acelera y estabiliza los tests.",
+  "explicacion": [
+   "El POST crea el dato sin pasar por la interfaz.",
+   "La UI solo comprueba lo que se quiere probar.",
+   "Reduce pasos frágiles del flujo."
+  ],
+  "razones": {
+   "a": "No hay mock: la petición llega al servidor real.",
+   "b": "Correcta. Setup por API, verificación por UI.",
+   "c": "No se mide la latencia ni el rendimiento.",
+   "d": "No hay comparación de capturas."
+  },
+  "clave": "Setup por API, aserción por UI.",
+  "docs": "https://playwright.dev/docs/api-testing#using-request-context"
+ },
+ {
+  "id": "M-API-08",
+  "nivel": "medio",
+  "tema": "Testing de API",
+  "tipo": "error",
+  "pregunta": "Este código no compila en TypeScript. ¿Cuál es el problema?",
+  "codigo": "const response = await request.post('/api/login', {\n  body: { user: 'ana', pass: 'secreto' },\n});",
+  "opciones": {
+   "a": "`post` no admite un objeto como segundo argumento.",
+   "b": "La opción para el cuerpo se llama `data`, no `body`.",
+   "c": "Falta pasar `headers` obligatoriamente.",
+   "d": "`/api/login` debe ser una URL absoluta."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "En APIRequestContext el cuerpo de la petición se pasa con data (o form/multipart), no con body.",
+  "explicacion": [
+   "Opciones válidas: data, form, multipart, params, headers, timeout, failOnStatusCode…",
+   "`body` es de route.fulfill, no de request.post.",
+   "Un objeto en data se envía como JSON."
+  ],
+  "razones": {
+   "a": "El segundo argumento es un objeto de opciones.",
+   "b": "Correcta. La opción es `data`.",
+   "c": "Las cabeceras son opcionales.",
+   "d": "Con baseURL se pueden usar rutas relativas."
+  },
+  "clave": "request.post -> data; route.fulfill -> body.",
+  "docs": "https://playwright.dev/docs/api/class-apirequestcontext#api-request-context-post"
+ },
+ {
+  "id": "M-AUT-01",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "Quieres que los tests de `chromium` esperen a que termine el proyecto de login. ¿Qué falta?",
+  "codigo": "projects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.ts/ },\n  {\n    name: 'chromium',\n    use: { ...devices['Desktop Chrome'] },\n    ___\n  },\n],",
+  "opciones": {
+   "a": "`dependencies: ['setup'],`",
+   "b": "`needs: ['setup'],`",
+   "c": "`before: 'setup',`",
+   "d": "`globalSetup: 'setup',`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`dependencies` en un proyecto hace que ese proyecto se ejecute solo tras terminar los indicados.",
+  "explicacion": [
+   "El proyecto setup corre primero y genera el estado de sesión.",
+   "dependencies lista nombres de proyectos.",
+   "globalSetup es una opción distinta y a nivel raíz."
+  ],
+  "razones": {
+   "a": "Correcta. dependencies lista los proyectos previos.",
+   "b": "needs no existe.",
+   "c": "before no existe.",
+   "d": "globalSetup es un fichero de la config, no del proyecto."
+  },
+  "clave": "Proyecto setup + dependencies.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-02",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "como",
+  "pregunta": "¿Qué regex en `testMatch` hace que un proyecto ejecute solo ficheros como `auth.setup.ts`?",
+  "opciones": {
+   "a": "`testMatch: /.*\\.setup\\.ts/`",
+   "b": "`testMatch: /setup/ts`",
+   "c": "`testMatch: '*.setup'`",
+   "d": "`testIgnore: /.*\\.setup\\.ts/`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un proyecto de setup suele filtrar sus ficheros con `testMatch` y la expresión `/.*\\.setup\\.ts/`.",
+  "explicacion": [
+   "testMatch acepta cadenas, regex o arrays.",
+   "El patrón captura nombres que terminan en .setup.ts.",
+   "testIgnore haría lo contrario."
+  ],
+  "razones": {
+   "a": "Correcta. Regex válida.",
+   "b": "/setup/ts no es una regex válida para este fin.",
+   "c": "'*.setup' no coincide con la extensión .ts.",
+   "d": "testIgnore excluye esos ficheros."
+  },
+  "clave": "testMatch elige, testIgnore excluye.",
+  "docs": "https://playwright.dev/docs/test-projects"
+ },
+ {
+  "id": "M-AUT-03",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "En el test de setup, ¿qué guarda la sesión en un fichero?",
+  "codigo": "setup('authenticate', async ({ page }) => {\n  await page.goto('/login');\n  await page.getByLabel('User').fill('ana');\n  await page.getByLabel('Password').fill('secret');\n  await page.getByRole('button', { name: 'Entrar' }).click();\n  await page.waitForURL('/home');\n  ___\n});",
+  "opciones": {
+   "a": "`await page.context().storageState({ path: authFile });`",
+   "b": "`await page.saveSession(authFile);`",
+   "c": "`await page.storageState(authFile);`",
+   "d": "`await context.save({ path: authFile });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El estado se guarda con `context.storageState({ path })`.",
+  "explicacion": [
+   "Almacena cookies y localStorage del contexto.",
+   "Se ejecuta tras comprobar que el login terminó.",
+   "El fichero se reutiliza en otros proyectos."
+  ],
+  "razones": {
+   "a": "Correcta. Método real del contexto.",
+   "b": "saveSession no existe.",
+   "c": "storageState es método del contexto, no de page.",
+   "d": "save no existe en BrowserContext."
+  },
+  "clave": "Sesión = context.storageState({ path }).",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-04",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo hacen los tests del proyecto `chromium` para reutilizar la sesión guardada?",
+  "codigo": "{\n  name: 'chromium',\n  use: {\n    ...devices['Desktop Chrome'],\n    ___\n  },\n  dependencies: ['setup'],\n},",
+  "opciones": {
+   "a": "`storageState: 'playwright/.auth/user.json'`",
+   "b": "`session: 'playwright/.auth/user.json'`",
+   "c": "`cookies: 'playwright/.auth/user.json'`",
+   "d": "`authFile: 'playwright/.auth/user.json'`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La opción `storageState` en `use` carga el estado de sesión en cada contexto.",
+  "explicacion": [
+   "Cada test arranca ya autenticado.",
+   "La ruta debe coincidir con la guardada en setup.",
+   "Se puede definir por proyecto o a nivel global."
+  ],
+  "razones": {
+   "a": "Correcta. Es la opción oficial.",
+   "b": "session no existe.",
+   "c": "cookies espera cookies, no una ruta.",
+   "d": "authFile no es opción de Playwright."
+  },
+  "clave": "use.storageState = sesión cargada.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-05",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "como",
+  "pregunta": "Con `storageState` global, ¿cómo ejecutas un fichero de tests sin sesión?",
+  "opciones": {
+   "a": "`test.use({ storageState: { cookies: [], origins: [] } });`",
+   "b": "`test.use({ storageState: null });`",
+   "c": "`test.skip(auth);`",
+   "d": "`test.use({ auth: false });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Se sobrescribe `storageState` con un estado vacío.",
+  "explicacion": [
+   "Se pone en el fichero o dentro de un describe.",
+   "Un estado vacío no contiene cookies ni origins.",
+   "test.use afecta a todo el ámbito donde se declara."
+  ],
+  "razones": {
+   "a": "Correcta. Estado vacío.",
+   "b": "null no es un valor válido para esta opción en TypeScript.",
+   "c": "test.skip omitiría el test.",
+   "d": "auth no es una opción."
+  },
+  "clave": "Sin sesión: storageState vacío.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-06",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "Para probar dos roles, ¿cómo configuras los proyectos?",
+  "codigo": "projects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.ts/ },\n  { name: 'admin', use: { storageState: 'playwright/.auth/admin.json' }, dependencies: ['setup'] },\n  { name: 'user', ___, dependencies: ['setup'] },\n]",
+  "opciones": {
+   "a": "`use: { storageState: 'playwright/.auth/user.json' }`",
+   "b": "`use: { role: 'user' }`",
+   "c": "`storageState: 'user'`",
+   "d": "`auth: 'playwright/.auth/user.json'`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Cada rol tiene su fichero de estado y su proyecto con `use.storageState`.",
+  "explicacion": [
+   "El setup genera un fichero por rol.",
+   "Cada proyecto carga el suyo.",
+   "storageState va dentro de use."
+  ],
+  "razones": {
+   "a": "Correcta. Cada proyecto con su fichero.",
+   "b": "role no existe.",
+   "c": "storageState debe estar dentro de use y ser ruta.",
+   "d": "auth no existe."
+  },
+  "clave": "Un rol = un fichero = un proyecto.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-FIX-01",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres una fixture que entregue un LoginPage listo al test. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{ loginPage: LoginPage }>({\n  loginPage: async ({ page }, use) => {\n    const loginPage = new LoginPage(page);\n    await loginPage.goto();\n    ___\n  },\n});",
+  "opciones": {
+   "a": "`await use(loginPage);`",
+   "b": "`return loginPage;`",
+   "c": "`use(loginPage);`",
+   "d": "`await test.use({ loginPage });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture entrega su valor llamando a `await use(valor)`; lo que va antes es la preparación y lo que va después, la limpieza.",
+  "explicacion": [
+   "use() cede el control al test con ese valor.",
+   "El código tras await use() se ejecuta al terminar el test (teardown).",
+   "Devolver el valor con return no lo entrega."
+  ],
+  "razones": {
+   "a": "Correcta. La fixture entrega el valor con await use(...).",
+   "b": "Las fixtures no devuelven el valor: lo pasan a use().",
+   "c": "Sin await, el teardown se ejecutaría antes de que acabe el test.",
+   "d": "test.use() configura opciones de un fichero o describe; no entrega valores."
+  },
+  "clave": "Fixture = preparar, await use(valor), limpiar.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-02",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Tras crear `fixtures.ts` con `base.extend`, ¿qué debe exportarse además de `test` para importar ambos desde ese fichero?",
+  "codigo": "import { test as base } from '@playwright/test';\n\nexport const test = base.extend<{ todo: TodoPage }>({\n  todo: async ({ page }, use) => { await use(new TodoPage(page)); },\n});\n___",
+  "opciones": {
+   "a": "`export { expect } from '@playwright/test';`",
+   "b": "`export { page } from '@playwright/test';`",
+   "c": "`export default base;`",
+   "d": "`export { use } from '@playwright/test';`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El fichero de fixtures exporta el `test` extendido y reexporta `expect` para importar ambos desde un solo sitio.",
+  "explicacion": [
+   "Los tests importan { test, expect } de './fixtures'.",
+   "Así no se mezcla el test base con el extendido.",
+   "expect no cambia, pero se reexporta por comodidad."
+  ],
+  "razones": {
+   "a": "Correcta. Reexporta expect.",
+   "b": "page no se exporta como módulo; es una fixture.",
+   "c": "Exportar base no incluye las fixtures nuevas.",
+   "d": "use no es una exportación de @playwright/test."
+  },
+  "clave": "Exporta `test` y `expect` juntos.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-03",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres que la fixture se cree una vez por worker y no por test. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{}, { db: Db }>({\n  db: [async ({}, use) => {\n    const db = await connect();\n    await use(db);\n    await db.close();\n  }, ___],\n});",
+  "opciones": {
+   "a": "`{ scope: 'worker' }`",
+   "b": "`{ worker: true }`",
+   "c": "`{ auto: 'worker' }`",
+   "d": "`{ scope: 'file' }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las fixtures de worker se declaran en el segundo genérico y con `{ scope: 'worker' }`.",
+  "explicacion": [
+   "El scope por defecto es 'test'.",
+   "Las de worker se comparten entre los tests que ejecuta el mismo worker.",
+   "Se tipan en el segundo parámetro genérico de extend."
+  ],
+  "razones": {
+   "a": "Correcta. Es la opción oficial de scope.",
+   "b": "worker: true no existe.",
+   "c": "auto no recibe un scope; es un booleano.",
+   "d": "Los valores válidos son 'test' y 'worker'."
+  },
+  "clave": "Segundo genérico + scope: 'worker'.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-04",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "como",
+  "pregunta": "¿Cómo declaras una fixture que se ejecuta en todos los tests aunque no la pidan?",
+  "codigo": "myLogger: [async ({}, use) => {\n  console.log('inicio');\n  await use();\n}, ___],",
+  "opciones": {
+   "a": "`{ auto: true }`",
+   "b": "`{ always: true }`",
+   "c": "`{ scope: 'auto' }`",
+   "d": "`{ global: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture automática se declara con `{ auto: true }` y se ejecuta en cada test sin que este la mencione.",
+  "explicacion": [
+   "Es útil para logging, limpiezas o capturas globales.",
+   "Se puede combinar con scope: 'worker'.",
+   "Si no hay valor que entregar, use() se llama sin argumentos."
+  ],
+  "razones": {
+   "a": "Correcta. auto: true.",
+   "b": "always no es una opción de fixture.",
+   "c": "scope solo admite 'test' o 'worker'.",
+   "d": "global no existe como opción."
+  },
+  "clave": "auto: true = se ejecuta siempre.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-05",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres una fixture configurable desde `test.use()` o los proyectos. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{ user: string }>({\n  user: ['guest', ___],\n});\n\n// en config: use: { user: 'admin' }",
+  "opciones": {
+   "a": "`{ option: true }`",
+   "b": "`{ config: true }`",
+   "c": "`{ scope: 'option' }`",
+   "d": "`{ auto: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture opción tiene un valor por defecto y `{ option: true }`, lo que permite sobrescribirla con `use`.",
+  "explicacion": [
+   "Se declara como [valorPorDefecto, { option: true }].",
+   "Se cambia con test.use() o en use del proyecto.",
+   "Sin option: true, el valor no se puede configurar así."
+  ],
+  "razones": {
+   "a": "Correcta. Marca la fixture como opción.",
+   "b": "config no es una propiedad válida.",
+   "c": "scope no admite 'option'.",
+   "d": "auto la ejecuta siempre, pero no la hace configurable."
+  },
+  "clave": "Opción = [default, { option: true }].",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-06",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "concepto",
+  "pregunta": "¿Cómo hace una fixture para depender de otra?",
+  "opciones": {
+   "a": "La recibe en el objeto desestructurado de sus argumentos, y Playwright resuelve el orden.",
+   "b": "Llamando manualmente a la otra fixture como función.",
+   "c": "Importándola con `import` desde su fichero.",
+   "d": "Declarando `dependencies: [...]` dentro de la fixture."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture pide otras fixtures desestructurándolas en su primer parámetro y Playwright las prepara antes.",
+  "explicacion": [
+   "Por ejemplo async ({ page, loginPage }, use) => {...}.",
+   "El teardown se ejecuta en orden inverso.",
+   "Solo se inicializan las que se usan."
+  ],
+  "razones": {
+   "a": "Correcta. Se piden por desestructuración.",
+   "b": "Las fixtures no se invocan manualmente.",
+   "c": "Importar el fichero no crea la dependencia.",
+   "d": "dependencies pertenece a proyectos, no a fixtures."
+  },
+  "clave": "Para depender, destructura.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-07",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "funcion",
+  "pregunta": "¿Qué función combina fixtures de dos `test` extendidos distintos en uno?",
+  "codigo": "import { mergeTests } from '@playwright/test';\nimport { test as dbTest } from './db';\nimport { test as authTest } from './auth';\n\nexport const test = ___;",
+  "opciones": {
+   "a": "`mergeTests(dbTest, authTest)`",
+   "b": "`dbTest.merge(authTest)`",
+   "c": "`base.extend(dbTest, authTest)`",
+   "d": "`combineTests(dbTest, authTest)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`mergeTests` fusiona las fixtures de varios `test` extendidos en uno solo.",
+  "explicacion": [
+   "Acepta dos o más test como argumentos.",
+   "El resultado se exporta como el test del proyecto.",
+   "No hay método .merge en test."
+  ],
+  "razones": {
+   "a": "Correcta. mergeTests es la API oficial.",
+   "b": "test no tiene método merge.",
+   "c": "extend no admite otros test como argumentos.",
+   "d": "combineTests no existe."
+  },
+  "clave": "Varios test: `mergeTests(a, b)`.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-08",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "error",
+  "pregunta": "El test con esta fixture falla indicando que `use()` no se llamó. ¿Qué falla?",
+  "codigo": "loginPage: async ({ page }, use) => {\n  const lp = new LoginPage(page);\n  await lp.goto();\n  return lp;\n},",
+  "opciones": {
+   "a": "La fixture nunca llama a `use()`, que es lo que la entrega al test.",
+   "b": "Falta `scope: 'test'`.",
+   "c": "`goto()` no se puede usar en una fixture.",
+   "d": "El parámetro `page` no está permitido en fixtures."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture debe llamar a `await use(valor)` exactamente una vez para que el test continúe.",
+  "explicacion": [
+   "return no sustituye a use().",
+   "Playwright informa de que la fixture no llamó a use().",
+   "El scope por defecto ya es 'test'."
+  ],
+  "razones": {
+   "a": "Correcta. Falta use().",
+   "b": "El scope por defecto ya es test.",
+   "c": "goto es una acción normal de un POM.",
+   "d": "page es la fixture más usada en otras fixtures."
+  },
+  "clave": "Sin use() no hay fixture.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FRA-01",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "codigo",
+  "pregunta": "El formulario de pago está dentro de un `<iframe id=\"payment\">`. ¿Qué método completa el hueco?",
+  "codigo": "await page.___('#payment')\n  .getByLabel('Tarjeta')\n  .fill('4242 4242 4242 4242');",
+  "opciones": {
+   "a": "`frameLocator`",
+   "b": "`frame`",
+   "c": "`locator`",
+   "d": "`waitForFrame`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "page.frameLocator(selector) devuelve un FrameLocator con el que localizar elementos dentro de un iframe.",
+  "explicacion": [
+   "frameLocator('#payment') apunta al iframe.",
+   "Desde él se encadenan getByLabel, getByRole, etc.",
+   "Reintenta y espera automáticamente, a diferencia de page.frame()."
+  ],
+  "razones": {
+   "a": "Correcta. `frameLocator` entra en el iframe.",
+   "b": "`page.frame()` es la API antigua y no auto-espera.",
+   "c": "`locator` no atraviesa la frontera del iframe.",
+   "d": "`waitForFrame` no existe en Page."
+  },
+  "clave": "iframe -> frameLocator.",
+  "docs": "https://playwright.dev/docs/frames"
+ },
+ {
+  "id": "M-FRA-02",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "error",
+  "pregunta": "El test borra un elemento que muestra un `confirm()`, pero el borrado nunca se confirma. ¿Por qué?",
+  "codigo": "await page.getByRole('button', { name: 'Borrar' }).click();\npage.on('dialog', dialog => dialog.accept());\nawait expect(page.getByText('Elemento borrado')).toBeVisible();",
+  "opciones": {
+   "a": "`dialog.accept()` no existe; es `dialog.confirm()`.",
+   "b": "Los diálogos solo se pueden aceptar con `page.once`.",
+   "c": "Falta `await` en `dialog.accept()`.",
+   "d": "El manejador se registra después del clic; sin manejador, Playwright descarta el diálogo automáticamente."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "Los manejadores de diálogos deben registrarse antes de la acción que los abre; sin ellos Playwright los descarta automáticamente.",
+  "explicacion": [
+   "Sin listener de 'dialog', Playwright cierra (dismiss) el diálogo solo.",
+   "El listener debe existir antes del click que lo dispara.",
+   "Aquí se registra tarde y nunca se acepta."
+  ],
+  "razones": {
+   "a": "`dialog.accept()` es el método correcto.",
+   "b": "`page.on` también vale; `once` solo limita a un evento.",
+   "c": "Aunque conviene hacerlo, el fallo principal es el orden del registro.",
+   "d": "Correcta. El diálogo ya se descartó antes de registrar el manejador."
+  },
+  "clave": "Primero el listener del diálogo, luego el click.",
+  "docs": "https://playwright.dev/docs/dialogs"
+ },
+ {
+  "id": "M-FRA-03",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "codigo",
+  "pregunta": "¿Por qué la promesa `popupPromise` se crea antes del clic?",
+  "codigo": "const popupPromise = page.waitForEvent('popup');\nawait page.getByText('Ayuda').click();\nconst popup = await popupPromise;\nawait expect(popup).toHaveTitle(/Ayuda/);",
+  "opciones": {
+   "a": "Porque `waitForEvent` bloquea el hilo hasta el clic.",
+   "b": "Para que el evento no se pierda si la pestaña se abre antes de empezar a escuchar.",
+   "c": "Porque `click` solo funciona si hay una promesa pendiente.",
+   "d": "Porque `toHaveTitle` necesita la promesa sin resolver."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Los eventos que dispara una acción se escuchan antes de ejecutarla para evitar condiciones de carrera.",
+  "explicacion": [
+   "waitForEvent empieza a escuchar al llamarse.",
+   "El popup puede abrirse justo durante el click.",
+   "Se hace await de la promesa después, para obtener la nueva Page."
+  ],
+  "razones": {
+   "a": "waitForEvent devuelve una promesa; no bloquea nada hasta el await.",
+   "b": "Correcta. Se evita perder el evento por orden de ejecución.",
+   "c": "click no depende de promesas pendientes.",
+   "d": "toHaveTitle recibe la Page ya resuelta."
+  },
+  "clave": "Promesa primero, acción después, await al final.",
+  "docs": "https://playwright.dev/docs/pages#handling-popups"
+ },
+ {
+  "id": "M-FRA-04",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "funcion",
+  "pregunta": "Un enlace abre una nueva pestaña con `target=\"_blank\"`. ¿Qué espera captura cualquier página nueva creada en el contexto del navegador?",
+  "codigo": "const pagePromise = context.___;\nawait page.getByRole('link', { name: 'Docs' }).click();\nconst newPage = await pagePromise;",
+  "opciones": {
+   "a": "`waitForEvent('page')`",
+   "b": "`waitForNavigation()`",
+   "c": "`waitForEvent('tab')`",
+   "d": "`waitForPage()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "context.waitForEvent('page') emite cada nueva Page del BrowserContext.",
+  "explicacion": [
+   "El evento 'page' del contexto cubre cualquier pestaña nueva.",
+   "page.waitForEvent('popup') cubre solo las abiertas desde esa página.",
+   "waitForNavigation está obsoleto y no abre pestañas."
+  ],
+  "razones": {
+   "a": "Correcta. `context.waitForEvent('page')` devuelve la nueva Page.",
+   "b": "`waitForNavigation` está obsoleto y no devuelve una Page nueva.",
+   "c": "No existe el evento 'tab'.",
+   "d": "BrowserContext no tiene `waitForPage`."
+  },
+  "clave": "Nueva pestaña: evento 'page' del context o 'popup' de la page.",
+  "docs": "https://playwright.dev/docs/pages#handling-new-pages"
+ },
+ {
+  "id": "M-FRA-05",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "codigo",
+  "pregunta": "El enlace descarga `informe-2024.pdf`. ¿Qué imprime este test?",
+  "codigo": "const downloadPromise = page.waitForEvent('download');\nawait page.getByRole('link', { name: 'Informe' }).click();\nconst download = await downloadPromise;\nconsole.log(download.suggestedFilename());",
+  "opciones": {
+   "a": "La ruta temporal donde Playwright guardó el fichero.",
+   "b": "`informe-2024.pdf`, el nombre sugerido por el servidor.",
+   "c": "El contenido del PDF.",
+   "d": "`undefined` hasta llamar a `download.saveAs`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "download.suggestedFilename() devuelve el nombre de fichero sugerido por el navegador/servidor.",
+  "explicacion": [
+   "La descarga se espera con waitForEvent('download') antes del click.",
+   "suggestedFilename() viene de Content-Disposition o de la URL.",
+   "saveAs(ruta) guarda la copia donde se indique."
+  ],
+  "razones": {
+   "a": "La ruta se obtiene con `download.path()`, no con suggestedFilename.",
+   "b": "Correcta. Devuelve el nombre sugerido.",
+   "c": "El contenido no se devuelve con este método.",
+   "d": "suggestedFilename está disponible sin llamar a saveAs."
+  },
+  "clave": "suggestedFilename = nombre; saveAs = guardar.",
+  "docs": "https://playwright.dev/docs/downloads"
+ },
+ {
+  "id": "M-FRA-06",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "codigo",
+  "pregunta": "¿Qué método completa el hueco para subir un fichero a un `<input type=\"file\">`?",
+  "codigo": "await page.getByLabel('Adjunto').___('tests/data/cv.pdf');",
+  "opciones": {
+   "a": "`fill`",
+   "b": "`uploadFile`",
+   "c": "`setInputFiles`",
+   "d": "`type`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "locator.setInputFiles() asigna uno o varios ficheros a un input de tipo file.",
+  "explicacion": [
+   "Acepta una ruta, un array de rutas o buffers.",
+   "setInputFiles([]) vacía la selección.",
+   "fill() solo vale para campos de texto."
+  ],
+  "razones": {
+   "a": "`fill` no sirve para inputs de tipo file.",
+   "b": "`uploadFile` es de otras librerías, no de Playwright.",
+   "c": "Correcta. `setInputFiles` selecciona los ficheros.",
+   "d": "`type` simula teclas y no sube ficheros."
+  },
+  "clave": "Subir fichero = setInputFiles.",
+  "docs": "https://playwright.dev/docs/input#upload-files"
+ },
+ {
+  "id": "M-FRA-07",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "error",
+  "pregunta": "El campo existe dentro del iframe `#payment`, pero el test da timeout. ¿Cuál es la causa?",
+  "codigo": "await page.locator('#payment').getByLabel('Tarjeta').fill('4242');",
+  "opciones": {
+   "a": "`getByLabel` no se puede encadenar.",
+   "b": "Falta `await` antes de `getByLabel`.",
+   "c": "Un locator normal no entra en el contenido del iframe; hay que usar `frameLocator`.",
+   "d": "`fill` no funciona en campos de tarjeta."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "Los locators no atraviesan iframes: el contenido de un iframe se alcanza con frameLocator o contentFrame().",
+  "explicacion": [
+   "page.locator('#payment') localiza la etiqueta iframe, no su contenido.",
+   "Para entrar: page.frameLocator('#payment') o locator.contentFrame().",
+   "Después se encadenan los locators normales."
+  ],
+  "razones": {
+   "a": "Encadenar getByLabel desde un locator es válido.",
+   "b": "Los locators se construyen sin await; solo la acción lo lleva.",
+   "c": "Correcta. Hay que entrar al iframe con `frameLocator`.",
+   "d": "fill funciona con cualquier input editable."
+  },
+  "clave": "Locator = no cruza iframes; frameLocator = sí.",
+  "docs": "https://playwright.dev/docs/frames"
+ },
+ {
+  "id": "M-FRA-08",
+  "nivel": "medio",
+  "tema": "Frames, diálogos y pestañas",
+  "tipo": "codigo",
+  "pregunta": "Un botón abre el selector nativo de ficheros y no hay `<input type=\"file\">` accesible. ¿Qué hace este patrón?",
+  "codigo": "const chooserPromise = page.waitForEvent('filechooser');\nawait page.getByText('Subir').click();\nconst chooser = await chooserPromise;\nawait chooser.setFiles('tests/data/foto.png');",
+  "opciones": {
+   "a": "Cancela el selector nativo.",
+   "b": "Descarga `foto.png` desde la página.",
+   "c": "Cambia el input a `type=\"file\"`.",
+   "d": "Intercepta el selector de ficheros y selecciona el fichero indicado."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "El evento filechooser permite responder al selector nativo con fileChooser.setFiles().",
+  "explicacion": [
+   "Se escucha 'filechooser' antes del click.",
+   "El click abre el selector y dispara el evento.",
+   "chooser.setFiles() selecciona los ficheros sin interactuar con el SO."
+  ],
+  "razones": {
+   "a": "No lo cancela: lo responde con un fichero.",
+   "b": "Es una subida, no una descarga.",
+   "c": "No modifica el DOM del input.",
+   "d": "Correcta. Intercepta el selector y fija el fichero."
+  },
+  "clave": "Botón que abre selector nativo: waitForEvent('filechooser').",
+  "docs": "https://playwright.dev/docs/input#upload-files"
+ },
+ {
+  "id": "M-LOC-01",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este código?",
+  "codigo": "const row = page.getByRole('row').filter({ hasText: 'Ana' });\nawait row.getByRole('button', { name: 'Editar' }).click();",
+  "opciones": {
+   "a": "Hace clic en todos los botones `Editar` de la tabla.",
+   "b": "Hace clic en el botón `Editar` de la fila que contiene el texto `Ana`.",
+   "c": "Falla siempre porque `filter` solo existe en `page.locator`.",
+   "d": "Hace clic en la primera fila y comprueba que contiene `Ana`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "filter() reduce un conjunto de locators y permite encadenar nuevos locators dentro del elemento resultante.",
+  "explicacion": [
+   "getByRole('row') devuelve todas las filas.",
+   "filter({ hasText }) deja solo las filas cuyo texto contiene 'Ana'.",
+   "El locator encadenado busca el botón únicamente dentro de esa fila."
+  ],
+  "razones": {
+   "a": "El filtro acota a una sola fila, no a toda la tabla.",
+   "b": "Correcta. Se filtra la fila por texto y se busca el botón dentro de ella.",
+   "c": "filter está disponible en cualquier Locator.",
+   "d": "No hay aserción ni se selecciona la primera fila; se filtra por texto."
+  },
+  "clave": "Fila por texto con filter, acción con un locator encadenado.",
+  "docs": "https://playwright.dev/docs/locators#filtering-locators"
+ },
+ {
+  "id": "M-LOC-02",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "funcion",
+  "pregunta": "Necesitas un locator que localice un elemento que cumpla a la vez dos condiciones (por ejemplo, un botón con rol `button` Y con un `data-testid` concreto). ¿Qué método usas?",
+  "codigo": "const btn = page.getByRole('button').___(page.getByTestId('save'));",
+  "opciones": {
+   "a": "`and`",
+   "b": "`or`",
+   "c": "`filter`",
+   "d": "`nth`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "locator.and() devuelve el elemento que coincide con ambos locators a la vez.",
+  "explicacion": [
+   "and() crea una intersección de dos locators.",
+   "or() es la unión: coincide con cualquiera de los dos.",
+   "Ambos locators se evalúan sobre el mismo elemento, no uno dentro del otro."
+  ],
+  "razones": {
+   "a": "Correcta. `and` exige que el mismo elemento cumpla ambos locators.",
+   "b": "`or` coincide con cualquiera de los dos, no con ambos.",
+   "c": "`filter` espera opciones como hasText o has, no un locator directamente.",
+   "d": "`nth` elige por posición, no combina condiciones."
+  },
+  "clave": "and = intersección, or = unión.",
+  "docs": "https://playwright.dev/docs/locators#matching-all-of-multiple-locators"
+ },
+ {
+  "id": "M-LOC-03",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "error",
+  "pregunta": "Este código no compila en TypeScript. ¿Cuál es el problema?",
+  "codigo": "for (const item of page.getByRole('listitem')) {\n  console.log(await item.textContent());\n}",
+  "opciones": {
+   "a": "`textContent` no existe en Locator.",
+   "b": "Un Locator no es iterable; hay que usar `await page.getByRole('listitem').all()`.",
+   "c": "`getByRole` no admite el rol `listitem`.",
+   "d": "Falta `await` delante del `for`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Un Locator no es iterable: locator.all() devuelve una promesa con un array de Locators sobre el que sí se puede iterar.",
+  "explicacion": [
+   "Un Locator es una descripción perezosa, no una colección.",
+   "await locator.all() devuelve Locator[] con los elementos actuales.",
+   "Después se usa for...of normalmente."
+  ],
+  "razones": {
+   "a": "locator.textContent() existe y es válido.",
+   "b": "Correcta. Hay que obtener el array con `await ...all()` antes del for...of.",
+   "c": "listitem es un rol ARIA válido.",
+   "d": "`await` no va delante del `for` de esta forma; el problema es la iteración sobre el Locator."
+  },
+  "clave": "for...of sobre await locator.all(), nunca sobre el locator.",
+  "docs": "https://playwright.dev/docs/locators#lists"
+ },
+ {
+  "id": "M-LOC-04",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "codigo",
+  "pregunta": "Quieres obtener un array de strings con el texto de todos los elementos de la lista. ¿Qué método completa el hueco?",
+  "codigo": "const texts: string[] = await page.locator('ul.menu li').___();\nexpect(texts).toEqual(['Inicio', 'Cursos', 'Contacto']);",
+  "opciones": {
+   "a": "`textContent`",
+   "b": "`allTextContents`",
+   "c": "`innerHTML`",
+   "d": "`count`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "allTextContents() y allInnerTexts() devuelven un array de strings con el texto de todos los elementos coincidentes.",
+  "explicacion": [
+   "textContent() devuelve un solo string y falla con varios elementos (strict mode).",
+   "allTextContents() devuelve string[].",
+   "count() solo devuelve el número de elementos."
+  ],
+  "razones": {
+   "a": "`textContent` devuelve un único string y es estricto con un solo elemento.",
+   "b": "Correcta. `allTextContents` devuelve el array de textos.",
+   "c": "`innerHTML` devuelve HTML de un solo elemento, no un array.",
+   "d": "`count` devuelve un número, no los textos."
+  },
+  "clave": "Plural 'all...' para arrays de texto.",
+  "docs": "https://playwright.dev/docs/api/class-locator#locator-all-text-contents"
+ },
+ {
+  "id": "M-LOC-05",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "concepto",
+  "pregunta": "En la página hay dos botones: `Guardar` y `Guardar como`. ¿Qué locator apunta solo al primero?",
+  "codigo": "// A\npage.getByRole('button', { name: 'Guardar' })\n// B\npage.getByRole('button', { name: 'Guardar', exact: true })",
+  "opciones": {
+   "a": "Solo A.",
+   "b": "Ambos; `exact` no cambia nada.",
+   "c": "Solo B.",
+   "d": "Ninguno; hay que usar `first()` siempre."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "Por defecto name coincide por subcadena sin distinguir mayúsculas; exact: true exige coincidencia exacta del nombre completo.",
+  "explicacion": [
+   "Sin exact, 'Guardar' también coincide con 'Guardar como' (subcadena).",
+   "El locator A violaría el strict mode al encontrar dos botones.",
+   "Con exact: true solo coincide el nombre completo y sensible a mayúsculas."
+  ],
+  "razones": {
+   "a": "A coincide con los dos botones y provoca un strict mode violation.",
+   "b": "`exact` sí cambia el emparejamiento: pasa de subcadena a exacto.",
+   "c": "Correcta. Con `exact: true` solo coincide 'Guardar' completo.",
+   "d": "Un locator exacto evita necesitar first()."
+  },
+  "clave": "¿Nombres que se contienen entre sí? exact: true.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-role"
+ },
+ {
+  "id": "M-LOC-06",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "como",
+  "pregunta": "¿Cómo localizas un enlace cuyo nombre es `Pedido #` seguido de un número variable (Pedido #12, Pedido #345…)?",
+  "opciones": {
+   "a": "`page.getByRole('link', { name: 'Pedido #\\\\d+' })`",
+   "b": "`page.getByRole('link', { name: /Pedido #\\d+/ })`",
+   "c": "`page.getByRole('link', { regex: 'Pedido #\\\\d+' })`",
+   "d": "`page.getByRole('link').matches(/Pedido #\\d+/)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "La opción name de getByRole acepta un string o una RegExp para nombres variables.",
+  "explicacion": [
+   "name acepta string o RegExp.",
+   "Con string se busca subcadena literal, no patrón.",
+   "No existe una opción regex ni un método matches() en Locator."
+  ],
+  "razones": {
+   "a": "Un string se toma literal: no interpreta `\\d+` como patrón.",
+   "b": "Correcta. name acepta una RegExp.",
+   "c": "No existe la opción `regex` en getByRole.",
+   "d": "Locator no tiene un método `matches`."
+  },
+  "clave": "Nombre variable: /regex/ en name.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-role"
+ },
+ {
+  "id": "M-LOC-07",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "codigo",
+  "pregunta": "Si hay 5 `li` en la lista y 2 contienen `Agotado`, ¿qué valor tiene `n`?",
+  "codigo": "const n = await page\n  .getByRole('listitem')\n  .filter({ hasNotText: 'Agotado' })\n  .count();",
+  "opciones": {
+   "a": "2",
+   "b": "5",
+   "c": "3",
+   "d": "No se puede saber: lanza un error de strict mode."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "filter({ hasNotText }) excluye los elementos que contienen el texto, y count() cuenta los restantes sin strict mode.",
+  "explicacion": [
+   "hasNotText deja los elementos que NO contienen el texto.",
+   "5 - 2 = 3 elementos restantes.",
+   "count() no es estricto: puede haber cualquier número de coincidencias."
+  ],
+  "razones": {
+   "a": "2 son los que sí contienen 'Agotado'; hasNotText los excluye.",
+   "b": "El filtro elimina los que contienen el texto.",
+   "c": "Correcta. Quedan los 3 elementos sin 'Agotado'.",
+   "d": "count() no lanza strict mode violation."
+  },
+  "clave": "hasText incluye, hasNotText excluye, count() cuenta.",
+  "docs": "https://playwright.dev/docs/locators#filter-by-text"
+ },
+ {
+  "id": "M-LOC-08",
+  "nivel": "medio",
+  "tema": "Localizadores avanzados",
+  "tipo": "codigo",
+  "pregunta": "La página, según el idioma, muestra solo uno de los dos botones. Si solo existe el botón en inglés, ¿qué ocurre?",
+  "codigo": "const accept = page\n  .getByRole('button', { name: 'Aceptar' })\n  .or(page.getByRole('button', { name: 'Accept' }));\nawait accept.click();",
+  "opciones": {
+   "a": "Falla porque no se encuentra `Aceptar`.",
+   "b": "Lanza un error porque `or` solo vale en aserciones.",
+   "c": "Hace clic en `Accept`.",
+   "d": "Espera a que aparezcan ambos botones."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "locator.or() crea un locator que coincide con cualquiera de los dos; si solo existe uno, actúa sobre él.",
+  "explicacion": [
+   "or() es la unión de ambos locators.",
+   "Con un solo botón presente, la acción se hace sobre él.",
+   "Si aparecieran los dos a la vez, habría strict mode violation."
+  ],
+  "razones": {
+   "a": "or() no exige que coincidan los dos locators.",
+   "b": "or() sirve para cualquier acción, no solo aserciones.",
+   "c": "Correcta. Coincide el botón existente y se hace clic.",
+   "d": "No se esperan ambos; basta con que exista uno."
+  },
+  "clave": "or = vale cualquiera de los dos (cuidado si aparecen ambos).",
+  "docs": "https://playwright.dev/docs/locators#matching-one-of-the-two-alternative-locators"
+ },
+ {
+  "id": "M-ORG-01",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "funcion",
+  "pregunta": "¿Qué función agrupa acciones con un nombre legible en el informe y el trace?",
+  "codigo": "await ___('Rellenar formulario', async () => {\n  await page.getByLabel('Nombre').fill('Ana');\n  await page.getByRole('button', { name: 'Enviar' }).click();\n});",
+  "opciones": {
+   "a": "`test.step`",
+   "b": "`test.group`",
+   "c": "`test.section`",
+   "d": "`expect.step`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`test.step` crea un paso con nombre visible en los informes y en el trace.",
+  "explicacion": [
+   "Devuelve una Promise, por eso se usa con await.",
+   "Puede devolver un valor.",
+   "Facilita localizar dónde falla un test."
+  ],
+  "razones": {
+   "a": "Correcta. Es la API oficial.",
+   "b": "test.group no existe.",
+   "c": "test.section no existe.",
+   "d": "expect no tiene step."
+  },
+  "clave": "Pasos legibles: test.step.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "M-ORG-02",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo compruebas varias cosas sin que la primera aserción fallida detenga el test?",
+  "opciones": {
+   "a": "`await expect.soft(locator).toHaveText('Hola');`",
+   "b": "`await expect(locator).soft().toHaveText('Hola');`",
+   "c": "`await expect(locator, { soft: true }).toBeVisible();`",
+   "d": "`await test.soft(locator).toHaveText('Hola');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`expect.soft` registra el fallo pero deja continuar el test.",
+  "explicacion": [
+   "El test se marca como fallido al final.",
+   "Útil para validar varios campos de una vez.",
+   "Se usa igual que expect."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "expect no tiene método soft().",
+   "c": "No existe esa opción así.",
+   "d": "test no tiene soft."
+  },
+  "clave": "Soft = falla sin parar.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-03",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "Se necesita esperar a que un endpoint devuelva 200 con reintentos. ¿Qué va en el hueco?",
+  "codigo": "await ___(async () => {\n  const res = await request.get('/api/health');\n  return res.status();\n}, { timeout: 10_000 }).toBe(200);",
+  "opciones": {
+   "a": "`expect.poll`",
+   "b": "`expect.retry`",
+   "c": "`expect.wait`",
+   "d": "`expect.eventually`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`expect.poll` repite una función hasta que el valor cumple la aserción.",
+  "explicacion": [
+   "Admite timeout e intervals.",
+   "La función devuelve el valor que se evalúa.",
+   "Se encadena con matchers como toBe."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "retry no existe.",
+   "c": "wait no existe.",
+   "d": "eventually no existe."
+  },
+  "clave": "Valor cambiante: expect.poll.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-04",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Qué matcher hace que este bloque se reintente hasta que no lance error?",
+  "codigo": "await expect(async () => {\n  const res = await request.get('/api/job');\n  expect(res.status()).toBe(200);\n}).___({ timeout: 10_000 });",
+  "opciones": {
+   "a": "`toPass`",
+   "b": "`toRetry`",
+   "c": "`toResolve`",
+   "d": "`toSucceed`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`toPass` reintenta un bloque hasta que no falle.",
+  "explicacion": [
+   "Útil para varios pasos relacionados.",
+   "Acepta timeout e intervals.",
+   "Se usa con expect(async () => {...})."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "toRetry no existe.",
+   "c": "toResolve no existe.",
+   "d": "toSucceed no existe."
+  },
+  "clave": "Bloque reintentable: toPass.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-05",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo haces que los tests de un describe se ejecuten en orden y se detengan al fallar uno?",
+  "opciones": {
+   "a": "`test.describe.configure({ mode: 'serial' });`",
+   "b": "`test.describe.serial = true;`",
+   "c": "`test.configure({ order: 'serial' });`",
+   "d": "`test.describe.configure({ workers: 1 });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El modo serial ejecuta los tests en orden y salta el resto si uno falla.",
+  "explicacion": [
+   "Se llama dentro del describe.",
+   "Los tests se reintentan juntos.",
+   "Debe usarse con cuidado."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "No es una propiedad.",
+   "c": "test.configure no existe.",
+   "d": "workers no es opción de describe."
+  },
+  "clave": "Dependientes: mode serial.",
+  "docs": "https://playwright.dev/docs/test-parallel"
+ },
+ {
+  "id": "M-ORG-06",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo etiquetas un test como smoke y lo ejecutas filtrando?",
+  "codigo": "test('login', ___, async ({ page }) => {\n  // ...\n});\n\n// npx playwright test --grep @smoke",
+  "opciones": {
+   "a": "`{ tag: '@smoke' }`",
+   "b": "`{ label: '@smoke' }`",
+   "c": "`{ grep: '@smoke' }`",
+   "d": "`{ smoke: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las etiquetas van en los detalles del test con `tag` y se filtran con `--grep`.",
+  "explicacion": [
+   "Pueden ser un string o array.",
+   "--grep-invert excluye tests.",
+   "Se pueden filtrar en CI."
+  ],
+  "razones": {
+   "a": "Correcta. tag.",
+   "b": "label no existe.",
+   "c": "grep no es detalle de test.",
+   "d": "smoke no es propiedad."
+  },
+  "clave": "tag + --grep.",
+  "docs": "https://playwright.dev/docs/test-annotations"
+ },
+ {
+  "id": "M-ORG-07",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo sabes en un test si es un reintento?",
+  "codigo": "test('x', async ({ page }) => {\n  const info = test.info();\n  if (___ > 0) { /* ... */ }\n});",
+  "opciones": {
+   "a": "`info.retry`",
+   "b": "`info.retries`",
+   "c": "`info.attempt`",
+   "d": "`test.retry`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`testInfo.retry` indica el número de reintento.",
+  "explicacion": [
+   "Vale 0 en el primer intento.",
+   "Se obtiene con test.info().",
+   "retries es opción de config."
+  ],
+  "razones": {
+   "a": "Correcta. retry.",
+   "b": "retries no es propiedad de testInfo.",
+   "c": "attempt no existe.",
+   "d": "test.retry no existe."
+  },
+  "clave": "retry 0 = primer intento.",
+  "docs": "https://playwright.dev/docs/test-retries"
+ },
+ {
+  "id": "M-ORG-08",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo saltas un test en WebKit con motivo?",
+  "codigo": "test('feature', async ({ page, browserName }) => {\n  ___;\n});",
+  "opciones": {
+   "a": "`test.skip(browserName === 'webkit', 'No soportado en WebKit')`",
+   "b": "`test.skip('webkit')`",
+   "c": "`if (browserName === 'webkit') return;`",
+   "d": "`test.fixme(browserName)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`test.skip(condicion, motivo)` omite el test dinámicamente.",
+  "explicacion": [
+   "Aparece como omitido en el informe.",
+   "Se puede usar dentro del test.",
+   "return lo marcaría como pasado."
+  ],
+  "razones": {
+   "a": "Correcta. Forma oficial.",
+   "b": "skip('webkit') omite siempre.",
+   "c": "Marcaría como pasado.",
+   "d": "fixme se usa para tests rotos."
+  },
+  "clave": "skip(cond, motivo).",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "M-ORG-09",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este código?",
+  "codigo": "const users: { name: string; role: string }[] = [\n  { name: 'Ana', role: 'admin' },\n  { name: 'Luis', role: 'user' },\n];\n\nfor (const u of users) {\n  test(`login de ${u.name}`, async ({ page }) => {\n    // ...\n  });\n}",
+  "opciones": {
+   "a": "Genera un test por usuario con nombre distinto.",
+   "b": "Ejecuta un solo test con todos.",
+   "c": "Falla por nombres repetidos.",
+   "d": "Necesita test.each."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los tests parametrizados se crean con un bucle.",
+  "explicacion": [
+   "Cada test debe tener título único.",
+   "Playwright no tiene test.each.",
+   "Se tipan los datos."
+  ],
+  "razones": {
+   "a": "Correcta. Un test por elemento.",
+   "b": "Se crean varios tests.",
+   "c": "Los títulos son distintos.",
+   "d": "test.each no existe."
+  },
+  "clave": "Bucle = tests parametrizados.",
+  "docs": "https://playwright.dev/docs/test-parameterize"
+ },
+ {
+  "id": "M-ORG-10",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Qué comando abre un trace?",
+  "opciones": {
+   "a": "`npx playwright show-trace trace.zip`",
+   "b": "`npx playwright open-trace trace.zip`",
+   "c": "`npx playwright trace trace.zip`",
+   "d": "`npx playwright view trace.zip`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`show-trace` abre el visor de trazas.",
+  "explicacion": [
+   "Muestra acciones y capturas.",
+   "Se genera con trace on.",
+   "Admite zip."
+  ],
+  "razones": {
+   "a": "Correcta. Comando oficial.",
+   "b": "open-trace no existe.",
+   "c": "trace no existe.",
+   "d": "view no existe."
+  },
+  "clave": "show-trace.",
+  "docs": "https://playwright.dev/docs/trace-viewer"
+ },
+ {
+  "id": "M-ORG-11",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo actualizas las capturas de referencia?",
+  "codigo": "await expect(page).toHaveScreenshot();",
+  "opciones": {
+   "a": "`npx playwright test --update-snapshots`",
+   "b": "`npx playwright test --update-screenshots`",
+   "c": "`npx playwright update`",
+   "d": "`npx playwright test --reset-snapshots`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`--update-snapshots` regenera las referencias.",
+  "explicacion": [
+   "Se usa tras un cambio visual intencionado.",
+   "Revisa los cambios antes de commitear.",
+   "Otros flags no existen."
+  ],
+  "razones": {
+   "a": "Correcta. Flag oficial.",
+   "b": "update-screenshots no existe.",
+   "c": "update no existe.",
+   "d": "reset-snapshots no existe."
+  },
+  "clave": "--update-snapshots.",
+  "docs": "https://playwright.dev/docs/test-snapshots"
+ },
+ {
+  "id": "M-POM-01",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "codigo",
+  "pregunta": "En este Page Object, ¿qué va en el hueco para definir el botón?",
+  "codigo": "import type { Page, Locator } from '@playwright/test';\n\nexport class LoginPage {\n  readonly page: Page;\n  readonly submit: Locator;\n\n  constructor(page: Page) {\n    this.page = page;\n    this.submit = ___;\n  }\n}",
+  "opciones": {
+   "a": "`page.getByRole('button', { name: 'Entrar' })`",
+   "b": "`await page.getByRole('button', { name: 'Entrar' })`",
+   "c": "`page.getByRole('button', { name: 'Entrar' }).click()`",
+   "d": "`page.getByRole('button', { name: 'Entrar' }).textContent()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "En un POM los locators son propiedades `readonly` que se crean en el constructor sin ejecutar ninguna acción.",
+  "explicacion": [
+   "Crear un locator es síncrono y perezoso: no toca el navegador.",
+   "El constructor no puede ser async, así que no admite await.",
+   "Guardar el Locator permite reutilizarlo con auto-espera en cada uso."
+  ],
+  "razones": {
+   "a": "Correcta. Devuelve un Locator, que es lo que declara la propiedad.",
+   "b": "Un constructor no puede ser async, y además crear un locator no necesita await.",
+   "c": "click() ejecuta una acción y devuelve Promise<void>, no un Locator.",
+   "d": "textContent() devuelve una Promise<string|null>, no un Locator."
+  },
+  "clave": "Constructor: solo locators, sin await ni acciones.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-02",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "error",
+  "pregunta": "Este método del Page Object a veces deja el test sin rellenar el formulario antes de pulsar. ¿Qué falla?",
+  "codigo": "async login(user: string, pass: string): Promise<void> {\n  this.userInput.fill(user);\n  this.passInput.fill(pass);\n  await this.submit.click();\n}",
+  "opciones": {
+   "a": "Faltan los `await` en los `fill()`: las promesas no se esperan y el clic puede adelantarse.",
+   "b": "`fill()` no existe en un Locator; hay que usar `type()`.",
+   "c": "El método debería devolver `Promise<string>`.",
+   "d": "Los locators deberían ser `async` para poder rellenarse."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Toda acción de Locator devuelve una Promise y hay que esperarla con `await` también dentro del Page Object.",
+  "explicacion": [
+   "Sin await la ejecución sigue sin esperar a que termine el fill.",
+   "Las promesas sin esperar pueden provocar condiciones de carrera o errores no capturados.",
+   "El tipo Promise<void> es correcto: el método no devuelve valor."
+  ],
+  "razones": {
+   "a": "Correcta. Hay que hacer await de cada acción.",
+   "b": "fill() sí existe en Locator y es lo recomendado.",
+   "c": "El método no devuelve texto; Promise<void> es correcto.",
+   "d": "Los locators no son async; las acciones sobre ellos sí devuelven Promise."
+  },
+  "clave": "Acción de Locator sin await = carrera.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-03",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "concepto",
+  "pregunta": "¿Dónde conviene poner por defecto las aserciones `expect` al usar Page Objects?",
+  "opciones": {
+   "a": "En los tests; el POM expone locators y acciones.",
+   "b": "Siempre dentro de los métodos del POM.",
+   "c": "En el constructor del POM, para validarlo al crearse.",
+   "d": "En el `playwright.config.ts`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La recomendación general es que el POM encapsule acciones y localizadores, y que los tests contengan las aserciones para que sea claro qué se verifica.",
+  "explicacion": [
+   "Los tests quedan legibles: se ve qué se comprueba.",
+   "Un POM con aserciones ocultas dificulta reutilizarlo en otros escenarios.",
+   "Se puede incluir alguna espera o verificación puntual en el POM, pero no es la norma."
+  ],
+  "razones": {
+   "a": "Correcta. Las aserciones se dejan en el test.",
+   "b": "Esconder todas las aserciones en el POM oculta la intención del test.",
+   "c": "El constructor no debe ejecutar comprobaciones asíncronas.",
+   "d": "La configuración no contiene aserciones de tests."
+  },
+  "clave": "POM = cómo; test = qué se verifica.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-04",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "codigo",
+  "pregunta": "Tras pulsar en el carrito se navega a otra página. ¿Qué devuelve el método para encadenar Page Objects?",
+  "codigo": "async goToCart(): Promise<CartPage> {\n  await this.cartLink.click();\n  return ___;\n}",
+  "opciones": {
+   "a": "`new CartPage(this.page)`",
+   "b": "`new CartPage()`",
+   "c": "`CartPage`",
+   "d": "`await this.cartLink`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un método que navega puede devolver el siguiente Page Object construido con la misma `page`.",
+  "explicacion": [
+   "El nuevo POM necesita la misma Page para actuar sobre el mismo navegador.",
+   "El tipo de retorno Promise<CartPage> se resuelve con la instancia.",
+   "Así se pueden encadenar llamadas legibles en el test."
+  ],
+  "razones": {
+   "a": "Correcta. Se instancia con la page actual.",
+   "b": "CartPage necesita la page en su constructor.",
+   "c": "Devolvería la clase, no una instancia.",
+   "d": "Devolvería un Locator, no un CartPage."
+  },
+  "clave": "Navegar = devolver `new SiguientePOM(this.page)`.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-05",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "como",
+  "pregunta": "¿Cómo se importan solo los tipos `Page` y `Locator` para anotar un Page Object?",
+  "opciones": {
+   "a": "`import type { Page, Locator } from '@playwright/test';`",
+   "b": "`import { Page, Locator } from 'playwright-pom';`",
+   "c": "`import type Page from '@playwright/page';`",
+   "d": "`const { Page, Locator } = require('@playwright/types');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`Page` y `Locator` se exportan desde `@playwright/test` y `import type` los importa solo como tipos.",
+  "explicacion": [
+   "import type se borra al compilar y no añade código en runtime.",
+   "Los tipos vienen del paquete @playwright/test.",
+   "Se usan para anotar propiedades y parámetros del POM."
+  ],
+  "razones": {
+   "a": "Correcta. Paquete y sintaxis correctos.",
+   "b": "playwright-pom no existe como paquete oficial.",
+   "c": "No existe el módulo @playwright/page ni exportación por defecto.",
+   "d": "@playwright/types no es un módulo de Playwright."
+  },
+  "clave": "Tipos desde `@playwright/test`.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-06",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "concepto",
+  "pregunta": "¿Por qué se guardan `Locator` en el POM y no el texto o valor ya leído?",
+  "opciones": {
+   "a": "Porque el Locator se resuelve de forma perezosa en cada uso, con auto-espera y datos frescos.",
+   "b": "Porque el texto leído no se puede tipar en TypeScript.",
+   "c": "Porque los Locator se cachean para siempre y son más rápidos.",
+   "d": "Porque Playwright prohíbe propiedades de tipo string."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un Locator es una descripción de cómo encontrar el elemento y se evalúa al actuar, así refleja el estado actual del DOM.",
+  "explicacion": [
+   "Un texto guardado en el constructor sería una foto fija que se queda obsoleta.",
+   "Las acciones y aserciones sobre Locator reintentan hasta que se cumple la condición.",
+   "El valor se lee en el momento de usarlo."
+  ],
+  "razones": {
+   "a": "Correcta. Evaluación perezosa y auto-espera.",
+   "b": "Se puede tipar sin problema; no es el motivo.",
+   "c": "No se cachea el elemento: se vuelve a buscar en cada uso.",
+   "d": "Playwright no impone esa restricción."
+  },
+  "clave": "Guarda cómo encontrar, no lo encontrado.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-07",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "error",
+  "pregunta": "¿Qué problema tiene esta clase?",
+  "codigo": "export class HomePage {\n  readonly title: Locator;\n\n  constructor(readonly page: Page) {\n    this.title = await page.locator('h1');\n  }\n}",
+  "opciones": {
+   "a": "Un constructor no puede usar `await`; además crear un locator no es asíncrono.",
+   "b": "Falta `readonly` en `page`.",
+   "c": "`locator('h1')` no es un selector válido.",
+   "d": "`Locator` solo se puede declarar dentro de métodos."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los locators se crean de forma síncrona; `await` solo se usa al ejecutar acciones o aserciones.",
+  "explicacion": [
+   "Usar await en un constructor es un error de sintaxis en TypeScript.",
+   "page.locator() devuelve un Locator directamente.",
+   "Basta con `this.title = page.locator('h1');`."
+  ],
+  "razones": {
+   "a": "Correcta. await sobra y es inválido en un constructor.",
+   "b": "`readonly` ya está en el parámetro con parámetro-propiedad.",
+   "c": "'h1' es un selector CSS válido.",
+   "d": "Un Locator puede ser propiedad de clase."
+  },
+  "clave": "Locator sin await; acción con await.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-RED-01",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "codigo",
+  "pregunta": "¿Qué efecto tiene este código?",
+  "codigo": "await page.route('**/api/users', route =>\n  route.fulfill({ json: [{ id: 1, name: 'Ana' }] })\n);\nawait page.goto('/users');",
+  "opciones": {
+   "a": "La petición va al servidor y se añade `Ana` al resultado.",
+   "b": "La petición a `/api/users` recibe una respuesta simulada sin llegar al servidor.",
+   "c": "Se bloquea la petición y la página falla.",
+   "d": "Se espera a que llegue la respuesta real de `/api/users`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "route.fulfill() responde a una petición interceptada con datos propios sin contactar con el servidor.",
+  "explicacion": [
+   "page.route intercepta peticiones que coincidan con el patrón.",
+   "fulfill({ json }) serializa el JSON y pone el content-type adecuado.",
+   "Se registra antes de goto para no perder la petición."
+  ],
+  "razones": {
+   "a": "fulfill no llama al servidor; para modificar la respuesta real se usa route.fetch.",
+   "b": "Correcta. Se devuelve el JSON simulado.",
+   "c": "Bloquear sería route.abort().",
+   "d": "No se espera: se responde directamente."
+  },
+  "clave": "fulfill = respuesta simulada, sin servidor.",
+  "docs": "https://playwright.dev/docs/mock"
+ },
+ {
+  "id": "M-RED-02",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "funcion",
+  "pregunta": "Quieres simular que se cae la conexión en las llamadas a la API. ¿Qué método usas?",
+  "codigo": "await page.route('**/api/**', route => route.___('connectionrefused'));",
+  "opciones": {
+   "a": "`fulfill`",
+   "b": "`abort`",
+   "c": "`continue`",
+   "d": "`fallback`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "route.abort(errorCode) hace fallar la petición con un error de red.",
+  "explicacion": [
+   "abort acepta un código como 'failed', 'connectionrefused' o 'timedout'.",
+   "fulfill responde con datos; continue deja pasar la petición.",
+   "Sirve para probar el manejo de errores de la UI."
+  ],
+  "razones": {
+   "a": "`fulfill` devuelve una respuesta, no un fallo de red.",
+   "b": "Correcta. `abort` simula fallo de red.",
+   "c": "`continue` envía la petición normalmente.",
+   "d": "`fallback` cede al siguiente manejador de ruta."
+  },
+  "clave": "abort = red caída.",
+  "docs": "https://playwright.dev/docs/api/class-route#route-abort"
+ },
+ {
+  "id": "M-RED-03",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este manejador de ruta?",
+  "codigo": "await page.route('**/api/users*', async route => {\n  const response = await route.fetch();\n  const json = await response.json();\n  json.push({ id: 99, name: 'Extra' });\n  await route.fulfill({ response, json });\n});",
+  "opciones": {
+   "a": "Hace la petición real, modifica el JSON y lo entrega a la página.",
+   "b": "Sustituye por completo la respuesta sin llamar al servidor.",
+   "c": "Cancela la petición y devuelve un 99.",
+   "d": "Registra la respuesta en consola y no devuelve nada."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "route.fetch() realiza la petición real para poder modificar la respuesta antes de pasarla con route.fulfill().",
+  "explicacion": [
+   "route.fetch() envía la petición al servidor real.",
+   "Se modifica el cuerpo recibido.",
+   "fulfill({ response, json }) reutiliza estado y cabeceras, y sustituye el cuerpo."
+  ],
+  "razones": {
+   "a": "Correcta. Se hace fetch real y se modifica la respuesta.",
+   "b": "Sí se llama al servidor mediante route.fetch().",
+   "c": "Nada se cancela; el 99 es solo un id añadido.",
+   "d": "Se devuelve la respuesta con route.fulfill."
+  },
+  "clave": "fetch + fulfill({ response, ... }) = respuesta real modificada.",
+  "docs": "https://playwright.dev/docs/mock#modify-api-responses"
+ },
+ {
+  "id": "M-RED-04",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "error",
+  "pregunta": "El test espera ver `Sin usuarios`, pero ve la lista real. ¿Qué falla?",
+  "codigo": "await page.goto('/users');\nawait page.route('**/api/users', route => route.fulfill({ json: [] }));\nawait expect(page.getByText('Sin usuarios')).toBeVisible();",
+  "opciones": {
+   "a": "La ruta se registra después de `goto`; la petición ya se hizo sin mock.",
+   "b": "`route.fulfill` no admite `json`.",
+   "c": "El patrón glob necesita comodín final `*`.",
+   "d": "`toBeVisible` no sirve con textos."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El mock debe registrarse antes de la navegación o acción que lanza la petición.",
+  "explicacion": [
+   "page.route solo intercepta peticiones posteriores a su registro.",
+   "La petición de goto('/users') ya se hizo con el servidor real.",
+   "Mueve page.route antes de goto."
+  ],
+  "razones": {
+   "a": "Correcta. La petición ya salió antes del mock.",
+   "b": "fulfill admite la opción `json`.",
+   "c": "El patrón `**/api/users` coincide con esa URL sin query.",
+   "d": "toBeVisible funciona con cualquier locator, incluido getByText."
+  },
+  "clave": "Primero route, luego goto.",
+  "docs": "https://playwright.dev/docs/mock"
+ },
+ {
+  "id": "M-RED-05",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "codigo",
+  "pregunta": "¿Qué método completa el hueco para capturar la respuesta que dispara el clic?",
+  "codigo": "const [response] = await Promise.all([\n  page.___('**/api/orders'),\n  page.getByRole('button', { name: 'Pedir' }).click(),\n]);\nexpect(response.status()).toBe(201);",
+  "opciones": {
+   "a": "`waitForResponse`",
+   "b": "`waitForNavigation`",
+   "c": "`waitForLoadState`",
+   "d": "`waitForFunction`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "page.waitForResponse() espera una respuesta que coincida con un patrón, y con Promise.all se registra antes de la acción.",
+  "explicacion": [
+   "Promise.all lanza la escucha y el click a la vez.",
+   "waitForResponse acepta glob, regex o predicado.",
+   "waitForNavigation está obsoleto y no sirve para una llamada XHR."
+  ],
+  "razones": {
+   "a": "Correcta. `waitForResponse` devuelve la Response.",
+   "b": "`waitForNavigation` está obsoleto y espera navegaciones, no llamadas a la API.",
+   "c": "`waitForLoadState` espera estados de carga y no devuelve una Response.",
+   "d": "`waitForFunction` evalúa JS en la página, no captura respuestas."
+  },
+  "clave": "Promise.all([waitForResponse, acción]).",
+  "docs": "https://playwright.dev/docs/network#network-events"
+ },
+ {
+  "id": "M-RED-06",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "concepto",
+  "pregunta": "¿En qué se diferencia `context.route` de `page.route`?",
+  "opciones": {
+   "a": "`context.route` solo intercepta la primera página.",
+   "b": "`page.route` intercepta en todo el navegador y `context.route` solo en un frame.",
+   "c": "`context.route` aplica a todas las páginas del contexto, incluidas las pestañas nuevas.",
+   "d": "No hay diferencia, son alias."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "context.route intercepta las peticiones de todas las páginas del contexto, incluidas las abiertas después; page.route solo las de esa página.",
+  "explicacion": [
+   "page.route afecta solo a esa Page.",
+   "context.route afecta a todas las páginas y popups del BrowserContext.",
+   "Si ambos coinciden, prevalece la ruta de la página."
+  ],
+  "razones": {
+   "a": "context.route cubre todas las páginas, no solo la primera.",
+   "b": "Está invertido: page.route es por página y no cubre todo el navegador.",
+   "c": "Correcta. El alcance es todo el contexto.",
+   "d": "No son alias: el alcance es distinto."
+  },
+  "clave": "context.route = todas las pestañas; page.route = una.",
+  "docs": "https://playwright.dev/docs/network#modify-requests"
+ },
+ {
+  "id": "M-RED-07",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "como",
+  "pregunta": "Has simulado una ruta y quieres que, a mitad del test, las llamadas vuelvan a ir al servidor real. ¿Cómo lo haces?",
+  "codigo": "await page.route('**/api/users*', route => route.fulfill({ json: [] }));\n// ...\n// ¿cómo se quita el mock?",
+  "opciones": {
+   "a": "`await page.unroute('**/api/users*');`",
+   "b": "`await page.route('**/api/users*', null);`",
+   "c": "`await page.abortRoute('**/api/users*');`",
+   "d": "`await page.reload({ mock: false });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "page.unroute(url, handler?) elimina las rutas registradas para ese patrón.",
+  "explicacion": [
+   "unroute elimina el manejador del patrón indicado.",
+   "Se puede pasar el handler concreto para quitar solo uno.",
+   "Después, las peticiones vuelven a ir a la red real."
+  ],
+  "razones": {
+   "a": "Correcta. `unroute` elimina el mock.",
+   "b": "page.route con null no es una API válida.",
+   "c": "`abortRoute` no existe.",
+   "d": "reload no tiene la opción `mock`."
+  },
+  "clave": "Quitar un mock = unroute con el mismo patrón.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-unroute"
+ },
+ {
+  "id": "M-RED-08",
+  "nivel": "medio",
+  "tema": "Red",
+  "tipo": "funcion",
+  "pregunta": "¿Qué hace esta línea?",
+  "codigo": "await page.routeFromHAR('hars/app.har', {\n  url: '**/api/**',\n  update: false,\n});",
+  "opciones": {
+   "a": "Graba el tráfico de red en `app.har`.",
+   "b": "Bloquea todas las peticiones a `/api/`.",
+   "c": "Convierte el fichero HAR a JSON.",
+   "d": "Responde las peticiones `/api/` con las respuestas guardadas en el HAR."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "routeFromHAR reproduce respuestas grabadas en un fichero HAR (con update: true las graba).",
+  "explicacion": [
+   "update: false = reproducir lo grabado.",
+   "update: true = grabar el tráfico actual en el HAR.",
+   "url limita qué peticiones se sirven desde el HAR."
+  ],
+  "razones": {
+   "a": "Grabar requiere `update: true`.",
+   "b": "No se bloquea: se responden con el HAR.",
+   "c": "No convierte formatos.",
+   "d": "Correcta. Se reproducen las respuestas del HAR."
+  },
+  "clave": "routeFromHAR: update false reproduce, true graba.",
+  "docs": "https://playwright.dev/docs/mock#mocking-with-har-files"
+ }
+]

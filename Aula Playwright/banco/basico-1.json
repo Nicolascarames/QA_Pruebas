@@ -1,0 +1,1014 @@
+[
+ {
+  "id": "B-LOC-01",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "localizador",
+  "pregunta": "Tienes este campo. ¿Qué localizador recomienda Playwright para rellenarlo?",
+  "codigo": "<label for=\"email\">Correo electrónico</label>\n<input id=\"email\" type=\"email\">",
+  "opciones": {
+   "a": "`page.getByText('Correo electrónico')`",
+   "b": "`page.getByLabel('Correo electrónico')`",
+   "c": "`page.getByTitle('email')`",
+   "d": "`page.$('#email')`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "getByLabel localiza controles de formulario por el texto de su etiqueta asociada.",
+  "explicacion": [
+   "getByLabel encuentra el input a través del label asociado.",
+   "Es como el usuario identifica el campo.",
+   "getByText devolvería la etiqueta, no el input."
+  ],
+  "razones": {
+   "a": "getByText devuelve el elemento label, no el input que se quiere rellenar.",
+   "b": "Correcta. Localiza el input por el texto de su label.",
+   "c": "getByTitle busca el atributo title, que aquí no existe.",
+   "d": "page.$ es la API antigua de ElementHandle, desaconsejada."
+  },
+  "clave": "Campo con label visible: getByLabel.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-label"
+ },
+ {
+  "id": "B-LOC-02",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para localizar el campo por su texto de ayuda.",
+  "codigo": "// <input placeholder=\"Buscar productos\">\nawait page.___('Buscar productos').fill('zapatillas');",
+  "opciones": {
+   "a": "getByPlaceholder",
+   "b": "getByLabel",
+   "c": "getByAltText",
+   "d": "getByTitle"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "getByPlaceholder localiza inputs por el texto de su atributo placeholder.",
+  "explicacion": [
+   "getByPlaceholder busca por el atributo placeholder.",
+   "getByLabel requiere un label asociado.",
+   "getByAltText es para imágenes y áreas."
+  ],
+  "razones": {
+   "a": "Correcta. Busca justo por el atributo placeholder.",
+   "b": "Busca por texto de etiqueta, no por placeholder.",
+   "c": "getByAltText mira el atributo alt, propio de imágenes.",
+   "d": "getByTitle mira el atributo title."
+  },
+  "clave": "Placeholder = getByPlaceholder.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-placeholder"
+ },
+ {
+  "id": "B-LOC-03",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "localizador",
+  "pregunta": "¿Qué localizador busca esta imagen por su texto alternativo?",
+  "codigo": "<img src=\"logo.png\" alt=\"Logotipo de Acme\">",
+  "opciones": {
+   "a": "`page.getByText('Logotipo de Acme')`",
+   "b": "`page.getByTitle('Logotipo de Acme')`",
+   "c": "`page.getByLabel('Logotipo de Acme')`",
+   "d": "`page.getByAltText('Logotipo de Acme')`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "getByAltText localiza elementos, normalmente imágenes, por su texto alternativo.",
+  "explicacion": [
+   "alt es el texto alternativo de la imagen.",
+   "getByText solo ve contenido de texto, no atributos.",
+   "Otra opción válida sería getByRole('img', { name })."
+  ],
+  "razones": {
+   "a": "El alt no es texto del DOM; getByText no lo encuentra.",
+   "b": "getByTitle busca el atributo title, no alt.",
+   "c": "getByLabel busca controles con etiqueta, no imágenes.",
+   "d": "Correcta. alt es el atributo que usa getByAltText."
+  },
+  "clave": "Imagen con alt: getByAltText.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-alt-text"
+ },
+ {
+  "id": "B-LOC-04",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "Tu equipo usa data-qa en lugar de data-testid. ¿Qué opción de config hace que getByTestId lo reconozca?",
+  "codigo": "// playwright.config.ts\nexport default defineConfig({\n  use: { ___: 'data-qa' },\n});",
+  "opciones": {
+   "a": "testIdSelector",
+   "b": "dataTestId",
+   "c": "testIdAttribute",
+   "d": "selectorAttribute"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La opción use.testIdAttribute cambia el atributo que getByTestId usa para localizar.",
+  "explicacion": [
+   "Por defecto getByTestId usa data-testid.",
+   "use.testIdAttribute lo cambia globalmente.",
+   "También existe selectors.setTestIdAttribute() en código."
+  ],
+  "razones": {
+   "a": "No existe una opción con ese nombre.",
+   "b": "No existe; es un nombre inventado.",
+   "c": "Correcta. Es el nombre real de la opción de configuración.",
+   "d": "No existe como opción de use."
+  },
+  "clave": "testIdAttribute: el atributo del test id.",
+  "docs": "https://playwright.dev/docs/locators#locate-by-test-id"
+ },
+ {
+  "id": "B-LOC-05",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "error",
+  "pregunta": "Este test falla con «strict mode violation». ¿Por qué?",
+  "codigo": "// La página tiene 3 botones «Añadir»\nawait page.getByRole('button', { name: 'Añadir' }).click();",
+  "opciones": {
+   "a": "getByRole no admite la opción name",
+   "b": "El locator resuelve a varios elementos y click exige exactamente uno",
+   "c": "click necesita un timeout explícito",
+   "d": "Falta await antes de page.getByRole"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Los locators son estrictos: una acción sobre un locator que coincide con varios elementos lanza error.",
+  "explicacion": [
+   "Strict mode obliga a que la acción apunte a un solo elemento.",
+   "Soluciones: afinar el locator, first(), nth() o filter().",
+   "Es una protección frente a clics en el elemento equivocado."
+  ],
+  "razones": {
+   "a": "name es una opción válida de getByRole.",
+   "b": "Correcta. Es justo lo que describe el modo estricto.",
+   "c": "click usa el timeout por defecto; no es obligatorio indicarlo.",
+   "d": "Los locators se crean sin await; el await va en la acción."
+  },
+  "clave": "Varios matches + acción = strict mode violation.",
+  "docs": "https://playwright.dev/docs/locators#strictness"
+ },
+ {
+  "id": "B-LOC-06",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "¿Qué ocurre en el momento de ejecutar esta línea?",
+  "codigo": "const boton = page.getByRole('button', { name: 'Guardar' });",
+  "opciones": {
+   "a": "Nada: el locator es perezoso y solo busca el elemento al usarlo en una acción o aserción",
+   "b": "Playwright espera hasta que el botón exista en el DOM",
+   "c": "Devuelve un ElementHandle con el elemento",
+   "d": "Lanza error si el botón no está visible"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un Locator es una descripción perezosa; no consulta el DOM hasta que se actúa sobre él.",
+  "explicacion": [
+   "Crear un locator no hace ninguna consulta ni espera.",
+   "Se resuelve cada vez que se usa, así que siempre está actualizado.",
+   "Por eso no lleva await."
+  ],
+  "razones": {
+   "a": "Correcta. Es la definición de locator perezoso.",
+   "b": "La espera ocurre al ejecutar una acción, no al crearlo.",
+   "c": "Devuelve un Locator, no un ElementHandle.",
+   "d": "No valida nada en la creación."
+  },
+  "clave": "Locator = receta, no resultado.",
+  "docs": "https://playwright.dev/docs/locators"
+ },
+ {
+  "id": "B-LOC-07",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "concepto",
+  "pregunta": "¿Cuál es el orden de preferencia recomendado para localizar elementos?",
+  "opciones": {
+   "a": "CSS, luego XPath y por último getByRole",
+   "b": "XPath primero porque es el más preciso",
+   "c": "Siempre getByTestId antes que cualquier otro",
+   "d": "Roles y texto visibles para el usuario, luego test id y, como último recurso, CSS/XPath"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "La guía recomienda localizar como el usuario: rol/texto primero, test id después y CSS/XPath al final.",
+  "explicacion": [
+   "Prioriza lo que ve el usuario: getByRole, getByLabel, getByText.",
+   "getByTestId es la alternativa estable si no hay atributos accesibles.",
+   "CSS y XPath se acoplan a la implementación."
+  ],
+  "razones": {
+   "a": "Invierte la recomendación.",
+   "b": "XPath es frágil ante cambios del DOM.",
+   "c": "El test id es útil, pero no es la primera opción.",
+   "d": "Correcta. Coincide con la guía de buenas prácticas."
+  },
+  "clave": "Usuario > test id > CSS/XPath.",
+  "docs": "https://playwright.dev/docs/best-practices#prefer-user-facing-attributes-to-xpath-or-css-selectors"
+ },
+ {
+  "id": "B-LOC-08",
+  "nivel": "basico",
+  "tema": "Localizadores",
+  "tipo": "codigo",
+  "pregunta": "¿Qué localizador XPath es válido en Playwright para esta lista?",
+  "codigo": "<ul><li class=\"item\">Uno</li></ul>",
+  "opciones": {
+   "a": "`page.getByXPath('//li')`",
+   "b": "`page.xpath('//li')`",
+   "c": "`page.locator('xpath=//li[@class=\"item\"]')`",
+   "d": "`page.locator('//li', { type: 'xpath' })`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.locator acepta XPath con el prefijo xpath= o si el selector empieza por //.",
+  "explicacion": [
+   "locator() detecta XPath por el prefijo xpath= o por empezar con //.",
+   "No existe un método getByXPath.",
+   "Aun así, CSS/XPath son el último recurso."
+  ],
+  "razones": {
+   "a": "getByXPath no existe en Playwright.",
+   "b": "page.xpath no existe.",
+   "c": "Correcta. Sintaxis válida de selector XPath.",
+   "d": "locator no tiene una opción type."
+  },
+  "clave": "locator(\"xpath=...\") o empieza por //.",
+  "docs": "https://playwright.dev/docs/other-locators#xpath-locator"
+ },
+ {
+  "id": "B-ACC-01",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método usas para escribir un valor en un input, reemplazando su contenido?",
+  "opciones": {
+   "a": "`locator.write()`",
+   "b": "`locator.fill()`",
+   "c": "`locator.setValue()`",
+   "d": "`locator.insertText()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "fill establece el valor del campo y dispara los eventos de entrada correspondientes.",
+  "explicacion": [
+   "fill limpia el campo y asigna el texto de una vez.",
+   "Para teclear carácter a carácter se usa pressSequentially.",
+   "write y setValue no existen en Locator."
+  ],
+  "razones": {
+   "a": "No existe locator.write.",
+   "b": "Correcta. Es el método estándar para rellenar inputs.",
+   "c": "No existe locator.setValue.",
+   "d": "No existe locator.insertText."
+  },
+  "clave": "Rellenar = fill.",
+  "docs": "https://playwright.dev/docs/input#text-input"
+ },
+ {
+  "id": "B-ACC-02",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Necesitas simular pulsaciones de teclas una a una (p. ej. un autocompletado). Completa el hueco.",
+  "codigo": "await page.getByLabel('Ciudad').___('Madrid', { delay: 100 });",
+  "opciones": {
+   "a": "pressSequentially",
+   "b": "fill",
+   "c": "setValue",
+   "d": "typeAll"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "pressSequentially teclea carácter a carácter y permite un delay entre pulsaciones.",
+  "explicacion": [
+   "fill asigna el valor de golpe, sin pulsaciones reales.",
+   "pressSequentially acepta delay.",
+   "Úsalo solo si la página reacciona a cada tecla."
+  ],
+  "razones": {
+   "a": "Correcta. Pulsa cada tecla con el delay indicado.",
+   "b": "fill no admite la opción delay.",
+   "c": "No existe setValue.",
+   "d": "No existe typeAll."
+  },
+  "clave": "Tecla a tecla = pressSequentially.",
+  "docs": "https://playwright.dev/docs/input#type-characters"
+ },
+ {
+  "id": "B-ACC-03",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Quieres seleccionar todo el texto de un campo. Completa el código.",
+  "codigo": "const campo = page.getByRole('textbox');\nawait campo.press('___');",
+  "opciones": {
+   "a": "Ctrl-A",
+   "b": "Control A",
+   "c": "ControlA",
+   "d": "Control+A"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "press admite combinaciones con modificadores unidos por +, p. ej. Control+A.",
+  "explicacion": [
+   "Las teclas se nombran como en KeyboardEvent.key.",
+   "Las combinaciones usan + sin espacios.",
+   "ControlOrMeta+A sirve para ser multiplataforma."
+  ],
+  "razones": {
+   "a": "Ctrl-A no es una sintaxis reconocida.",
+   "b": "Los espacios no son separador válido.",
+   "c": "Faltaría el + entre teclas.",
+   "d": "Correcta. Formato correcto de combinación."
+  },
+  "clave": "Combinación: Tecla+Tecla.",
+  "docs": "https://playwright.dev/docs/input#keys-and-shortcuts"
+ },
+ {
+  "id": "B-ACC-04",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "como",
+  "pregunta": "¿Cómo marcas un checkbox asegurando que queda marcado, sin importar su estado previo?",
+  "opciones": {
+   "a": "`await page.getByLabel('Acepto').click()` siempre",
+   "b": "`await page.getByLabel('Acepto').toggle()`",
+   "c": "`await page.getByLabel('Acepto').check()`",
+   "d": "`await page.getByLabel('Acepto').select()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "check es idempotente: marca el checkbox si no lo está y verifica el resultado.",
+  "explicacion": [
+   "check solo hace clic si hace falta.",
+   "click alternaría el estado y podría desmarcarlo.",
+   "setChecked(valor) fija un estado concreto."
+  ],
+  "razones": {
+   "a": "click invierte el estado, no lo fija.",
+   "b": "toggle no existe en Locator.",
+   "c": "Correcta. Garantiza el estado marcado.",
+   "d": "select no es un método de Locator."
+  },
+  "clave": "Estado marcado = check, no click.",
+  "docs": "https://playwright.dev/docs/input#checkboxes-and-radio-buttons"
+ },
+ {
+  "id": "B-ACC-05",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para elegir la opción por su texto visible.",
+  "codigo": "// <select id=\"pais\"><option value=\"es\">España</option></select>\nawait page.locator('#pais').selectOption({ ___: 'España' });",
+  "opciones": {
+   "a": "text",
+   "b": "label",
+   "c": "name",
+   "d": "title"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "selectOption acepta value, label o index para elegir la opción.",
+  "explicacion": [
+   "Se puede pasar un string (valor) o un objeto { label }.",
+   "También admite { index } y arrays para multiselect.",
+   "No existe la clave text."
+  ],
+  "razones": {
+   "a": "text no es una clave válida.",
+   "b": "Correcta. label selecciona por el texto visible de la opción.",
+   "c": "name no es una clave válida.",
+   "d": "title no es una clave válida."
+  },
+  "clave": "Texto visible = { label }.",
+  "docs": "https://playwright.dev/docs/input#select-options"
+ },
+ {
+  "id": "B-ACC-06",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método sube un archivo a un input de tipo file?",
+  "opciones": {
+   "a": "`locator.setInputFiles()`",
+   "b": "`locator.upload()`",
+   "c": "`locator.fill()` con la ruta",
+   "d": "`page.attachFile()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "setInputFiles establece los ficheros seleccionados en un input de tipo file.",
+  "explicacion": [
+   "Acepta una ruta, un array de rutas o buffers.",
+   "Con [] se vacía la selección.",
+   "fill no sirve para inputs file."
+  ],
+  "razones": {
+   "a": "Correcta. Método oficial para subir archivos.",
+   "b": "locator.upload no existe.",
+   "c": "fill no funciona con inputs de archivo.",
+   "d": "page.attachFile no existe."
+  },
+  "clave": "Subir archivo = setInputFiles.",
+  "docs": "https://playwright.dev/docs/input#upload-files"
+ },
+ {
+  "id": "B-ACC-07",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para hacer clic derecho con la tecla Shift pulsada.",
+  "codigo": "await page.getByText('Fila 1').click({\n  button: '___',\n  modifiers: ['Shift'],\n});",
+  "opciones": {
+   "a": "context",
+   "b": "secondary",
+   "c": "menu",
+   "d": "right"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "La opción button de click acepta left, right o middle.",
+  "explicacion": [
+   "button: left, right o middle.",
+   "modifiers admite Shift, Control, Alt, Meta, ControlOrMeta.",
+   "force omite las comprobaciones de actionability; úsalo con cuidado."
+  ],
+  "razones": {
+   "a": "context no es un valor válido.",
+   "b": "secondary no es un valor válido.",
+   "c": "menu no es un valor válido.",
+   "d": "Correcta. Valor válido para el botón derecho."
+  },
+  "clave": "button: left | right | middle.",
+  "docs": "https://playwright.dev/docs/api/class-locator#locator-click"
+ },
+ {
+  "id": "B-ACC-08",
+  "nivel": "basico",
+  "tema": "Acciones",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este código?",
+  "codigo": "await page.locator('#origen').dragTo(page.locator('#destino'));",
+  "opciones": {
+   "a": "Mueve el destino al origen",
+   "b": "Hace clic en ambos elementos",
+   "c": "Arrastra el elemento origen y lo suelta sobre el destino",
+   "d": "Copia el texto de origen al destino"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "dragTo realiza arrastrar y soltar desde un locator hasta otro.",
+  "explicacion": [
+   "Se invoca sobre el elemento de origen.",
+   "El argumento es el locator de destino.",
+   "Equivale a hover, mouse down, mover y mouse up."
+  ],
+  "razones": {
+   "a": "La dirección es al revés.",
+   "b": "No hace clics independientes.",
+   "c": "Correcta. Es el comportamiento de dragTo.",
+   "d": "No copia texto; simula el arrastre."
+  },
+  "clave": "origen.dragTo(destino).",
+  "docs": "https://playwright.dev/docs/input#drag-and-drop"
+ },
+ {
+  "id": "B-NAV-01",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Con baseURL configurada en use, ¿qué valor va en el hueco para navegar a https://miapp.test/login?",
+  "codigo": "// playwright.config.ts: use: { baseURL: 'https://miapp.test' }\ntest('login', async ({ page }) => {\n  await page.goto('___');\n});",
+  "opciones": {
+   "a": "baseURL/login",
+   "b": "/login",
+   "c": "{baseURL}/login",
+   "d": "miapp.test:/login"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Con baseURL, goto acepta rutas relativas que se resuelven contra ella.",
+  "explicacion": [
+   "La ruta relativa se une a baseURL.",
+   "Evita repetir el dominio en cada test.",
+   "Sin baseURL habría que usar la URL completa."
+  ],
+  "razones": {
+   "a": "baseURL no se interpola en el texto.",
+   "b": "Correcta. Se resuelve como https://miapp.test/login.",
+   "c": "No hay interpolación con llaves.",
+   "d": "No es una URL válida."
+  },
+  "clave": "baseURL + ruta relativa.",
+  "docs": "https://playwright.dev/docs/test-use-options"
+ },
+ {
+  "id": "B-NAV-02",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método vuelve a la página anterior del historial?",
+  "opciones": {
+   "a": "`page.goBack()`",
+   "b": "`page.back()`",
+   "c": "`page.history.back()`",
+   "d": "`page.previous()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "page.goBack navega a la entrada anterior del historial.",
+  "explicacion": [
+   "goBack y goForward recorren el historial.",
+   "page.reload() recarga la página actual.",
+   "Devuelven la respuesta o null."
+  ],
+  "razones": {
+   "a": "Correcta. Es el método existente.",
+   "b": "page.back no existe.",
+   "c": "page.history no existe.",
+   "d": "page.previous no existe."
+  },
+  "clave": "Atrás = goBack.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-go-back"
+ },
+ {
+  "id": "B-NAV-03",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Completa el código para comprobar la URL actual tras iniciar sesión.",
+  "codigo": "await page.getByRole('button', { name: 'Entrar' }).click();\nawait expect(page).___(/dashboard/);",
+  "opciones": {
+   "a": "toBeURL",
+   "b": "toContainURL",
+   "c": "toHavePath",
+   "d": "toHaveURL"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "toHaveURL es una aserción con reintentos que verifica la URL de la página.",
+  "explicacion": [
+   "Acepta string, RegExp o predicado.",
+   "Reintenta hasta cumplirse o agotar el timeout.",
+   "page.url() devuelve la URL sin reintentos."
+  ],
+  "razones": {
+   "a": "No existe toBeURL.",
+   "b": "No existe toContainURL.",
+   "c": "No existe toHavePath.",
+   "d": "Correcta. Aserción real de página."
+  },
+  "clave": "URL en aserción = toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-NAV-04",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "error",
+  "pregunta": "Este test es poco fiable. ¿Qué problema tiene?",
+  "codigo": "await page.getByText('Entrar').click();\nexpect(page.url()).toBe('https://miapp.test/home');",
+  "opciones": {
+   "a": "url() es asíncrono y falta await",
+   "b": "toBe no compara cadenas",
+   "c": "page.url() es instantáneo y no reintenta; la URL puede no haber cambiado aún",
+   "d": "getByText no puede hacer click"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.url() devuelve la URL actual al instante; para esperar el cambio usa toHaveURL o waitForURL.",
+  "explicacion": [
+   "La navegación puede tardar tras el click.",
+   "await expect(page).toHaveURL(...) reintenta.",
+   "url() es síncrono."
+  ],
+  "razones": {
+   "a": "url() es síncrono, no necesita await.",
+   "b": "toBe compara cadenas con normalidad.",
+   "c": "Correcta. Describe la condición de carrera.",
+   "d": "click funciona sobre cualquier locator."
+  },
+  "clave": "Para URLs que cambian: toHaveURL.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-NAV-05",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "funcion",
+  "pregunta": "¿Qué método espera a que la página navegue a una URL que cumple un patrón?",
+  "opciones": {
+   "a": "`page.waitForNavigation()`",
+   "b": "`page.waitForURL()`",
+   "c": "`page.waitForTimeout()`",
+   "d": "`page.waitForLocation()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "page.waitForURL espera a que la URL cumpla un string, patrón o predicado.",
+  "explicacion": [
+   "waitForNavigation está obsoleto.",
+   "waitForTimeout es una pausa fija: evítala.",
+   "waitForURL admite glob, RegExp o función."
+  ],
+  "razones": {
+   "a": "Obsoleto y desaconsejado.",
+   "b": "Correcta. Método actual recomendado.",
+   "c": "Es solo una pausa fija.",
+   "d": "No existe."
+  },
+  "clave": "Esperar URL = waitForURL.",
+  "docs": "https://playwright.dev/docs/navigations"
+ },
+ {
+  "id": "B-NAV-06",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "Completa para esperar a que no haya actividad de red durante 500 ms.",
+  "codigo": "await page.goto('/informes');\nawait page.waitForLoadState('___');",
+  "opciones": {
+   "a": "networkidle",
+   "b": "complete",
+   "c": "ready",
+   "d": "idle"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "waitForLoadState admite load, domcontentloaded y networkidle.",
+  "explicacion": [
+   "load es el valor por defecto.",
+   "networkidle se desaconseja en tests; prefiere aserciones web-first.",
+   "domcontentloaded espera al HTML parseado."
+  ],
+  "razones": {
+   "a": "Correcta. Valor válido de estado de carga.",
+   "b": "complete no es un valor válido.",
+   "c": "ready no es un valor válido.",
+   "d": "idle no es un valor válido."
+  },
+  "clave": "Estados: load, domcontentloaded, networkidle.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-wait-for-load-state"
+ },
+ {
+  "id": "B-NAV-07",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "como",
+  "pregunta": "¿Cómo obtiene un test de @playwright/test la página con la que trabajar?",
+  "opciones": {
+   "a": "Con `new Page()` dentro del test",
+   "b": "Llamando a `chromium.launch()` en cada test",
+   "c": "Con `require('page')`",
+   "d": "Destructurándola como fixture: `test('x', async ({ page }) => {})`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "page es un fixture que Playwright Test crea aislado para cada test.",
+  "explicacion": [
+   "Se pide destructurando en los argumentos del test.",
+   "Cada test recibe un contexto y página nuevos.",
+   "No hace falta lanzar ni cerrar el navegador a mano."
+  ],
+  "razones": {
+   "a": "Page no se instancia con new.",
+   "b": "El runner gestiona el navegador.",
+   "c": "No existe ese módulo.",
+   "d": "Correcta. Es la forma estándar con fixtures."
+  },
+  "clave": "async ({ page }) => ...",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "B-NAV-08",
+  "nivel": "basico",
+  "tema": "Navegación",
+  "tipo": "codigo",
+  "pregunta": "¿Qué expresión completa correctamente el código para obtener el título?",
+  "codigo": "const titulo = ___;\nexpect(titulo).toBe('Inicio');",
+  "opciones": {
+   "a": "page.title",
+   "b": "page.getTitle()",
+   "c": "await page.title()",
+   "d": "await page.document.title"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "page.title() devuelve de forma asíncrona el título del documento.",
+  "explicacion": [
+   "Es un método asíncrono: requiere await.",
+   "Para esperar a que cambie usa await expect(page).toHaveTitle().",
+   "No hay getTitle."
+  ],
+  "razones": {
+   "a": "Sin paréntesis sería una referencia a la función.",
+   "b": "getTitle no existe.",
+   "c": "Correcta. Método real y asíncrono.",
+   "d": "page.document no existe."
+  },
+  "clave": "title() con await.",
+  "docs": "https://playwright.dev/docs/api/class-page#page-title"
+ },
+ {
+  "id": "B-ESP-01",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué comprobaciones hace Playwright antes de ejecutar un click?",
+  "opciones": {
+   "a": "Solo que el elemento exista en el DOM",
+   "b": "Visible, estable, habilitado y que recibe eventos",
+   "c": "Que el elemento tenga un id",
+   "d": "Que la página haya disparado el evento load"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Antes de actuar, Playwright espera a que el elemento cumpla las comprobaciones de actionability.",
+  "explicacion": [
+   "Visible: tiene caja no vacía y no está oculto.",
+   "Stable: sin animación en curso.",
+   "Enabled y Receives Events: no deshabilitado ni tapado por otro elemento."
+  ],
+  "razones": {
+   "a": "La existencia por sí sola no basta.",
+   "b": "Correcta. Son las comprobaciones reales.",
+   "c": "El id no es requisito.",
+   "d": "No espera al evento load."
+  },
+  "clave": "Visible, stable, enabled, receives events.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-02",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "error",
+  "pregunta": "¿Qué problema tiene este código?",
+  "codigo": "await page.getByText('Guardar').click();\nawait page.waitForTimeout(3000);\nawait expect(page.getByText('Guardado')).toBeVisible();",
+  "opciones": {
+   "a": "waitForTimeout es una pausa fija: lenta o frágil; expect ya reintenta",
+   "b": "Falta await en expect",
+   "c": "toBeVisible no existe",
+   "d": "click no admite getByText"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las pausas fijas hacen tests lentos y poco fiables; las aserciones web-first reintentan solas.",
+  "explicacion": [
+   "expect(...).toBeVisible() espera hasta su timeout.",
+   "waitForTimeout se desaconseja salvo depuración.",
+   "Quita la pausa y deja la aserción."
+  ],
+  "razones": {
+   "a": "Correcta. Es el antipatrón.",
+   "b": "El await ya está presente.",
+   "c": "toBeVisible existe.",
+   "d": "click funciona con cualquier locator."
+  },
+  "clave": "No duermas: aserta.",
+  "docs": "https://playwright.dev/docs/best-practices"
+ },
+ {
+  "id": "B-ESP-03",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué timeout por defecto tiene cada test completo en Playwright Test?",
+  "opciones": {
+   "a": "5 segundos",
+   "b": "60 segundos",
+   "c": "Sin límite",
+   "d": "30 segundos"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "El timeout del test es de 30 000 ms por defecto e incluye hooks y fixtures.",
+  "explicacion": [
+   "Test: 30 s por defecto.",
+   "expect: 5 s por defecto.",
+   "Las acciones no tienen timeout propio por defecto, pero el del test las limita."
+  ],
+  "razones": {
+   "a": "5 s es el de expect.",
+   "b": "60 s no es el valor por defecto.",
+   "c": "Sí existe límite.",
+   "d": "Correcta. Valor por defecto del test."
+  },
+  "clave": "Test 30 s, expect 5 s.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ESP-04",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "codigo",
+  "pregunta": "Completa para subir el timeout de las aserciones expect a 10 segundos.",
+  "codigo": "// playwright.config.ts\nexport default defineConfig({\n  ___: { timeout: 10_000 },\n});",
+  "opciones": {
+   "a": "assertions",
+   "b": "timeouts",
+   "c": "expect",
+   "d": "use"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La clave expect de la configuración fija el timeout de las aserciones.",
+  "explicacion": [
+   "Config: expect: { timeout }.",
+   "Una aserción concreta admite { timeout } en sus opciones.",
+   "No confundir con el timeout de test."
+  ],
+  "razones": {
+   "a": "No existe esa clave.",
+   "b": "No existe esa clave.",
+   "c": "Correcta. Clave real de la configuración.",
+   "d": "use contiene opciones de contexto, no el timeout de expect."
+  },
+  "clave": "expect: { timeout }.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ },
+ {
+  "id": "B-ESP-05",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "Un botón está tapado por un modal. ¿Qué ocurre con click()?",
+  "opciones": {
+   "a": "Hace clic igualmente sobre el modal",
+   "b": "Playwright reintenta hasta que reciba eventos o venza el timeout",
+   "c": "Falla inmediatamente",
+   "d": "Cierra el modal"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "b"
+  ],
+  "concepto": "Si otro elemento intercepta el clic, no se cumple Receives Events y Playwright sigue reintentando.",
+  "explicacion": [
+   "Receives Events: el punto de clic debe ser alcanzable.",
+   "Si se agota el timeout, el error indica el elemento que lo intercepta.",
+   "force: true omite el chequeo, pero puede ocultar bugs."
+  ],
+  "razones": {
+   "a": "No clicaría sobre un elemento distinto.",
+   "b": "Correcta. Comportamiento de actionability.",
+   "c": "Reintenta antes de fallar.",
+   "d": "No cierra nada por su cuenta."
+  },
+  "clave": "Tapado: reintenta, no clica.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-06",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "funcion",
+  "pregunta": "¿Qué aserción espera a que un elemento aparezca en pantalla?",
+  "opciones": {
+   "a": "`await expect(locator).toBeVisible()`",
+   "b": "`expect(await locator.isVisible()).toBe(true)`",
+   "c": "`await page.waitForTimeout(1000)`",
+   "d": "`expect(locator.visible).toBe(true)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las aserciones web-first con locator reintentan hasta cumplirse o agotar el timeout.",
+  "explicacion": [
+   "isVisible() devuelve el estado al instante, sin esperar.",
+   "expect(locator) con matchers reintenta.",
+   "visible no es propiedad de Locator."
+  ],
+  "razones": {
+   "a": "Correcta. Aserción con reintentos.",
+   "b": "isVisible no espera; puede dar falso antes de aparecer.",
+   "c": "Pausa fija.",
+   "d": "Locator no tiene propiedad visible."
+  },
+  "clave": "Web-first: await expect(locator).",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "B-ESP-07",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "concepto",
+  "pregunta": "¿Qué pasa con fill() sobre un input deshabilitado?",
+  "opciones": {
+   "a": "Rellena el valor ignorando disabled",
+   "b": "Falla al instante",
+   "c": "Lo habilita automáticamente",
+   "d": "Playwright espera a que esté habilitado y falla al agotar el timeout"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "d"
+  ],
+  "concepto": "Las acciones esperan a que el elemento esté Enabled antes de ejecutarse.",
+  "explicacion": [
+   "Enabled significa que no tiene disabled.",
+   "fill además exige que sea editable.",
+   "El timeout de acción acaba produciendo el error."
+  ],
+  "razones": {
+   "a": "No ignora disabled.",
+   "b": "Antes reintenta.",
+   "c": "No modifica atributos.",
+   "d": "Correcta. Comportamiento de auto-espera."
+  },
+  "clave": "Enabled es requisito de la acción.",
+  "docs": "https://playwright.dev/docs/actionability"
+ },
+ {
+  "id": "B-ESP-08",
+  "nivel": "basico",
+  "tema": "Auto-espera",
+  "tipo": "codigo",
+  "pregunta": "Completa el hueco para limitar a 3 segundos una acción concreta.",
+  "codigo": "await page.getByRole('button', { name: 'Enviar' }).click({ ___: 3000 });",
+  "opciones": {
+   "a": "wait",
+   "b": "maxTime",
+   "c": "timeout",
+   "d": "delay"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "c"
+  ],
+  "concepto": "La mayoría de acciones aceptan la opción timeout en milisegundos.",
+  "explicacion": [
+   "timeout en acción: sobrescribe el valor global.",
+   "delay en click es la pausa entre mousedown y mouseup.",
+   "Si vence, la acción falla con TimeoutError."
+  ],
+  "razones": {
+   "a": "wait no existe como opción.",
+   "b": "maxTime no existe.",
+   "c": "Correcta. Opción real de las acciones.",
+   "d": "delay es otra cosa: pausa entre pulsaciones."
+  },
+  "clave": "Acción con límite: { timeout }.",
+  "docs": "https://playwright.dev/docs/test-timeouts"
+ }
+]

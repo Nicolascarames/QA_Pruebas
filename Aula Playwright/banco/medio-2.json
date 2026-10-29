@@ -1,0 +1,1017 @@
+[
+ {
+  "id": "M-POM-01",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "codigo",
+  "pregunta": "En este Page Object, ¿qué va en el hueco para definir el botón?",
+  "codigo": "import type { Page, Locator } from '@playwright/test';\n\nexport class LoginPage {\n  readonly page: Page;\n  readonly submit: Locator;\n\n  constructor(page: Page) {\n    this.page = page;\n    this.submit = ___;\n  }\n}",
+  "opciones": {
+   "a": "`page.getByRole('button', { name: 'Entrar' })`",
+   "b": "`await page.getByRole('button', { name: 'Entrar' })`",
+   "c": "`page.getByRole('button', { name: 'Entrar' }).click()`",
+   "d": "`page.getByRole('button', { name: 'Entrar' }).textContent()`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "En un POM los locators son propiedades `readonly` que se crean en el constructor sin ejecutar ninguna acción.",
+  "explicacion": [
+   "Crear un locator es síncrono y perezoso: no toca el navegador.",
+   "El constructor no puede ser async, así que no admite await.",
+   "Guardar el Locator permite reutilizarlo con auto-espera en cada uso."
+  ],
+  "razones": {
+   "a": "Correcta. Devuelve un Locator, que es lo que declara la propiedad.",
+   "b": "Un constructor no puede ser async, y además crear un locator no necesita await.",
+   "c": "click() ejecuta una acción y devuelve Promise<void>, no un Locator.",
+   "d": "textContent() devuelve una Promise<string|null>, no un Locator."
+  },
+  "clave": "Constructor: solo locators, sin await ni acciones.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-02",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "error",
+  "pregunta": "Este método del Page Object a veces deja el test sin rellenar el formulario antes de pulsar. ¿Qué falla?",
+  "codigo": "async login(user: string, pass: string): Promise<void> {\n  this.userInput.fill(user);\n  this.passInput.fill(pass);\n  await this.submit.click();\n}",
+  "opciones": {
+   "a": "Faltan los `await` en los `fill()`: las promesas no se esperan y el clic puede adelantarse.",
+   "b": "`fill()` no existe en un Locator; hay que usar `type()`.",
+   "c": "El método debería devolver `Promise<string>`.",
+   "d": "Los locators deberían ser `async` para poder rellenarse."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Toda acción de Locator devuelve una Promise y hay que esperarla con `await` también dentro del Page Object.",
+  "explicacion": [
+   "Sin await la ejecución sigue sin esperar a que termine el fill.",
+   "Las promesas sin esperar pueden provocar condiciones de carrera o errores no capturados.",
+   "El tipo Promise<void> es correcto: el método no devuelve valor."
+  ],
+  "razones": {
+   "a": "Correcta. Hay que hacer await de cada acción.",
+   "b": "fill() sí existe en Locator y es lo recomendado.",
+   "c": "El método no devuelve texto; Promise<void> es correcto.",
+   "d": "Los locators no son async; las acciones sobre ellos sí devuelven Promise."
+  },
+  "clave": "Acción de Locator sin await = carrera.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-03",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "concepto",
+  "pregunta": "¿Dónde conviene poner por defecto las aserciones `expect` al usar Page Objects?",
+  "opciones": {
+   "a": "En los tests; el POM expone locators y acciones.",
+   "b": "Siempre dentro de los métodos del POM.",
+   "c": "En el constructor del POM, para validarlo al crearse.",
+   "d": "En el `playwright.config.ts`."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La recomendación general es que el POM encapsule acciones y localizadores, y que los tests contengan las aserciones para que sea claro qué se verifica.",
+  "explicacion": [
+   "Los tests quedan legibles: se ve qué se comprueba.",
+   "Un POM con aserciones ocultas dificulta reutilizarlo en otros escenarios.",
+   "Se puede incluir alguna espera o verificación puntual en el POM, pero no es la norma."
+  ],
+  "razones": {
+   "a": "Correcta. Las aserciones se dejan en el test.",
+   "b": "Esconder todas las aserciones en el POM oculta la intención del test.",
+   "c": "El constructor no debe ejecutar comprobaciones asíncronas.",
+   "d": "La configuración no contiene aserciones de tests."
+  },
+  "clave": "POM = cómo; test = qué se verifica.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-04",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "codigo",
+  "pregunta": "Tras pulsar en el carrito se navega a otra página. ¿Qué devuelve el método para encadenar Page Objects?",
+  "codigo": "async goToCart(): Promise<CartPage> {\n  await this.cartLink.click();\n  return ___;\n}",
+  "opciones": {
+   "a": "`new CartPage(this.page)`",
+   "b": "`new CartPage()`",
+   "c": "`CartPage`",
+   "d": "`await this.cartLink`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un método que navega puede devolver el siguiente Page Object construido con la misma `page`.",
+  "explicacion": [
+   "El nuevo POM necesita la misma Page para actuar sobre el mismo navegador.",
+   "El tipo de retorno Promise<CartPage> se resuelve con la instancia.",
+   "Así se pueden encadenar llamadas legibles en el test."
+  ],
+  "razones": {
+   "a": "Correcta. Se instancia con la page actual.",
+   "b": "CartPage necesita la page en su constructor.",
+   "c": "Devolvería la clase, no una instancia.",
+   "d": "Devolvería un Locator, no un CartPage."
+  },
+  "clave": "Navegar = devolver `new SiguientePOM(this.page)`.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-05",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "como",
+  "pregunta": "¿Cómo se importan solo los tipos `Page` y `Locator` para anotar un Page Object?",
+  "opciones": {
+   "a": "`import type { Page, Locator } from '@playwright/test';`",
+   "b": "`import { Page, Locator } from 'playwright-pom';`",
+   "c": "`import type Page from '@playwright/page';`",
+   "d": "`const { Page, Locator } = require('@playwright/types');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`Page` y `Locator` se exportan desde `@playwright/test` y `import type` los importa solo como tipos.",
+  "explicacion": [
+   "import type se borra al compilar y no añade código en runtime.",
+   "Los tipos vienen del paquete @playwright/test.",
+   "Se usan para anotar propiedades y parámetros del POM."
+  ],
+  "razones": {
+   "a": "Correcta. Paquete y sintaxis correctos.",
+   "b": "playwright-pom no existe como paquete oficial.",
+   "c": "No existe el módulo @playwright/page ni exportación por defecto.",
+   "d": "@playwright/types no es un módulo de Playwright."
+  },
+  "clave": "Tipos desde `@playwright/test`.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-06",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "concepto",
+  "pregunta": "¿Por qué se guardan `Locator` en el POM y no el texto o valor ya leído?",
+  "opciones": {
+   "a": "Porque el Locator se resuelve de forma perezosa en cada uso, con auto-espera y datos frescos.",
+   "b": "Porque el texto leído no se puede tipar en TypeScript.",
+   "c": "Porque los Locator se cachean para siempre y son más rápidos.",
+   "d": "Porque Playwright prohíbe propiedades de tipo string."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un Locator es una descripción de cómo encontrar el elemento y se evalúa al actuar, así refleja el estado actual del DOM.",
+  "explicacion": [
+   "Un texto guardado en el constructor sería una foto fija que se queda obsoleta.",
+   "Las acciones y aserciones sobre Locator reintentan hasta que se cumple la condición.",
+   "El valor se lee en el momento de usarlo."
+  ],
+  "razones": {
+   "a": "Correcta. Evaluación perezosa y auto-espera.",
+   "b": "Se puede tipar sin problema; no es el motivo.",
+   "c": "No se cachea el elemento: se vuelve a buscar en cada uso.",
+   "d": "Playwright no impone esa restricción."
+  },
+  "clave": "Guarda cómo encontrar, no lo encontrado.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-POM-07",
+  "nivel": "medio",
+  "tema": "Page Object Model",
+  "tipo": "error",
+  "pregunta": "¿Qué problema tiene esta clase?",
+  "codigo": "export class HomePage {\n  readonly title: Locator;\n\n  constructor(readonly page: Page) {\n    this.title = await page.locator('h1');\n  }\n}",
+  "opciones": {
+   "a": "Un constructor no puede usar `await`; además crear un locator no es asíncrono.",
+   "b": "Falta `readonly` en `page`.",
+   "c": "`locator('h1')` no es un selector válido.",
+   "d": "`Locator` solo se puede declarar dentro de métodos."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los locators se crean de forma síncrona; `await` solo se usa al ejecutar acciones o aserciones.",
+  "explicacion": [
+   "Usar await en un constructor es un error de sintaxis en TypeScript.",
+   "page.locator() devuelve un Locator directamente.",
+   "Basta con `this.title = page.locator('h1');`."
+  ],
+  "razones": {
+   "a": "Correcta. await sobra y es inválido en un constructor.",
+   "b": "`readonly` ya está en el parámetro con parámetro-propiedad.",
+   "c": "'h1' es un selector CSS válido.",
+   "d": "Un Locator puede ser propiedad de clase."
+  },
+  "clave": "Locator sin await; acción con await.",
+  "docs": "https://playwright.dev/docs/pom"
+ },
+ {
+  "id": "M-FIX-01",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres una fixture que entregue un LoginPage listo al test. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{ loginPage: LoginPage }>({\n  loginPage: async ({ page }, use) => {\n    const loginPage = new LoginPage(page);\n    await loginPage.goto();\n    ___\n  },\n});",
+  "opciones": {
+   "a": "`await use(loginPage);`",
+   "b": "`return loginPage;`",
+   "c": "`use(loginPage);`",
+   "d": "`await test.use({ loginPage });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture entrega su valor llamando a `await use(valor)`; lo que va antes es la preparación y lo que va después, la limpieza.",
+  "explicacion": [
+   "use() cede el control al test con ese valor.",
+   "El código tras await use() se ejecuta al terminar el test (teardown).",
+   "Devolver el valor con return no lo entrega."
+  ],
+  "razones": {
+   "a": "Correcta. La fixture entrega el valor con await use(...).",
+   "b": "Las fixtures no devuelven el valor: lo pasan a use().",
+   "c": "Sin await, el teardown se ejecutaría antes de que acabe el test.",
+   "d": "test.use() configura opciones de un fichero o describe; no entrega valores."
+  },
+  "clave": "Fixture = preparar, await use(valor), limpiar.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-02",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Tras crear `fixtures.ts` con `base.extend`, ¿qué debe exportarse además de `test` para importar ambos desde ese fichero?",
+  "codigo": "import { test as base } from '@playwright/test';\n\nexport const test = base.extend<{ todo: TodoPage }>({\n  todo: async ({ page }, use) => { await use(new TodoPage(page)); },\n});\n___",
+  "opciones": {
+   "a": "`export { expect } from '@playwright/test';`",
+   "b": "`export { page } from '@playwright/test';`",
+   "c": "`export default base;`",
+   "d": "`export { use } from '@playwright/test';`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El fichero de fixtures exporta el `test` extendido y reexporta `expect` para importar ambos desde un solo sitio.",
+  "explicacion": [
+   "Los tests importan { test, expect } de './fixtures'.",
+   "Así no se mezcla el test base con el extendido.",
+   "expect no cambia, pero se reexporta por comodidad."
+  ],
+  "razones": {
+   "a": "Correcta. Reexporta expect.",
+   "b": "page no se exporta como módulo; es una fixture.",
+   "c": "Exportar base no incluye las fixtures nuevas.",
+   "d": "use no es una exportación de @playwright/test."
+  },
+  "clave": "Exporta `test` y `expect` juntos.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-03",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres que la fixture se cree una vez por worker y no por test. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{}, { db: Db }>({\n  db: [async ({}, use) => {\n    const db = await connect();\n    await use(db);\n    await db.close();\n  }, ___],\n});",
+  "opciones": {
+   "a": "`{ scope: 'worker' }`",
+   "b": "`{ worker: true }`",
+   "c": "`{ auto: 'worker' }`",
+   "d": "`{ scope: 'file' }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las fixtures de worker se declaran en el segundo genérico y con `{ scope: 'worker' }`.",
+  "explicacion": [
+   "El scope por defecto es 'test'.",
+   "Las de worker se comparten entre los tests que ejecuta el mismo worker.",
+   "Se tipan en el segundo parámetro genérico de extend."
+  ],
+  "razones": {
+   "a": "Correcta. Es la opción oficial de scope.",
+   "b": "worker: true no existe.",
+   "c": "auto no recibe un scope; es un booleano.",
+   "d": "Los valores válidos son 'test' y 'worker'."
+  },
+  "clave": "Segundo genérico + scope: 'worker'.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-04",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "como",
+  "pregunta": "¿Cómo declaras una fixture que se ejecuta en todos los tests aunque no la pidan?",
+  "codigo": "myLogger: [async ({}, use) => {\n  console.log('inicio');\n  await use();\n}, ___],",
+  "opciones": {
+   "a": "`{ auto: true }`",
+   "b": "`{ always: true }`",
+   "c": "`{ scope: 'auto' }`",
+   "d": "`{ global: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture automática se declara con `{ auto: true }` y se ejecuta en cada test sin que este la mencione.",
+  "explicacion": [
+   "Es útil para logging, limpiezas o capturas globales.",
+   "Se puede combinar con scope: 'worker'.",
+   "Si no hay valor que entregar, use() se llama sin argumentos."
+  ],
+  "razones": {
+   "a": "Correcta. auto: true.",
+   "b": "always no es una opción de fixture.",
+   "c": "scope solo admite 'test' o 'worker'.",
+   "d": "global no existe como opción."
+  },
+  "clave": "auto: true = se ejecuta siempre.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-05",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "codigo",
+  "pregunta": "Quieres una fixture configurable desde `test.use()` o los proyectos. ¿Qué va en el hueco?",
+  "codigo": "export const test = base.extend<{ user: string }>({\n  user: ['guest', ___],\n});\n\n// en config: use: { user: 'admin' }",
+  "opciones": {
+   "a": "`{ option: true }`",
+   "b": "`{ config: true }`",
+   "c": "`{ scope: 'option' }`",
+   "d": "`{ auto: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture opción tiene un valor por defecto y `{ option: true }`, lo que permite sobrescribirla con `use`.",
+  "explicacion": [
+   "Se declara como [valorPorDefecto, { option: true }].",
+   "Se cambia con test.use() o en use del proyecto.",
+   "Sin option: true, el valor no se puede configurar así."
+  ],
+  "razones": {
+   "a": "Correcta. Marca la fixture como opción.",
+   "b": "config no es una propiedad válida.",
+   "c": "scope no admite 'option'.",
+   "d": "auto la ejecuta siempre, pero no la hace configurable."
+  },
+  "clave": "Opción = [default, { option: true }].",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-06",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "concepto",
+  "pregunta": "¿Cómo hace una fixture para depender de otra?",
+  "opciones": {
+   "a": "La recibe en el objeto desestructurado de sus argumentos, y Playwright resuelve el orden.",
+   "b": "Llamando manualmente a la otra fixture como función.",
+   "c": "Importándola con `import` desde su fichero.",
+   "d": "Declarando `dependencies: [...]` dentro de la fixture."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture pide otras fixtures desestructurándolas en su primer parámetro y Playwright las prepara antes.",
+  "explicacion": [
+   "Por ejemplo async ({ page, loginPage }, use) => {...}.",
+   "El teardown se ejecuta en orden inverso.",
+   "Solo se inicializan las que se usan."
+  ],
+  "razones": {
+   "a": "Correcta. Se piden por desestructuración.",
+   "b": "Las fixtures no se invocan manualmente.",
+   "c": "Importar el fichero no crea la dependencia.",
+   "d": "dependencies pertenece a proyectos, no a fixtures."
+  },
+  "clave": "Para depender, destructura.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-07",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "funcion",
+  "pregunta": "¿Qué función combina fixtures de dos `test` extendidos distintos en uno?",
+  "codigo": "import { mergeTests } from '@playwright/test';\nimport { test as dbTest } from './db';\nimport { test as authTest } from './auth';\n\nexport const test = ___;",
+  "opciones": {
+   "a": "`mergeTests(dbTest, authTest)`",
+   "b": "`dbTest.merge(authTest)`",
+   "c": "`base.extend(dbTest, authTest)`",
+   "d": "`combineTests(dbTest, authTest)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`mergeTests` fusiona las fixtures de varios `test` extendidos en uno solo.",
+  "explicacion": [
+   "Acepta dos o más test como argumentos.",
+   "El resultado se exporta como el test del proyecto.",
+   "No hay método .merge en test."
+  ],
+  "razones": {
+   "a": "Correcta. mergeTests es la API oficial.",
+   "b": "test no tiene método merge.",
+   "c": "extend no admite otros test como argumentos.",
+   "d": "combineTests no existe."
+  },
+  "clave": "Varios test: `mergeTests(a, b)`.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-FIX-08",
+  "nivel": "medio",
+  "tema": "Fixtures",
+  "tipo": "error",
+  "pregunta": "El test con esta fixture falla indicando que `use()` no se llamó. ¿Qué falla?",
+  "codigo": "loginPage: async ({ page }, use) => {\n  const lp = new LoginPage(page);\n  await lp.goto();\n  return lp;\n},",
+  "opciones": {
+   "a": "La fixture nunca llama a `use()`, que es lo que la entrega al test.",
+   "b": "Falta `scope: 'test'`.",
+   "c": "`goto()` no se puede usar en una fixture.",
+   "d": "El parámetro `page` no está permitido en fixtures."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Una fixture debe llamar a `await use(valor)` exactamente una vez para que el test continúe.",
+  "explicacion": [
+   "return no sustituye a use().",
+   "Playwright informa de que la fixture no llamó a use().",
+   "El scope por defecto ya es 'test'."
+  ],
+  "razones": {
+   "a": "Correcta. Falta use().",
+   "b": "El scope por defecto ya es test.",
+   "c": "goto es una acción normal de un POM.",
+   "d": "page es la fixture más usada en otras fixtures."
+  },
+  "clave": "Sin use() no hay fixture.",
+  "docs": "https://playwright.dev/docs/test-fixtures"
+ },
+ {
+  "id": "M-AUT-01",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "Quieres que los tests de `chromium` esperen a que termine el proyecto de login. ¿Qué falta?",
+  "codigo": "projects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.ts/ },\n  {\n    name: 'chromium',\n    use: { ...devices['Desktop Chrome'] },\n    ___\n  },\n],",
+  "opciones": {
+   "a": "`dependencies: ['setup'],`",
+   "b": "`needs: ['setup'],`",
+   "c": "`before: 'setup',`",
+   "d": "`globalSetup: 'setup',`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`dependencies` en un proyecto hace que ese proyecto se ejecute solo tras terminar los indicados.",
+  "explicacion": [
+   "El proyecto setup corre primero y genera el estado de sesión.",
+   "dependencies lista nombres de proyectos.",
+   "globalSetup es una opción distinta y a nivel raíz."
+  ],
+  "razones": {
+   "a": "Correcta. dependencies lista los proyectos previos.",
+   "b": "needs no existe.",
+   "c": "before no existe.",
+   "d": "globalSetup es un fichero de la config, no del proyecto."
+  },
+  "clave": "Proyecto setup + dependencies.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-02",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "como",
+  "pregunta": "¿Qué regex en `testMatch` hace que un proyecto ejecute solo ficheros como `auth.setup.ts`?",
+  "opciones": {
+   "a": "`testMatch: /.*\\.setup\\.ts/`",
+   "b": "`testMatch: /setup/ts`",
+   "c": "`testMatch: '*.setup'`",
+   "d": "`testIgnore: /.*\\.setup\\.ts/`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Un proyecto de setup suele filtrar sus ficheros con `testMatch` y la expresión `/.*\\.setup\\.ts/`.",
+  "explicacion": [
+   "testMatch acepta cadenas, regex o arrays.",
+   "El patrón captura nombres que terminan en .setup.ts.",
+   "testIgnore haría lo contrario."
+  ],
+  "razones": {
+   "a": "Correcta. Regex válida.",
+   "b": "/setup/ts no es una regex válida para este fin.",
+   "c": "'*.setup' no coincide con la extensión .ts.",
+   "d": "testIgnore excluye esos ficheros."
+  },
+  "clave": "testMatch elige, testIgnore excluye.",
+  "docs": "https://playwright.dev/docs/test-projects"
+ },
+ {
+  "id": "M-AUT-03",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "En el test de setup, ¿qué guarda la sesión en un fichero?",
+  "codigo": "setup('authenticate', async ({ page }) => {\n  await page.goto('/login');\n  await page.getByLabel('User').fill('ana');\n  await page.getByLabel('Password').fill('secret');\n  await page.getByRole('button', { name: 'Entrar' }).click();\n  await page.waitForURL('/home');\n  ___\n});",
+  "opciones": {
+   "a": "`await page.context().storageState({ path: authFile });`",
+   "b": "`await page.saveSession(authFile);`",
+   "c": "`await page.storageState(authFile);`",
+   "d": "`await context.save({ path: authFile });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El estado se guarda con `context.storageState({ path })`.",
+  "explicacion": [
+   "Almacena cookies y localStorage del contexto.",
+   "Se ejecuta tras comprobar que el login terminó.",
+   "El fichero se reutiliza en otros proyectos."
+  ],
+  "razones": {
+   "a": "Correcta. Método real del contexto.",
+   "b": "saveSession no existe.",
+   "c": "storageState es método del contexto, no de page.",
+   "d": "save no existe en BrowserContext."
+  },
+  "clave": "Sesión = context.storageState({ path }).",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-04",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo hacen los tests del proyecto `chromium` para reutilizar la sesión guardada?",
+  "codigo": "{\n  name: 'chromium',\n  use: {\n    ...devices['Desktop Chrome'],\n    ___\n  },\n  dependencies: ['setup'],\n},",
+  "opciones": {
+   "a": "`storageState: 'playwright/.auth/user.json'`",
+   "b": "`session: 'playwright/.auth/user.json'`",
+   "c": "`cookies: 'playwright/.auth/user.json'`",
+   "d": "`authFile: 'playwright/.auth/user.json'`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "La opción `storageState` en `use` carga el estado de sesión en cada contexto.",
+  "explicacion": [
+   "Cada test arranca ya autenticado.",
+   "La ruta debe coincidir con la guardada en setup.",
+   "Se puede definir por proyecto o a nivel global."
+  ],
+  "razones": {
+   "a": "Correcta. Es la opción oficial.",
+   "b": "session no existe.",
+   "c": "cookies espera cookies, no una ruta.",
+   "d": "authFile no es opción de Playwright."
+  },
+  "clave": "use.storageState = sesión cargada.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-05",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "como",
+  "pregunta": "Con `storageState` global, ¿cómo ejecutas un fichero de tests sin sesión?",
+  "opciones": {
+   "a": "`test.use({ storageState: { cookies: [], origins: [] } });`",
+   "b": "`test.use({ storageState: null });`",
+   "c": "`test.skip(auth);`",
+   "d": "`test.use({ auth: false });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Se sobrescribe `storageState` con un estado vacío.",
+  "explicacion": [
+   "Se pone en el fichero o dentro de un describe.",
+   "Un estado vacío no contiene cookies ni origins.",
+   "test.use afecta a todo el ámbito donde se declara."
+  ],
+  "razones": {
+   "a": "Correcta. Estado vacío.",
+   "b": "null no es un valor válido para esta opción en TypeScript.",
+   "c": "test.skip omitiría el test.",
+   "d": "auth no es una opción."
+  },
+  "clave": "Sin sesión: storageState vacío.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-AUT-06",
+  "nivel": "medio",
+  "tema": "Autenticación y proyectos",
+  "tipo": "codigo",
+  "pregunta": "Para probar dos roles, ¿cómo configuras los proyectos?",
+  "codigo": "projects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.ts/ },\n  { name: 'admin', use: { storageState: 'playwright/.auth/admin.json' }, dependencies: ['setup'] },\n  { name: 'user', ___, dependencies: ['setup'] },\n]",
+  "opciones": {
+   "a": "`use: { storageState: 'playwright/.auth/user.json' }`",
+   "b": "`use: { role: 'user' }`",
+   "c": "`storageState: 'user'`",
+   "d": "`auth: 'playwright/.auth/user.json'`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Cada rol tiene su fichero de estado y su proyecto con `use.storageState`.",
+  "explicacion": [
+   "El setup genera un fichero por rol.",
+   "Cada proyecto carga el suyo.",
+   "storageState va dentro de use."
+  ],
+  "razones": {
+   "a": "Correcta. Cada proyecto con su fichero.",
+   "b": "role no existe.",
+   "c": "storageState debe estar dentro de use y ser ruta.",
+   "d": "auth no existe."
+  },
+  "clave": "Un rol = un fichero = un proyecto.",
+  "docs": "https://playwright.dev/docs/auth"
+ },
+ {
+  "id": "M-ORG-01",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "funcion",
+  "pregunta": "¿Qué función agrupa acciones con un nombre legible en el informe y el trace?",
+  "codigo": "await ___('Rellenar formulario', async () => {\n  await page.getByLabel('Nombre').fill('Ana');\n  await page.getByRole('button', { name: 'Enviar' }).click();\n});",
+  "opciones": {
+   "a": "`test.step`",
+   "b": "`test.group`",
+   "c": "`test.section`",
+   "d": "`expect.step`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`test.step` crea un paso con nombre visible en los informes y en el trace.",
+  "explicacion": [
+   "Devuelve una Promise, por eso se usa con await.",
+   "Puede devolver un valor.",
+   "Facilita localizar dónde falla un test."
+  ],
+  "razones": {
+   "a": "Correcta. Es la API oficial.",
+   "b": "test.group no existe.",
+   "c": "test.section no existe.",
+   "d": "expect no tiene step."
+  },
+  "clave": "Pasos legibles: test.step.",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "M-ORG-02",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo compruebas varias cosas sin que la primera aserción fallida detenga el test?",
+  "opciones": {
+   "a": "`await expect.soft(locator).toHaveText('Hola');`",
+   "b": "`await expect(locator).soft().toHaveText('Hola');`",
+   "c": "`await expect(locator, { soft: true }).toBeVisible();`",
+   "d": "`await test.soft(locator).toHaveText('Hola');`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`expect.soft` registra el fallo pero deja continuar el test.",
+  "explicacion": [
+   "El test se marca como fallido al final.",
+   "Útil para validar varios campos de una vez.",
+   "Se usa igual que expect."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "expect no tiene método soft().",
+   "c": "No existe esa opción así.",
+   "d": "test no tiene soft."
+  },
+  "clave": "Soft = falla sin parar.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-03",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "Se necesita esperar a que un endpoint devuelva 200 con reintentos. ¿Qué va en el hueco?",
+  "codigo": "await ___(async () => {\n  const res = await request.get('/api/health');\n  return res.status();\n}, { timeout: 10_000 }).toBe(200);",
+  "opciones": {
+   "a": "`expect.poll`",
+   "b": "`expect.retry`",
+   "c": "`expect.wait`",
+   "d": "`expect.eventually`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`expect.poll` repite una función hasta que el valor cumple la aserción.",
+  "explicacion": [
+   "Admite timeout e intervals.",
+   "La función devuelve el valor que se evalúa.",
+   "Se encadena con matchers como toBe."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "retry no existe.",
+   "c": "wait no existe.",
+   "d": "eventually no existe."
+  },
+  "clave": "Valor cambiante: expect.poll.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-04",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Qué matcher hace que este bloque se reintente hasta que no lance error?",
+  "codigo": "await expect(async () => {\n  const res = await request.get('/api/job');\n  expect(res.status()).toBe(200);\n}).___({ timeout: 10_000 });",
+  "opciones": {
+   "a": "`toPass`",
+   "b": "`toRetry`",
+   "c": "`toResolve`",
+   "d": "`toSucceed`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`toPass` reintenta un bloque hasta que no falle.",
+  "explicacion": [
+   "Útil para varios pasos relacionados.",
+   "Acepta timeout e intervals.",
+   "Se usa con expect(async () => {...})."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "toRetry no existe.",
+   "c": "toResolve no existe.",
+   "d": "toSucceed no existe."
+  },
+  "clave": "Bloque reintentable: toPass.",
+  "docs": "https://playwright.dev/docs/test-assertions"
+ },
+ {
+  "id": "M-ORG-05",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo haces que los tests de un describe se ejecuten en orden y se detengan al fallar uno?",
+  "opciones": {
+   "a": "`test.describe.configure({ mode: 'serial' });`",
+   "b": "`test.describe.serial = true;`",
+   "c": "`test.configure({ order: 'serial' });`",
+   "d": "`test.describe.configure({ workers: 1 });`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "El modo serial ejecuta los tests en orden y salta el resto si uno falla.",
+  "explicacion": [
+   "Se llama dentro del describe.",
+   "Los tests se reintentan juntos.",
+   "Debe usarse con cuidado."
+  ],
+  "razones": {
+   "a": "Correcta. API oficial.",
+   "b": "No es una propiedad.",
+   "c": "test.configure no existe.",
+   "d": "workers no es opción de describe."
+  },
+  "clave": "Dependientes: mode serial.",
+  "docs": "https://playwright.dev/docs/test-parallel"
+ },
+ {
+  "id": "M-ORG-06",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo etiquetas un test como smoke y lo ejecutas filtrando?",
+  "codigo": "test('login', ___, async ({ page }) => {\n  // ...\n});\n\n// npx playwright test --grep @smoke",
+  "opciones": {
+   "a": "`{ tag: '@smoke' }`",
+   "b": "`{ label: '@smoke' }`",
+   "c": "`{ grep: '@smoke' }`",
+   "d": "`{ smoke: true }`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Las etiquetas van en los detalles del test con `tag` y se filtran con `--grep`.",
+  "explicacion": [
+   "Pueden ser un string o array.",
+   "--grep-invert excluye tests.",
+   "Se pueden filtrar en CI."
+  ],
+  "razones": {
+   "a": "Correcta. tag.",
+   "b": "label no existe.",
+   "c": "grep no es detalle de test.",
+   "d": "smoke no es propiedad."
+  },
+  "clave": "tag + --grep.",
+  "docs": "https://playwright.dev/docs/test-annotations"
+ },
+ {
+  "id": "M-ORG-07",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo sabes en un test si es un reintento?",
+  "codigo": "test('x', async ({ page }) => {\n  const info = test.info();\n  if (___ > 0) { /* ... */ }\n});",
+  "opciones": {
+   "a": "`info.retry`",
+   "b": "`info.retries`",
+   "c": "`info.attempt`",
+   "d": "`test.retry`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`testInfo.retry` indica el número de reintento.",
+  "explicacion": [
+   "Vale 0 en el primer intento.",
+   "Se obtiene con test.info().",
+   "retries es opción de config."
+  ],
+  "razones": {
+   "a": "Correcta. retry.",
+   "b": "retries no es propiedad de testInfo.",
+   "c": "attempt no existe.",
+   "d": "test.retry no existe."
+  },
+  "clave": "retry 0 = primer intento.",
+  "docs": "https://playwright.dev/docs/test-retries"
+ },
+ {
+  "id": "M-ORG-08",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Cómo saltas un test en WebKit con motivo?",
+  "codigo": "test('feature', async ({ page, browserName }) => {\n  ___;\n});",
+  "opciones": {
+   "a": "`test.skip(browserName === 'webkit', 'No soportado en WebKit')`",
+   "b": "`test.skip('webkit')`",
+   "c": "`if (browserName === 'webkit') return;`",
+   "d": "`test.fixme(browserName)`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`test.skip(condicion, motivo)` omite el test dinámicamente.",
+  "explicacion": [
+   "Aparece como omitido en el informe.",
+   "Se puede usar dentro del test.",
+   "return lo marcaría como pasado."
+  ],
+  "razones": {
+   "a": "Correcta. Forma oficial.",
+   "b": "skip('webkit') omite siempre.",
+   "c": "Marcaría como pasado.",
+   "d": "fixme se usa para tests rotos."
+  },
+  "clave": "skip(cond, motivo).",
+  "docs": "https://playwright.dev/docs/api/class-test"
+ },
+ {
+  "id": "M-ORG-09",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "codigo",
+  "pregunta": "¿Qué hace este código?",
+  "codigo": "const users: { name: string; role: string }[] = [\n  { name: 'Ana', role: 'admin' },\n  { name: 'Luis', role: 'user' },\n];\n\nfor (const u of users) {\n  test(`login de ${u.name}`, async ({ page }) => {\n    // ...\n  });\n}",
+  "opciones": {
+   "a": "Genera un test por usuario con nombre distinto.",
+   "b": "Ejecuta un solo test con todos.",
+   "c": "Falla por nombres repetidos.",
+   "d": "Necesita test.each."
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "Los tests parametrizados se crean con un bucle.",
+  "explicacion": [
+   "Cada test debe tener título único.",
+   "Playwright no tiene test.each.",
+   "Se tipan los datos."
+  ],
+  "razones": {
+   "a": "Correcta. Un test por elemento.",
+   "b": "Se crean varios tests.",
+   "c": "Los títulos son distintos.",
+   "d": "test.each no existe."
+  },
+  "clave": "Bucle = tests parametrizados.",
+  "docs": "https://playwright.dev/docs/test-parameterize"
+ },
+ {
+  "id": "M-ORG-10",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Qué comando abre un trace?",
+  "opciones": {
+   "a": "`npx playwright show-trace trace.zip`",
+   "b": "`npx playwright open-trace trace.zip`",
+   "c": "`npx playwright trace trace.zip`",
+   "d": "`npx playwright view trace.zip`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`show-trace` abre el visor de trazas.",
+  "explicacion": [
+   "Muestra acciones y capturas.",
+   "Se genera con trace on.",
+   "Admite zip."
+  ],
+  "razones": {
+   "a": "Correcta. Comando oficial.",
+   "b": "open-trace no existe.",
+   "c": "trace no existe.",
+   "d": "view no existe."
+  },
+  "clave": "show-trace.",
+  "docs": "https://playwright.dev/docs/trace-viewer"
+ },
+ {
+  "id": "M-ORG-11",
+  "nivel": "medio",
+  "tema": "Organización y depuración",
+  "tipo": "como",
+  "pregunta": "¿Cómo actualizas las capturas de referencia?",
+  "codigo": "await expect(page).toHaveScreenshot();",
+  "opciones": {
+   "a": "`npx playwright test --update-snapshots`",
+   "b": "`npx playwright test --update-screenshots`",
+   "c": "`npx playwright update`",
+   "d": "`npx playwright test --reset-snapshots`"
+  },
+  "codigoOpciones": false,
+  "correcta": [
+   "a"
+  ],
+  "concepto": "`--update-snapshots` regenera las referencias.",
+  "explicacion": [
+   "Se usa tras un cambio visual intencionado.",
+   "Revisa los cambios antes de commitear.",
+   "Otros flags no existen."
+  ],
+  "razones": {
+   "a": "Correcta. Flag oficial.",
+   "b": "update-screenshots no existe.",
+   "c": "update no existe.",
+   "d": "reset-snapshots no existe."
+  },
+  "clave": "--update-snapshots.",
+  "docs": "https://playwright.dev/docs/test-snapshots"
+ }
+]

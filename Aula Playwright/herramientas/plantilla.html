@@ -1,0 +1,598 @@
+<meta charset="utf-8">
+<title>Aula Playwright TS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: hoja de ejercicio centrada (~820px) con barra de pestañas fija; el código va en bloques tipo editor, las opciones como burbujas de hoja de respuestas */
+:root{
+  --paper:#eff3f1; --sheet:#ffffff; --ink:#15211d; --muted:#56665f; --line:#d5dfda;
+  --accent:#0d7a5f; --accent-soft:#e0f2ec;
+  --ok:#17804a; --ok-soft:#e3f4ea; --bad:#c23a2b; --bad-soft:#fbe7e4; --warn:#a96a00; --warn-soft:#fdf1dc;
+  --code-bg:#17201d; --code-ink:#dfe8e4; --code-kw:#7fd4b8; --code-str:#f2c46d; --code-com:#8a9a93; --code-gap:#ff8f7a;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1513; --sheet:#16201d; --ink:#e3ece8; --muted:#97a8a1; --line:#283631;
+  --accent:#5fd3ae; --accent-soft:#163229;
+  --ok:#4cc985; --ok-soft:#14301f; --bad:#ff8a7a; --bad-soft:#3a1b18; --warn:#f0b54a; --warn-soft:#352812;
+  --code-bg:#0a100e; --code-ink:#dfe8e4; --code-kw:#7fd4b8; --code-str:#f2c46d; --code-com:#7d8d86; --code-gap:#ff8f7a;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0e1513; --sheet:#16201d; --ink:#e3ece8; --muted:#97a8a1; --line:#283631;
+  --accent:#5fd3ae; --accent-soft:#163229;
+  --ok:#4cc985; --ok-soft:#14301f; --bad:#ff8a7a; --bad-soft:#3a1b18; --warn:#f0b54a; --warn-soft:#352812;
+  --code-bg:#0a100e; --code-ink:#dfe8e4; --code-kw:#7fd4b8; --code-str:#f2c46d; --code-com:#7d8d86; --code-gap:#ff8f7a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sheet)}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sheet);border-bottom:1px solid var(--line)}
+.bar-in{max-width:820px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.15rem;letter-spacing:-.01em;display:flex;align-items:baseline;gap:8px}
+.brand small{font-family:var(--f-mono);font-size:.7rem;font-weight:400;color:var(--muted);letter-spacing:.04em}
+.tabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.tab{border:0;background:transparent;padding:6px 12px;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:700;font-size:.92rem}
+.tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
+.tab .n{font-family:var(--f-mono);font-size:.75rem;margin-left:4px}
+main{max-width:820px;margin:0 auto;padding-block:20px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h2{font-size:1.5rem}
+h3{font-size:1.1rem}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--sheet);padding:4px 11px;border-radius:999px;cursor:pointer;font-size:.88rem}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+.sel-tema{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:4px 10px;font-size:.88rem;max-width:100%}
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:22px clamp(16px,4vw,28px);display:flex;flex-direction:column;gap:16px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-family:var(--f-mono);font-size:.76rem;color:var(--muted);letter-spacing:.02em;text-transform:uppercase}
+.meta b{color:var(--ink);font-weight:600}
+.lvl{padding:1px 7px;border-radius:4px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.lvl.medio{background:var(--warn-soft);color:var(--warn)}
+.qtext{font-size:1.08rem}
+code,pre.code{font-variant-ligatures:none}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--accent-soft);color:var(--ink);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+pre.code{margin:0;background:var(--code-bg);color:var(--code-ink);border-radius:8px;padding:14px 16px;font-family:var(--f-mono);font-size:.84rem;line-height:1.6;overflow-x:auto;white-space:pre;tab-size:2}
+pre.code .kw{color:var(--code-kw)} pre.code .st{color:var(--code-str)} pre.code .cm{color:var(--code-com);font-style:italic}
+pre.code .gap{color:var(--code-gap);font-weight:600;background:rgba(255,143,122,.14);border-radius:3px;padding:0 2px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;text-align:left;width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--sheet);cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt[disabled]{cursor:default}
+.opt pre.code{font-size:.8rem;padding:10px 12px}
+.bub{width:30px;height:30px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;font-size:.85rem;color:var(--muted)}
+.opt.sel .bub{background:var(--accent);border-color:var(--accent);color:var(--sheet)}
+.opt.sel{border-color:var(--accent)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .bub{background:var(--ok);border-color:var(--ok);color:var(--sheet)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .bub{background:var(--bad);border-color:var(--bad);color:var(--sheet)}
+.otext{min-width:0;display:flex;flex-direction:column;gap:2px}
+.why{display:block;margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);font-size:.9rem;color:var(--ink)}
+.why b{display:block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.why.y b{color:var(--ok)} .why.n b{color:var(--muted)}
+.opt.wrong .why.n b{color:var(--bad)}
+.mine{align-self:flex-start;margin:0 0 4px;font-family:var(--f-mono);font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:1px 6px;border-radius:4px;border:1px solid currentColor;color:var(--muted)}
+.verdict{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:8px;font-weight:700}
+.verdict .ico{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:1.1rem;color:var(--sheet)}
+.verdict.ok{background:var(--ok-soft);color:var(--ok)} .verdict.bad{background:var(--bad-soft);color:var(--bad)}
+.verdict.ok .ico{background:var(--ok)} .verdict.bad .ico{background:var(--bad)}
+.verdict .vt{font-family:var(--f-display);font-size:1.15rem}
+.verdict .vs{font-weight:400;color:var(--ink);font-size:.93rem}
+.concept{border:1px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:12px 14px;font-size:1.02rem}
+.concept code{background:var(--sheet)}
+.concept b,.blk h3{display:block;font-family:var(--f-mono);font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.blk h3{color:var(--muted)}
+.pts{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;max-width:68ch}
+.pts li::marker{color:var(--accent)}
+.src{font-size:.85rem;color:var(--muted)}
+.btn{border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;background:var(--accent);color:var(--sheet)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.small{padding:6px 12px;font-size:.88rem}
+.expl{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:16px}
+.tip{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:0 8px 8px 0}
+.tip b{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--warn);display:block;margin-bottom:2px}
+.ask{display:flex;flex-direction:column;gap:8px;background:var(--paper);border:1px dashed var(--line);border-radius:8px;padding:14px}
+.ask textarea{width:100%;min-height:64px;resize:vertical;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--sheet)}
+.answer{display:flex;flex-direction:column;gap:6px;max-width:68ch;min-width:0}
+.answer h4{margin:10px 0 0;font-family:var(--f-mono);font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.answer h4:first-child{margin-top:0}
+.answer ul,.answer ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.answer:empty{display:none}
+.answer:not(:empty){background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat{background:var(--sheet);border:1px solid var(--line);border-radius:10px;padding:14px}
+.stat .v{font-family:var(--f-display);font-size:1.8rem;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.85rem;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.93rem}
+.tbl th,.tbl td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.scroll{overflow-x:auto}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden;min-width:80px}
+.meter i{display:block;height:100%;background:var(--accent)}
+.meter.ok i{background:var(--ok)} .meter.bad i{background:var(--bad)} .meter.warn i{background:var(--warn)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.8rem;font-weight:700}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
+.timer{font-family:var(--f-mono);font-size:1.25rem;font-weight:600;font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.cell{height:36px;border:1px solid var(--line);border-radius:6px;background:var(--sheet);cursor:pointer;font-family:var(--f-mono);font-size:.82rem;position:relative}
+.cell.done{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.cell.cur{outline:2px solid var(--ink);outline-offset:1px}
+.cell.flag::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.simhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 14px;background:var(--sheet);border:1px solid var(--line);border-radius:8px}
+.item .t{min-width:0}
+.item .t span{display:block}
+.empty{padding:28px;text-align:center;color:var(--muted);background:var(--sheet);border:1px dashed var(--line);border-radius:10px}
+.save{font-size:.8rem;color:var(--muted)}
+.big{font-family:var(--f-display);font-size:3rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+details.rev{border:1px solid var(--line);border-radius:8px;background:var(--sheet)}
+details.rev>summary{cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:center;list-style:none}
+details.rev>summary::-webkit-details-marker{display:none}
+details.rev[open]>summary{border-bottom:1px solid var(--line)}
+details.rev .inner{padding:14px;display:flex;flex-direction:column;gap:12px;min-width:0}
+kbd{font-family:var(--f-mono);font-size:.75rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px}
+@media (max-width:560px){.tabs{margin-left:0;width:100%}.tab{flex:1;padding:6px 6px}.big{font-size:2.4rem}}
+@media (prefers-reduced-motion:no-preference){.opt,.chip,.tab{transition:border-color .15s,background .15s}}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <div class="brand">Aula Playwright <small>TypeScript · básico y medio</small></div>
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" id="t-practicar" data-v="practicar">Practicar</button>
+    <button class="tab" role="tab" id="t-test" data-v="test">Test</button>
+    <button class="tab" role="tab" id="t-falladas" data-v="falladas">Falladas<span class="n" id="nFall"></span></button>
+    <button class="tab" role="tab" id="t-progreso" data-v="progreso">Progreso</button>
+  </nav>
+</div></header>
+<main id="app"></main>
+
+<script>
+const BANCO = /*BANCO*/[];
+const NIVELES = {basico:"Básico", medio:"Medio"};
+const TEST_N = 20, TEST_MIN = 30, TEST_APROBADO = 14;
+const LET = ["A","B","C","D"];
+const byId = Object.fromEntries(BANCO.map(q=>[q.id,q]));
+const TEMAS = nivel=>[...new Set(BANCO.filter(q=>!nivel||q.nivel===nivel).map(q=>q.tema))];
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* Texto con `código en línea` */
+const tx = s=>esc(s).replace(/`([^`]+)`/g,"<code>$1</code>");
+const shuffle = a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pct = (a,b)=>b?Math.round(100*a/b):0;
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+
+/* Resaltado sencillo de TypeScript: comentarios, cadenas, palabras clave y el hueco ___ */
+const KW="await|async|const|let|var|function|return|import|from|export|type|interface|class|new|readonly|constructor|for|of|in|if|else|this|true|false|null|undefined|extends|private|public|try|catch|throw|default|as";
+const TOK=new RegExp(`(\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|<!--[\\s\\S]*?-->)|('(?:\\\\.|[^'\\\\\\n])*'|"(?:\\\\.|[^"\\\\\\n])*"|\`(?:\\\\.|[^\`\\\\])*\`)|\\b(${KW})\\b|(_{3,})`,"g");
+function hl(code){
+  let out="",last=0,m; TOK.lastIndex=0;
+  while((m=TOK.exec(code))){
+    out+=esc(code.slice(last,m.index));
+    const cls=m[1]?"cm":m[2]?"st":m[3]?"kw":"gap";
+    out+=`<span class="${cls}">${esc(m[0])}</span>`; last=TOK.lastIndex;
+  }
+  return out+esc(code.slice(last));
+}
+const codeBlock = c=>`<pre class="code">${hl(c)}</pre>`;
+
+/* ---------- Estado y guardado ---------- */
+const S = {
+  view:"practicar", prog:{}, tests:[], db:null, sample:null, store:"local",
+  pr:{nivel:"", tema:"", orden:"nuevas", pool:null, q:null, order:null, sel:[], done:false, last:null, askCtl:null},
+  sim:null, simResult:null, simNivel:""
+};
+function saveLabel(){
+  const el=$("#saveInfo"); if(!el) return;
+  el.textContent = S.store==="db" ? "Tu progreso se guarda en tu cuenta (lo ves en cualquier dispositivo)." : "Tu progreso se guarda en este navegador.";
+}
+async function initStore(){
+  S.prog = lsGet("pw.prog",{}); S.tests = lsGet("pw.tests",[]);
+  try{
+    const db = window.claude ? await window.claude.use("db") : null;
+    if(db){
+      const [p,s] = await Promise.all([db.collection("progreso").get(), db.collection("tests").orderBy("fecha","desc").limit(50).get()]);
+      const remote={}; p.docs.forEach(d=>{const v=d.data(); if(v) remote[d.id]=v});
+      for(const [id,v] of Object.entries(S.prog)){ if(!remote[id] || (remote[id].ultima||"")<(v.ultima||"")){ remote[id]=v; try{await db.doc("progreso/"+id).set(v)}catch(e){} } }
+      S.prog=remote; S.tests=s.docs.map(d=>({...d.data(),_id:d.id}));
+      S.db=db; S.store="db"; lsSet("pw.prog",S.prog);
+    }
+  }catch(e){ /* sigue en local */ }
+  render();
+}
+async function recordAnswer(q, ok, elegida){
+  const prev = S.prog[q.id] || {qid:q.id,nivel:q.nivel,tema:q.tema,intentos:0,aciertos:0,historial:[]};
+  const v = {...prev, intentos:prev.intentos+1, aciertos:prev.aciertos+(ok?1:0), ultimaCorrecta:ok, ultima:new Date().toISOString(), ultimaElegida:elegida, historial:[...(prev.historial||[]),ok].slice(-10)};
+  S.prog[q.id]=v; lsSet("pw.prog",S.prog);
+  if(S.db){ try{ await S.db.doc("progreso/"+q.id).set(v) }catch(e){} }
+}
+async function recordTest(r){
+  S.tests.unshift(r); lsSet("pw.tests",S.tests.slice(0,50));
+  if(S.db){ try{ await S.db.collection("tests").add(r) }catch(e){} }
+}
+const failed = ()=>BANCO.filter(q=>S.prog[q.id] && S.prog[q.id].ultimaCorrecta===false);
+
+/* ---------- Navegación ---------- */
+const VIEWS=["practicar","test","falladas","progreso"];
+function go(v){ S.view=v; render(); window.scrollTo({top:0}); }
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.v)));
+function render(){
+  document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.v===S.view)));
+  const nf=failed().length; $("#nFall").textContent = nf? nf : "";
+  const app=$("#app");
+  if(S.view==="practicar") renderPractice(app);
+  else if(S.view==="test") renderSim(app);
+  else if(S.view==="falladas") renderFailed(app);
+  else renderProgress(app);
+}
+
+/* ---------- Pregunta (común) ---------- */
+const TIPO={funcion:"¿Qué función?",localizador:"¿Qué localizador?",como:"¿Cómo se hace?",codigo:"Código",error:"Encuentra el fallo",concepto:"Concepto"};
+function qHead(q){
+  return `<div class="meta"><span class="lvl ${q.nivel}">${NIVELES[q.nivel]}</span><span><b>${esc(q.tema)}</b></span><span>${TIPO[q.tipo]||""}</span><span>${esc(q.id)}</span></div>
+  <div class="qtext">${tx(q.pregunta)}</div>
+  ${q.codigo?codeBlock(q.codigo):""}`;
+}
+function optBody(q,key){ return q.codigoOpciones ? codeBlock(q.opciones[key]) : `<span>${tx(q.opciones[key])}</span>`; }
+function optsHTML(q, order, sel, reveal, chosen){
+  return `<div class="opts" role="radiogroup">`+order.map((key,i)=>{
+    let cls="opt";
+    if(!reveal && sel.includes(key)) cls+=" sel";
+    if(reveal){ if(q.correcta.includes(key)) cls+=" right"; else if(chosen.includes(key)) cls+=" wrong"; }
+    const good=q.correcta.includes(key), mine=reveal && chosen.includes(key);
+    const razon = String(q.razones[key]||"").replace(/^Correcta\.\s*/,"") || "Es la respuesta correcta; mira la explicación.";
+    const why = reveal ? `<span class="why ${good?"y":"n"}"><b>${good?"✓ Por qué es correcta":"✗ Por qué no"}</b>${tx(razon)}</span>` : "";
+    const tag = mine ? `<span class="mine">Tu respuesta</span>` : "";
+    return `<button class="${cls}" data-key="${key}" ${reveal?"disabled":""} aria-pressed="${sel.includes(key)}"><span class="bub">${LET[i]}</span><span class="otext">${tag}${optBody(q,key)}${why}</span></button>`;
+  }).join("")+`</div>`;
+}
+const isRight=(q,sel)=>sel.length===q.correcta.length && sel.every(k=>q.correcta.includes(k));
+const letterOf=(order,key)=>LET[order.indexOf(key)];
+function explHTML(q){
+  return `<div class="expl">
+    <div class="concept"><b>La idea en una frase</b>${tx(q.concepto)}</div>
+    <div class="blk"><h3>Explicación</h3><ul class="pts">${q.explicacion.map(p=>`<li>${tx(p)}</li>`).join("")}</ul></div>
+    <div class="tip"><b>Truco para recordarlo</b>${tx(q.clave)}</div>
+    <p class="src">Documentación oficial: <a href="${esc(q.docs)}" target="_blank" rel="noopener">${esc(q.docs.replace(/^https:\/\//,""))}</a></p></div>`;
+}
+function verdictHTML(q, order, sel){
+  const ok=isRight(q,sel), L=ks=>ks.map(k=>letterOf(order,k)).join(" y ");
+  return `<div class="verdict ${ok?"ok":"bad"}"><span class="ico" aria-hidden="true">${ok?"✓":"✗"}</span>
+    <div><div class="vt">${ok?"¡Correcta!":"Incorrecta"}</div>
+    <div class="vs">${ok?`Has elegido la <b>${L(sel)}</b>.`:`Has elegido la <b>${L(sel)}</b> · La correcta es la <b>${L(q.correcta)}</b>.`} Debajo de cada opción tienes por qué vale o no.</div></div></div>`;
+}
+
+/* ---------- Práctica ---------- */
+function practicePool(){
+  const pr=S.pr;
+  return BANCO.filter(q=>(!pr.nivel||q.nivel===pr.nivel)&&(!pr.tema||q.tema===pr.tema));
+}
+function pickNext(){
+  const pr=S.pr;
+  let pool = pr.pool ? pr.poolLeft.map(id=>byId[id]).filter(Boolean) : practicePool();
+  if(!pool.length) return null;
+  let cand = pool.filter(q=>q.id!==pr.last);
+  if(!cand.length) cand=pool;
+  if(pr.orden==="nuevas"){
+    const unseen=cand.filter(q=>!S.prog[q.id]);
+    if(unseen.length) cand=unseen;
+    else {
+      const score=q=>{const p=S.prog[q.id];return p.aciertos/p.intentos};
+      const min=Math.min(...cand.map(score)); cand=cand.filter(q=>score(q)===min);
+    }
+  }
+  return cand[Math.floor(Math.random()*cand.length)];
+}
+function newPracticeQ(){
+  const q=pickNext(); const pr=S.pr;
+  pr.q=q; pr.sel=[]; pr.done=false; pr.order=q?shuffle(Object.keys(q.opciones)):null;
+  if(pr.askCtl){pr.askCtl.abort();pr.askCtl=null}
+}
+function renderPractice(app){
+  const pr=S.pr;
+  if(!pr.q) newPracticeQ();
+  const pool=practicePool();
+  const seenPool=pool.filter(q=>S.prog[q.id]).length;
+  const tot=Object.values(S.prog).reduce((a,p)=>[a[0]+p.aciertos,a[1]+p.intentos],[0,0]);
+  let head;
+  if(pr.pool){
+    head=`<div class="row"><span class="pill bad">Repaso de falladas</span><span class="muted">${pr.poolLeft.length} pendientes en esta tanda</span><button class="btn ghost small" id="exitPool">Volver a practicar todo</button></div>`;
+  } else {
+    const niv=[["","Todo"],["basico","Básico"],["medio","Medio"]].map(([v,l])=>`<button class="chip" data-niv="${v}" aria-pressed="${pr.nivel===v}">${l}</button>`).join("");
+    const temas=TEMAS(pr.nivel).map(t=>`<option value="${esc(t)}" ${pr.tema===t?"selected":""}>${esc(t)}</option>`).join("");
+    head=`<div class="row">${niv}<select class="sel-tema" id="temaSel" aria-label="Tema"><option value="">Todos los temas</option>${temas}</select></div>
+    <div class="row muted" style="font-size:.9rem">Orden:
+      <button class="chip" data-ord="nuevas" aria-pressed="${pr.orden==="nuevas"}">Nuevas primero</button>
+      <button class="chip" data-ord="azar" aria-pressed="${pr.orden==="azar"}">Al azar</button>
+      <span style="margin-left:auto" class="mono">${seenPool}/${pool.length} vistas · ${pct(tot[0],tot[1])} % de acierto</span></div>`;
+  }
+  const q=pr.q;
+  if(!q){ app.innerHTML=head+`<div class="empty">No quedan preguntas en esta tanda. <button class="btn small" id="exitPool2">Volver a practicar</button></div>`; bindPracticeHead(); const b=$("#exitPool2"); if(b) b.onclick=()=>{pr.pool=null;pr.poolLeft=null;pr.tema="";newPracticeQ();render()}; return; }
+  let body = `<section class="sheet" aria-live="polite">${qHead(q)}${pr.done?verdictHTML(q,pr.order,pr.sel):""}${optsHTML(q,pr.order,pr.sel,pr.done,pr.sel)}`;
+  if(!pr.done){
+    body+=`<div class="row"><button class="btn" id="check" ${pr.sel.length!==1?"disabled":""}>Comprobar</button><span class="muted" style="font-size:.85rem">Teclas <kbd>A</kbd>–<kbd>D</kbd> para elegir · <kbd>Enter</kbd> para comprobar</span></div>`;
+  } else {
+    body+=explHTML(q);
+    body+=askHTML();
+    body+=`<div class="row"><button class="btn" id="next">Siguiente pregunta</button><span class="muted" style="font-size:.85rem"><kbd>Enter</kbd></span></div>`;
+  }
+  body+=`</section><p class="save" id="saveInfo"></p>`;
+  app.innerHTML=head+body; saveLabel();
+  bindPracticeHead();
+  app.querySelectorAll(".opt").forEach(b=>b.addEventListener("click",()=>toggleSel(b.dataset.key)));
+  const c=$("#check"); if(c) c.onclick=checkPractice;
+  const n=$("#next"); if(n) n.onclick=nextPractice;
+  bindAsk(q, pr.order, pr.sel);
+}
+function bindPracticeHead(){
+  const pr=S.pr;
+  document.querySelectorAll("[data-niv]").forEach(b=>b.onclick=()=>{pr.nivel=b.dataset.niv;if(pr.tema&&!TEMAS(pr.nivel).includes(pr.tema))pr.tema="";pr.last=null;newPracticeQ();render()});
+  const ts=$("#temaSel"); if(ts) ts.onchange=()=>{pr.tema=ts.value;pr.last=null;newPracticeQ();render()};
+  document.querySelectorAll("[data-ord]").forEach(b=>b.onclick=()=>{pr.orden=b.dataset.ord;render()});
+  const e=$("#exitPool"); if(e) e.onclick=()=>{pr.pool=null;pr.poolLeft=null;newPracticeQ();render()};
+}
+function toggleSel(key){ const pr=S.pr; if(pr.done) return; pr.sel=[key]; render(); }
+function checkPractice(){
+  const pr=S.pr; if(pr.done || pr.sel.length!==1) return;
+  pr.done=true; const ok=isRight(pr.q,pr.sel);
+  recordAnswer(pr.q, ok, pr.sel);
+  if(pr.pool && ok) pr.poolLeft=pr.poolLeft.filter(id=>id!==pr.q.id);
+  render();
+}
+function nextPractice(){ S.pr.last=S.pr.q.id; newPracticeQ(); render(); window.scrollTo({top:0}); }
+document.addEventListener("keydown",e=>{
+  if(S.view!=="practicar" || !S.pr.q) return;
+  if(e.target.closest("textarea,input,select")) return;
+  const k=e.key.toUpperCase(); const i=LET.indexOf(k);
+  if(i>=0 && i<S.pr.order.length && !S.pr.done){ e.preventDefault(); toggleSel(S.pr.order[i]); }
+  else if(e.key==="Enter"){ e.preventDefault(); S.pr.done?nextPractice():checkPractice(); }
+});
+
+/* ---------- Pregúntale a Claude ---------- */
+function askHTML(){
+  if(!S.sample) return "";
+  return `<div class="ask"><h3>¿Te queda alguna duda?</h3>
+  <p class="muted" style="font-size:.9rem">Pregunta lo que quieras sobre esta pregunta o sobre el código, y te lo explico con otro enfoque.</p>
+  <textarea id="askTxt" placeholder="Por ejemplo: ¿por qué aquí no sirve page.locator('#id')?"></textarea>
+  <div class="row"><button class="btn small" id="askBtn">Preguntar</button><button class="btn ghost small" id="askAlt">Explícamelo con otro ejemplo de código</button><button class="btn ghost small" id="askStop" hidden>Parar</button></div>
+  <div class="answer" id="askOut"></div></div>`;
+}
+/* Markdown mínimo: apartados ###, viñetas, listas numeradas, **negrita**, `código` y bloques ``` */
+function md(t){
+  const parts=String(t).split(/```[a-zA-Z]*\n?/);
+  let h="";
+  parts.forEach((seg,i)=>{
+    if(i%2===1){ h+=codeBlock(seg.replace(/\n$/,"")); return; }
+    const lines=seg.split(/\n/); let list=null;
+    const close=()=>{ if(list){h+=`</${list}>`;list=null} };
+    const inl=s=>tx(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+    for(const l of lines){
+      let m;
+      if((m=l.match(/^\s*#{1,6}\s+(.+)$/))){ close(); h+="<h4>"+esc(m[1].replace(/\*\*/g,""))+"</h4>"; }
+      else if((m=l.match(/^\s*[-•*]\s+(.+)$/))){ if(list!=="ul"){close();h+="<ul>";list="ul"} h+="<li>"+inl(m[1])+"</li>"; }
+      else if((m=l.match(/^\s*\d+[.)]\s+(.+)$/))){ if(list!=="ol"){close();h+="<ol>";list="ol"} h+="<li>"+inl(m[1])+"</li>"; }
+      else { close(); if(l.trim()) h+="<p>"+inl(l)+"</p>"; }
+    }
+    close();
+  });
+  return h;
+}
+function bindAsk(q, order, sel){
+  const btn=$("#askBtn"); if(!btn) return;
+  const out=$("#askOut"), stop=$("#askStop"), txt=$("#askTxt");
+  const run=async(pregunta)=>{
+    const opts=order.map((k,i)=>`${LET[i]}) ${q.opciones[k]}`).join("\n");
+    const ok=isRight(q,sel);
+    const prompt=`Eres un tutor experto en automatización de pruebas con Playwright Test y TypeScript (API actual de @playwright/test). Respondes en español de España; el código y los nombres de la API van tal cual, en inglés. El alumno aprende practicando: acaba de contestar una pregunta tipo test de nivel ${NIVELES[q.nivel].toLowerCase()} y quiere entenderla mejor.
+
+PREGUNTA (tema: ${q.tema}):
+${q.pregunta}${q.codigo?"\n\nCÓDIGO DE LA PREGUNTA:\n"+q.codigo:""}
+
+OPCIONES:
+${opts}
+
+RESPUESTA CORRECTA: ${q.correcta.map(k=>letterOf(order,k)).join(" y ")}
+RESPUESTA DEL ALUMNO: ${sel.map(k=>letterOf(order,k)).join(" y ")} (${ok?"acertó":"falló"})
+EXPLICACIÓN DE REFERENCIA: ${q.concepto} ${q.explicacion.join(" ")}
+
+DUDA DEL ALUMNO: ${pregunta}
+
+Responde a su duda en 120-220 palabras más el código. Al alumno le cuesta leer párrafos largos: estructura SIEMPRE la respuesta con estos apartados, en este orden, usando exactamente este formato:
+
+### En una frase
+(una sola frase con la idea clave que responde a su duda)
+
+### Por qué
+- (2 a 4 viñetas cortas, máximo 20 palabras cada una)
+
+### Ejemplo
+(un fragmento corto de TypeScript con Playwright, de 3 a 10 líneas, dentro de un bloque \`\`\`ts, y una viñeta que diga qué hace)
+${ok?"":`
+### Tu error
+- (qué confusión probable le llevó a elegir su opción, en 1 o 2 viñetas)
+`}
+### Para recordarlo
+(una frase con el truco para reconocer este tipo de pregunta)
+
+Reglas: nunca escribas más de 2 frases seguidas sin cambiar de viñeta o apartado. Usa \`comillas invertidas\` para los nombres de métodos y opciones. Solo API real y actual de Playwright; si algo depende de la versión, dilo. No añadas introducciones ni despedidas.`;
+    const ctl=new AbortController(); S.pr.askCtl=ctl;
+    btn.disabled=true; $("#askAlt").disabled=true; stop.hidden=false; out.innerHTML=`<p class="muted">Pensando…</p>`;
+    stop.onclick=()=>ctl.abort();
+    try{
+      await S.sample(prompt,{signal:ctl.signal,cache:false,onText:({text})=>{out.innerHTML=md(text)}});
+    }catch(e){
+      if(e && e.text) out.innerHTML=md(e.text); else if(!e || e.code!=="cancelled") out.innerHTML="";
+      if(e && (e.code==="not_granted"||e.code==="sampling_disabled"||e.code==="not_declared")){ out.innerHTML=`<p class="muted">Las preguntas a Claude no están disponibles en esta vista. Puedes preguntarme en el chat.</p>`; }
+      else if(e && e.code==="rate_limited"){ out.innerHTML+=`<p class="muted">Demasiadas preguntas seguidas. Prueba de nuevo dentro de un rato.</p>`; }
+      else if(e && e.code!=="cancelled"){ out.innerHTML+=`<p class="muted">No se ha podido completar la respuesta. Vuelve a intentarlo.</p>`; }
+    }finally{ btn.disabled=false; const a=$("#askAlt"); if(a) a.disabled=false; stop.hidden=true; }
+  };
+  btn.onclick=()=>{ const t=txt.value.trim(); if(t) run(t); else txt.focus(); };
+  $("#askAlt").onclick=()=>run("Explícame esta pregunta con otro ejemplo de código distinto al del enunciado, y cómo reconocer este tipo de pregunta.");
+}
+
+/* ---------- Test cronometrado ---------- */
+function buildSim(nivel){
+  const pool=BANCO.filter(q=>!nivel||q.nivel===nivel);
+  // reparto por temas: va cogiendo de cada tema por turnos, primero las menos vistas
+  const porTema={};
+  for(const q of shuffle(pool)){ (porTema[q.tema]=porTema[q.tema]||[]).push(q); }
+  for(const t in porTema) porTema[t].sort((a,b)=>((S.prog[a.id]||{}).intentos||0)-((S.prog[b.id]||{}).intentos||0));
+  const ids=[]; const temas=shuffle(Object.keys(porTema));
+  while(ids.length<Math.min(TEST_N,pool.length)){ for(const t of temas){ const q=porTema[t].shift(); if(q&&ids.length<TEST_N) ids.push(q.id); } }
+  return {ids, nivel, orders:Object.fromEntries(ids.map(id=>[id,shuffle(Object.keys(byId[id].opciones))])), ans:{}, flags:{}, cur:0, start:Date.now(), mins:TEST_MIN};
+}
+let tick=null;
+function renderSim(app){
+  if(S.simResult) return renderSimResult(app);
+  if(!S.sim){ S.sim=lsGet("pw.simDraft",null); if(S.sim && !S.sim.ids.every(id=>byId[id])) S.sim=null; }
+  const sim=S.sim;
+  if(!sim){
+    const last=S.tests[0];
+    const n=v=>BANCO.filter(q=>!v||q.nivel===v).length;
+    app.innerHTML=`<section class="sheet"><h2>Test cronometrado</h2>
+    <p>${TEST_N} preguntas al azar repartidas entre todos los temas del nivel que elijas, en ${TEST_MIN} minutos. Se aprueba con <b>${TEST_APROBADO} de ${TEST_N} (70 %)</b>. Puedes moverte entre preguntas y marcarlas para revisar. Las explicaciones aparecen al entregar.</p>
+    <div class="row">${[["basico","Básico"],["medio","Medio"],["","Mixto"]].map(([v,l])=>`<button class="chip" data-sn="${v}" aria-pressed="${S.simNivel===v}">${l} <span class="muted mono">(${n(v)})</span></button>`).join("")}</div>
+    <div class="row"><button class="btn" id="startSim">Empezar · ${TEST_MIN} min</button></div>
+    ${last?`<p class="muted">Último test: ${last.puntos}/${last.total} · ${last.nivel?NIVELES[last.nivel]:"Mixto"} · ${last.aprobado?"aprobado":"suspenso"} · ${new Date(last.fecha).toLocaleDateString("es-ES")}</p>`:""}
+    </section>`;
+    app.querySelectorAll("[data-sn]").forEach(b=>b.onclick=()=>{S.simNivel=b.dataset.sn;render()});
+    $("#startSim").onclick=()=>{S.sim=buildSim(S.simNivel);lsSet("pw.simDraft",S.sim);render()};
+    return;
+  }
+  const N=sim.ids.length;
+  const q=byId[sim.ids[sim.cur]], order=sim.orders[q.id], sel=sim.ans[q.id]||[];
+  const answered=Object.values(sim.ans).filter(a=>a.length).length;
+  app.innerHTML=`<div class="simhead"><div><h2 style="font-size:1.2rem">Pregunta ${sim.cur+1} de ${N}</h2><span class="muted">${answered} respondidas</span></div><div class="timer" id="timer"></div></div>
+  <section class="sheet">${qHead(q)}${optsHTML(q,order,sel,false,[])}
+  <div class="row"><button class="btn ghost small" id="prev" ${sim.cur===0?"disabled":""}>Anterior</button><button class="btn small" id="nxt" ${sim.cur===N-1?"disabled":""}>Siguiente</button>
+  <button class="btn ghost small" id="flag">${sim.flags[q.id]?"Quitar marca":"Marcar para revisar"}</button></div></section>
+  <section class="sheet"><div class="grid">${sim.ids.map((id,i)=>`<button class="cell ${(sim.ans[id]||[]).length?"done":""} ${i===sim.cur?"cur":""} ${sim.flags[id]?"flag":""}" data-i="${i}" aria-label="Pregunta ${i+1}">${i+1}</button>`).join("")}</div>
+  <div class="row"><button class="btn" id="submit">Entregar test</button><button class="btn ghost small" id="abandon">Abandonar</button><span class="muted" id="confirmTxt"></span></div></section>`;
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ sim.ans[q.id]=[b.dataset.key]; lsSet("pw.simDraft",sim); render(); });
+  $("#prev").onclick=()=>{sim.cur--;render()}; $("#nxt").onclick=()=>{sim.cur++;render()};
+  $("#flag").onclick=()=>{sim.flags[q.id]=!sim.flags[q.id];lsSet("pw.simDraft",sim);render()};
+  app.querySelectorAll(".cell").forEach(b=>b.onclick=()=>{sim.cur=+b.dataset.i;render()});
+  const sub=$("#submit");
+  sub.onclick=()=>{
+    const left=N-answered;
+    if(left>0 && !sub.dataset.sure){ sub.dataset.sure="1"; sub.textContent="Sí, entregar"; $("#confirmTxt").textContent=`Te quedan ${left} sin responder.`; return; }
+    finishSim();
+  };
+  const ab=$("#abandon");
+  ab.onclick=()=>{ if(!ab.dataset.sure){ab.dataset.sure="1";ab.textContent="Confirmar: abandonar sin guardar";return} S.sim=null;lsSet("pw.simDraft",null);clearInterval(tick);render(); };
+  startTick();
+}
+function startTick(){
+  clearInterval(tick);
+  const upd=()=>{
+    const sim=S.sim; const el=$("#timer"); if(!sim){clearInterval(tick);return}
+    const rest=Math.max(0, sim.mins*60 - Math.floor((Date.now()-sim.start)/1000));
+    if(el){ el.textContent=`${String(Math.floor(rest/60)).padStart(2,"0")}:${String(rest%60).padStart(2,"0")}`; el.classList.toggle("low",rest<180); }
+    if(rest===0){ clearInterval(tick); finishSim(true); }
+  };
+  upd(); tick=setInterval(upd,1000);
+}
+async function finishSim(timeout){
+  clearInterval(tick);
+  const sim=S.sim; if(!sim) return;
+  const porTema={}; let puntos=0; const respuestas=[]; const N=sim.ids.length;
+  for(const id of sim.ids){
+    const q=byId[id], sel=sim.ans[id]||[], ok=isRight(q,sel);
+    if(ok) puntos++;
+    porTema[q.tema]=porTema[q.tema]||{ok:0,total:0}; porTema[q.tema].total++; if(ok) porTema[q.tema].ok++;
+    respuestas.push({qid:id,elegida:sel,ok});
+  }
+  const minimo=Math.ceil(N*0.7);
+  const r={fecha:new Date().toISOString(),nivel:sim.nivel,puntos,total:N,aprobado:puntos>=minimo,porTema,duracionSeg:Math.min(sim.mins*60,Math.round((Date.now()-sim.start)/1000)),limiteMin:sim.mins,porTiempo:!!timeout,respuestas};
+  S.simResult={...r, orders:sim.orders};
+  S.sim=null; lsSet("pw.simDraft",null);
+  render();
+  for(const a of respuestas){ if(a.elegida.length) await recordAnswer(byId[a.qid],a.ok,a.elegida); }
+  await recordTest(r);
+  render();
+}
+function renderSimResult(app){
+  const r=S.simResult;
+  const mm=Math.floor(r.duracionSeg/60), ss=r.duracionSeg%60;
+  app.innerHTML=`<section class="sheet">
+   <div class="row" style="justify-content:space-between"><div><div class="big">${r.puntos}<span class="muted" style="font-size:1.4rem">/${r.total}</span></div><p class="muted">${pct(r.puntos,r.total)} % · ${r.nivel?NIVELES[r.nivel]:"Mixto"} · ${mm} min ${ss} s${r.porTiempo?" · se agotó el tiempo":""}</p></div>
+   <span class="pill ${r.aprobado?"ok":"bad"}" style="font-size:1rem;padding:6px 14px">${r.aprobado?"Aprobado":"Suspenso"} (mínimo ${Math.ceil(r.total*0.7)})</span></div>
+   <div class="scroll"><table class="tbl"><thead><tr><th>Tema</th><th>Aciertos</th><th style="width:40%"></th></tr></thead><tbody>
+   ${Object.entries(r.porTema).map(([t,v])=>{const p=pct(v.ok,v.total);return `<tr><td>${esc(t)}</td><td class="mono">${v.ok}/${v.total}</td><td><div class="meter ${p>=70?"ok":p>=50?"warn":"bad"}"><i style="width:${p}%"></i></div></td></tr>`}).join("")}
+   </tbody></table></div>
+   <div class="row"><button class="btn" id="again">Nuevo test</button><button class="btn ghost" id="toFail">Repasar las falladas</button></div></section>
+   <h3>Revisión pregunta a pregunta</h3>
+   <div class="list">${r.respuestas.map((a,i)=>{const q=byId[a.qid],ord=r.orders[a.qid];
+     return `<details class="rev"><summary><span class="pill ${a.ok?"ok":"bad"}">${a.ok?"Bien":(a.elegida.length?"Mal":"Sin responder")}</span><span><b class="mono">${i+1}.</b> ${esc(q.tema)} <span class="muted mono" style="font-size:.78rem">${q.id}</span></span></summary>
+     <div class="inner">${qHead(q)}${optsHTML(q,ord,[],true,a.elegida)}${explHTML(q)}</div></details>`}).join("")}</div>`;
+  $("#again").onclick=()=>{S.simResult=null;render()};
+  $("#toFail").onclick=()=>{S.simResult=null;startFailedPractice()};
+}
+
+/* ---------- Falladas ---------- */
+function startFailedPractice(){
+  const ids=failed().map(q=>q.id); if(!ids.length){go("falladas");return}
+  Object.assign(S.pr,{pool:ids,poolLeft:ids.slice(),last:null}); newPracticeQ(); go("practicar");
+}
+function renderFailed(app){
+  const f=failed();
+  if(!f.length){ app.innerHTML=`<h2>Falladas</h2><div class="empty">No tienes preguntas falladas pendientes. Cuando falles una, aparecerá aquí hasta que la aciertes.</div>`; return; }
+  app.innerHTML=`<div class="row" style="justify-content:space-between"><h2>Falladas (${f.length})</h2><button class="btn" id="go">Practicar estas ${f.length}</button></div>
+  <p class="muted">Preguntas cuya última respuesta fue incorrecta. Salen de la lista al acertarlas.</p>
+  <div class="list">${f.sort((a,b)=>a.id.localeCompare(b.id)).map(q=>{const p=S.prog[q.id];return `<div class="item"><div class="t"><span><b>${esc(q.tema)}</b> · ${tx(q.pregunta.length>90?q.pregunta.slice(0,90)+"…":q.pregunta)}</span><span class="muted mono" style="font-size:.78rem">${NIVELES[q.nivel]} · ${q.id} · ${p.aciertos}/${p.intentos} aciertos</span></div><button class="btn ghost small" data-q="${q.id}">Repetir</button></div>`}).join("")}</div>`;
+  $("#go").onclick=startFailedPractice;
+  app.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{Object.assign(S.pr,{pool:[b.dataset.q],poolLeft:[b.dataset.q],last:null}); newPracticeQ(); go("practicar");});
+}
+
+/* ---------- Progreso ---------- */
+function renderProgress(app){
+  const P=Object.values(S.prog).filter(p=>byId[p.qid]);
+  const tot=P.reduce((a,p)=>[a[0]+p.aciertos,a[1]+p.intentos],[0,0]);
+  const lastOk=P.filter(p=>p.ultimaCorrecta).length;
+  const fila=(qs)=>{const ps=qs.map(q=>S.prog[q.id]).filter(Boolean);const a=ps.reduce((x,p)=>[x[0]+p.aciertos,x[1]+p.intentos],[0,0]);return {total:qs.length,vistas:ps.length,acc:pct(a[0],a[1]),intentos:a[1]}};
+  const tr=(label,r)=>`<tr><td>${label}</td><td class="mono">${r.vistas}/${r.total}</td><td class="mono">${r.intentos?r.acc+" %":"—"}</td><td><div class="meter ${!r.intentos?"":r.acc>=70?"ok":r.acc>=50?"warn":"bad"}"><i style="width:${r.intentos?r.acc:0}%"></i></div></td></tr>`;
+  const bloques=Object.entries(NIVELES).map(([nv,nl])=>{
+    const temas=TEMAS(nv).map(t=>({t,...fila(BANCO.filter(q=>q.nivel===nv&&q.tema===t))}));
+    return {nv,nl,res:fila(BANCO.filter(q=>q.nivel===nv)),temas};
+  });
+  const weak=bloques.flatMap(b=>b.temas.map(t=>({...t,nl:b.nl}))).filter(t=>t.intentos>=3).sort((a,b)=>a.acc-b.acc)[0];
+  const tests=S.tests;
+  app.innerHTML=`<h2>Tu progreso</h2>
+  <div class="stats">
+    <div class="stat"><div class="v">${P.length}<span class="muted" style="font-size:1rem">/${BANCO.length}</span></div><div class="l">preguntas vistas</div></div>
+    <div class="stat"><div class="v">${pct(tot[0],tot[1])} %</div><div class="l">acierto global (${tot[1]} respuestas)</div></div>
+    <div class="stat"><div class="v">${pct(lastOk,P.length)} %</div><div class="l">acierto en la última respuesta de cada pregunta</div></div>
+    <div class="stat"><div class="v">${tests.length?Math.max(...tests.map(s=>pct(s.puntos,s.total)))+" %":"—"}</div><div class="l">mejor test cronometrado</div></div>
+  </div>
+  ${weak&&weak.acc<70?`<div class="tip"><b>Dónde reforzar</b>${esc(weak.t)} (${weak.nl}) va al ${weak.acc} %. Practica ese tema hasta superar el 70 %.</div>`:""}
+  ${bloques.map(b=>`<section class="sheet"><h3>${b.nl} <span class="muted mono" style="font-size:.85rem">· ${b.res.vistas}/${b.res.total} vistas · ${b.res.intentos?b.res.acc+" %":"—"}</span></h3><div class="scroll"><table class="tbl"><thead><tr><th>Tema</th><th>Vistas</th><th>Acierto</th><th style="width:30%"></th></tr></thead><tbody>
+  ${b.temas.map(t=>tr(esc(t.t),t)).join("")}</tbody></table></div></section>`).join("")}
+  <section class="sheet"><h3>Tests cronometrados</h3>${tests.length?`<div class="scroll"><table class="tbl"><thead><tr><th>Fecha</th><th>Nivel</th><th>Nota</th><th>Resultado</th><th>Tiempo</th></tr></thead><tbody>
+  ${tests.map(s=>`<tr><td>${new Date(s.fecha).toLocaleString("es-ES",{dateStyle:"medium",timeStyle:"short"})}</td><td>${s.nivel?NIVELES[s.nivel]:"Mixto"}</td><td class="mono">${s.puntos}/${s.total}</td><td><span class="pill ${s.aprobado?"ok":"bad"}">${s.aprobado?"Aprobado":"Suspenso"}</span></td><td class="mono">${Math.round(s.duracionSeg/60)} / ${s.limiteMin} min</td></tr>`).join("")}
+  </tbody></table></div>`:`<p class="muted">Aún no has hecho ningún test cronometrado. Cuando aciertes más del 70 % practicando un nivel, prueba uno.</p>`}</section>
+  <p class="save" id="saveInfo"></p>`;
+  saveLabel();
+}
+
+/* ---------- Arranque ---------- */
+const h=(location.hash||"").slice(1); if(VIEWS.includes(h)) S.view=h;
+render();
+initStore();
+if(window.claude) window.claude.use("sample").then(s=>{ if(s){ S.sample=s; if(S.view==="practicar"&&S.pr.done) render(); } }).catch(()=>{});
+</script>
