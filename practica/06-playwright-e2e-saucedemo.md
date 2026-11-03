@@ -17,9 +17,9 @@ Reto personal añadido: **locators sin `data-test`** (getByRole, getByText, rege
 Los 6 tests pasan en Chromium, también 3 veces seguidas (`--repeat-each=3`): no hay flaky.
 
 **Pendiente de los requisitos:**
-- [ ] Capturas al fallar: falta `screenshot: 'only-on-failure'` en la config.
+- [x] Capturas, trazas y vídeo al fallar + informe HTML y `list`.
 - [ ] README del proyecto (instalación, ejecución, cobertura, decisiones, qué haría con más tiempo).
-- [ ] Extra: Firefox y WebKit (están comentados en `playwright.config.ts`).
+- [x] Extra: Chromium, Firefox y WebKit (18 tests en verde).
 - [ ] Extra: pipeline de CI (prueba 15).
 - [ ] Extra: `storageState` para no repetir el login en cada test.
 - [ ] Borrar `tests/example.spec.ts`, que es el de ejemplo de la instalación.
@@ -71,7 +71,7 @@ En el código, cada corrección está marcada con `// ANTES · MAL · POR QUÉ`.
 | Suma esperada | precios de `data/articles.ts` | precios leídos de la pantalla de resumen | La mía también detecta un precio cambiado en la web. La suya no depende de mantener los datos al día. |
 | Datos del formulario | en `users.standard` | objeto `CUSTOMER` aparte | Separarlos es más limpio: el comprador no es el usuario de login. |
 | Página final | `toBeVisible()` del heading | `toHaveText('Thank you...')` | Equivalentes. |
-| Config | solo Chromium, sin capturas | 3 navegadores, captura/traza/vídeo al fallar, informe HTML + list | Pendiente (ver arriba). |
+| Config | igual que la solución | 3 navegadores, captura/traza/vídeo al fallar, informe HTML + list | Pendiente (ver arriba). |
 
 ## Lecciones
 
