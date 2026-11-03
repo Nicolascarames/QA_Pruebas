@@ -16,13 +16,13 @@ test('TC-01 · un usuario válido inicia sesión y ve el catálogo', async ({ pa
     await expect(page.locator('[data-test="title"]')).toHaveText('Products');
 });
 
-test('TC-03 · contraseña incorrecta', async ({ page }) => {
+test('TC-03 · contraseña incorrecta', async ({  }) => {
     await loginPage.login(users.standard.username, 'novale');
     await expect(loginPage.botonLogin).toBeVisible();
     await expect(loginPage.msgError).toHaveText('Epic sadface: Username and password do not match any user in this service');
 });
 
-test('TC-11 · bloqueo de usuario en login', async ({page}) => {
+test('TC-11 · bloqueo de usuario en login', async ({}) => {
     await loginPage.login(users.locked.username, users.locked.password);
     await expect(loginPage.botonLogin).toBeVisible();
     await expect(loginPage.msgError).toHaveText('Epic sadface: Sorry, this user has been locked out.');

@@ -29,10 +29,17 @@ export class InventoryPage {
     }
 
     async addToCart(productName:string){
-        await this.addToCartButton.filter({hasText: productName}).click();
+        // La tarjeta es un <div> sin rol: el div más interno que contiene
+        // el botón "View details for <producto>" y el botón "Add to cart".
+        await this.page.locator('div')
+        .filter({has: this.page.getByRole('button', {name: `View details for ${productName}`})})
+        .filter({has: this.addToCartButton})
+        .last()
+        .getByRole('button', {name: 'Add to cart'})
+        .click();
     }
 
     async goToCart(){
-        await this.page.goto('/cart')
+        await this.page.goto('/cart.html')
     }
 }
