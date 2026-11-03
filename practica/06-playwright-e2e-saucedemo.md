@@ -71,7 +71,7 @@ En el código, cada corrección está marcada con `// ANTES · MAL · POR QUÉ`.
 | Suma esperada | precios de `data/articles.ts` | precios leídos de la pantalla de resumen | La mía también detecta un precio cambiado en la web. La suya no depende de mantener los datos al día. |
 | Datos del formulario | en `users.standard` | objeto `CUSTOMER` aparte | Separarlos es más limpio: el comprador no es el usuario de login. |
 | Página final | `toBeVisible()` del heading | `toHaveText('Thank you...')` | Equivalentes. |
-| Config | igual que la solución | 3 navegadores, captura/traza/vídeo al fallar, informe HTML + list | Pendiente (ver arriba). |
+| Config | igual que la solución | 3 navegadores, captura/traza/vídeo al fallar, informe HTML + list | Hecho. |
 
 ## Lecciones
 
