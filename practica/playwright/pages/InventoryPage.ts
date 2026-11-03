@@ -28,15 +28,23 @@ export class InventoryPage {
         return text.map(price => Number(price.replace('$','')));
     }
 
-    async addToCart(productName:string){
-        // La tarjeta es un <div> sin rol: el div más interno que contiene
-        // el botón "View details for <producto>" y el botón "Add to cart".
-        await this.page.locator('div')
-        .filter({has: this.page.getByRole('button', {name: `View details for ${productName}`})})
-        .filter({has: this.addToCartButton})
-        .last()
-        .getByRole('button', {name: 'Add to cart'})
-        .click();
+    async addToCart(productNameList: string[]){
+        // ANTES: addToCart(productNameList: Array) { productNameList.map(productName => { await ... }) }
+        // MAL: (1) Array sin tipo de elemento; (2) await dentro de una flecha que no es async;
+        //      (3) map lanza todas las vueltas a la vez y no espera ninguna
+        // POR QUÉ: map es para transformar datos; para acciones con await en orden se usa for...of
+        for (const productName of productNameList) {
+            // ANTES: getByRole('button', {name: 'View details for ' + productName}).filter(...).getByRole('button', {name: 'Add to cart'})
+            // MAL: buscaba "Add to cart" DENTRO del botón "View details", pero son hermanos, no padre e hijo
+            // POR QUÉ: encadenar locators = buscar dentro. Hay que subir al contenedor común (la tarjeta, un <div>
+            //          sin rol) y filtrar: el div más interno que tiene los dos botones es el último (.last())
+            await this.page.locator('div')
+            .filter({has: this.page.getByRole('button', {name: `View details for ${productName}`})})
+            .filter({has: this.addToCartButton})
+            .last()
+            .getByRole('button', {name: 'Add to cart'})
+            .click();
+        }
     }
 
     async goToCart(){

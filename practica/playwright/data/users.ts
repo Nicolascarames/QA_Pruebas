@@ -1,7 +1,10 @@
 export const users = {
     standard: {
         username: 'standard_user',
-        password: process.env.SAUCE_PASSWORD!
+        password: process.env.SAUCE_PASSWORD!,
+        firstName: 'PrimerNombre',
+        lastName: 'Apellido',
+        postalCode: '15487'
     },
     locked: {
         username: 'locked_out_user',

@@ -19,8 +19,7 @@ test.beforeEach(async ({page}) => {
 })
 
 test ('Añadir 2 productos al carrito', async ({page}) => {
-    await inventoryPage.addToCart(articles.backpack.name)
-    await inventoryPage.addToCart(articles.bolt_T_Shirt.name)
+    await inventoryPage.addToCart([articles.backpack.name, articles.bolt_T_Shirt.name])
     await expect (inventoryPage.cartButton).toHaveText('2');
     await inventoryPage.goToCart();
     await expect (cartPage.cartTitle).toHaveText('Your Cart');
