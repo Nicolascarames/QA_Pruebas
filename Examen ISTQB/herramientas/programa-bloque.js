@@ -121,15 +121,18 @@ function marcarTerminos(html){
   progPrepararTerminos();
   if (!_progRe) return html;
   const vistos = new Set();
-  let dentro = 0;
+  let dentro = 0, enTitulo = 0;
   return String(html).split(/(<[^>]*>)/).map(seg => {
     if (seg[0] === "<"){
+      if (/^<h[1-6]\b/i.test(seg)) enTitulo++;
+      else if (/^<\/h[1-6]>/i.test(seg)) enTitulo = Math.max(0, enTitulo - 1);
       if (/^<span\b[^>]*class="[^"]*\bterm\b/.test(seg)) dentro++;
       else if (dentro && /^<span\b/.test(seg)) dentro++;
       else if (dentro && /^<\/span>/.test(seg)) dentro--;
       return seg;
     }
-    if (dentro) return seg;
+    // Ni dentro de otro término ni en títulos (gastarían el único hueco del término)
+    if (dentro || enTitulo) return seg;
     return seg.replace(_progRe, m => {
       const k = _progMapa.get(m.toLowerCase());
       if (k === undefined || vistos.has(k)) return m;
@@ -183,7 +186,9 @@ function activarTerminos(){
         ? `<small><a href="${esc(url)}" target="_blank" rel="noopener">${esc(g.fuente.replace(url, "").replace(/[\s·]+$/, "") || "fuente")}</a></small>`
         : `<small>${esc(g.fuente || "")}</small>`);
     cont.appendChild(pop);
-    pop.style.top = (t.offsetTop + t.offsetHeight + 4) + "px";
-    pop.style.left = Math.max(0, Math.min(t.offsetLeft, cont.clientWidth - pop.offsetWidth)) + "px";
+    // Posición relativa al contenedor con getBoundingClientRect (offsetTop/Left van contra el offsetParent: dentro de un <td> sería la celda)
+    const rt = t.getBoundingClientRect(), rc = cont.getBoundingClientRect();
+    pop.style.top = (rt.bottom - rc.top - cont.clientTop + cont.scrollTop + 4) + "px";
+    pop.style.left = Math.max(0, Math.min(rt.left - rc.left - cont.clientLeft + cont.scrollLeft, cont.clientWidth - pop.offsetWidth)) + "px";
   });
 }

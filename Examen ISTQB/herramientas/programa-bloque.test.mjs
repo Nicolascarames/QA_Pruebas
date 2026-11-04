@@ -146,3 +146,9 @@ test("datos reales: las 70 fuentes generan HTML sin lanzar", () => {
   const R = cargar({ apartados: rd("apartados.json"), glosario: rd("glosario.json"), diferencias: rd("diferencias.json") });
   assert.ok(R.programaHTML("5.1.6").length > 100);
 });
+
+test("marcarTerminos: no marca dentro de títulos; el término queda en el cuerpo", () => {
+  const h = C.marcarTerminos('<h4 class="prog-h">9.1.1 La prueba</h4><p>la prueba y más</p>');
+  assert.match(h, /<h4 class="prog-h">9\.1\.1 La prueba<\/h4>/);
+  assert.match(h, /<p>la <span class="term" data-t="0">prueba<\/span> y más<\/p>/);
+});
