@@ -49,7 +49,7 @@
 | `Examen ISTQB/herramientas/inyectar-programa.mjs` | Inyección re-ejecutable en `aula-istqb.html` (o en la ruta que se le pase). |
 | `Examen ISTQB/herramientas/inyectar-programa.test.mjs` | Tests de la inyección. |
 
-Verificación común: `node --test "Examen ISTQB/herramientas/"` desde la raíz del repo.
+Verificación común: `node --test "Examen ISTQB/herramientas/*.test.mjs"` desde la raíz del repo.
 
 Datos de partida útiles (comprobados hoy):
 - Las 70 `fuente` distintas del banco: `1.1 1.1.1 1.1.2 1.2.1 1.2.2 1.2.3 1.3 1.4.1–1.4.5 1.5.1–1.5.3 2.1.1–2.1.6 2.2 2.2.1–2.2.3 2.3 3.1 3.1.1–3.1.3 3.2.1–3.2.5 4.1 4.2.1–4.2.4 4.3.1–4.3.3 4.4.1–4.4.3 4.5 4.5.1–4.5.3 5.1.1–5.1.7 5.2 5.2.1–5.2.4 5.3 5.3.1–5.3.3 5.4 5.5 6.1 6.2`. Se obtienen con: `node -e 'const s=require("fs").readFileSync("Examen ISTQB/aula-istqb.html","utf8");const b=eval(s.match(/const BANCO = (\[.*\]);/)[1]);console.log([...new Set(b.map(q=>q.fuente))].sort().join(" "))'`.
@@ -89,7 +89,7 @@ test("textos de muestra", () => {
 });
 ```
 
-- [ ] **Step 2: Ejecutar y ver que falla** — `node --test "Examen ISTQB/herramientas/"` → FAIL (no existe `apartados.json`).
+- [ ] **Step 2: Ejecutar y ver que falla** — `node --test "Examen ISTQB/herramientas/*.test.mjs"` → FAIL (no existe `apartados.json`).
 
 - [ ] **Step 3: Implementar `extraer-programa.mjs`**
 
@@ -97,7 +97,7 @@ Uso: `node "Examen ISTQB/herramientas/extraer-programa.mjs"` → ejecuta `pdftot
 
 - [ ] **Step 4: Revisión a mano contra el PDF** — leer el `texto` de 1.1.2, 1.4.2, 2.2.2, 4.2.1 y 5.1.6 (rangos del `.txt`, no el fichero entero) y corregir la limpieza en el script, no en el JSON. Si un caso concreto no compensa automatizar, se admite una tabla de parches en el script (`PARCHES = { "id": [[buscar, reemplazar]] }`) que solo arregla formato, nunca palabras.
 
-- [ ] **Step 5: Ejecutar tests** — `node --test "Examen ISTQB/herramientas/"` → PASS.
+- [ ] **Step 5: Ejecutar tests** — `node --test "Examen ISTQB/herramientas/*.test.mjs"` → PASS.
 
 - [ ] **Step 6: Commit** — `git add "Examen ISTQB/herramientas" "Examen ISTQB/documentos/programa-es/apartados.json"` · `Aula ISTQB: extraer apartados del programa en español`.
 
@@ -188,7 +188,7 @@ test("diferencias válidas", () => {
   - con glosario `["prueba", "prueba de regresión"]`: `marcarTerminos("<p>La prueba de regresión y la prueba</p>")` marca «prueba de regresión» como un solo `.term` y no anida otro dentro; `marcarTerminos('<a title="prueba">x</a>')` no toca el atributo.
   - aviso: con una diferencia en `9.1.1` tipo `"v4.0.1"`, `programaHTML("9.1")` contiene `⚠️ Actualizado en v4.0.1:`.
   - el HTML de términos no contiene `<button` ni `tabindex` (Review Focus 1).
-- [ ] **Step 2:** `node --test "Examen ISTQB/herramientas/"` → FAIL.
+- [ ] **Step 2:** `node --test "Examen ISTQB/herramientas/*.test.mjs"` → FAIL.
 - [ ] **Step 3:** Implementar. CSS con las variables del aula (`--accent`, `--line`, `--muted`, `--sheet`; tema oscuro ya cubierto si solo se usan variables). `.term` con subrayado punteado y `cursor:pointer`; `.term-pop` absoluto, ancho máx. 22rem; `.prog` con borde `var(--line)` como `.ask`.
 - [ ] **Step 4:** Tests → PASS. **Step 5: Commit** — `Aula ISTQB: bloque «Ver en el programa» con términos tocables`.
 
@@ -235,7 +235,7 @@ Reglas de `inyectar`:
 - [ ] **Step 1:** `get_artifact` + `read_artifact` de `4t1hWTtaMeMzBMrwsEaRvr`; guardar el HTML publicado en el scratchpad. Comparar con `git show HEAD~N:"Examen ISTQB/aula-istqb.html"` (la copia anterior a Task 5). Si difieren en algo más que espacios, **parar y preguntar al usuario** cuál manda.
 - [ ] **Step 2:** Ejecutar `inyectar-programa.mjs <copia publicada>`; publicar con `publish_files` (slug, `base_version` leída, `shared_live` si `read` ≠ owner). Volver a leer y comprobar que contiene `PROG-JS-INICIO`.
 - [ ] **Step 3:** Copiar el resultado a `Examen ISTQB/aula-istqb.html`. Actualizar `Examen ISTQB/README.md` (sección del aula: el bloque, de dónde salen los datos, cómo regenerar: los tres comandos) y añadir a `memory.md` una línea: «Bloque del programa: datos en `documentos/programa-es/`, se regenera con `herramientas/inyectar-programa.mjs`; no editar a mano la zona entre marcadores PROG».
-- [ ] **Step 4:** `node --test "Examen ISTQB/herramientas/"` → PASS. Commit — `Aula ISTQB: publicar bloque del programa y documentar`.
+- [ ] **Step 4:** `node --test "Examen ISTQB/herramientas/*.test.mjs"` → PASS. Commit — `Aula ISTQB: publicar bloque del programa y documentar`.
 
 ---
 

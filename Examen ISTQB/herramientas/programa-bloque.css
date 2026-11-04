@@ -1,7 +1,8 @@
 /* Bloque «Ver en el programa» y recuadro de definición. Solo variables del aula (cubren el tema oscuro). */
 .prog{margin-top:.6rem;border:1px solid var(--line);border-radius:10px;background:var(--sheet)}
 .prog>summary{cursor:pointer;padding:.5rem .75rem;color:var(--accent);font-weight:600}
-.prog-in{position:relative;padding:.25rem .85rem .8rem;font-size:.92rem;line-height:1.5}
+/* cursor:pointer hace que iOS Safari/WKWebView envíe «click» al document al tocar texto plano (si no, el recuadro de definición no se cierra al tocar fuera); la selección de texto sigue igual */
+.prog-in{cursor:pointer;position:relative;padding:.25rem .85rem .8rem;font-size:.92rem;line-height:1.5}
 .prog-ruta{color:var(--muted);font-size:.8rem;margin-bottom:.5rem}
 .prog-h{margin:1rem 0 .3rem;font-size:.95rem}
 .prog-txt p{margin:.4rem 0}

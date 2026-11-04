@@ -5,6 +5,7 @@ import { dirname, join, resolve } from "node:path";
 
 const IC = "/*PROG-CSS-INICIO*/", FC = "/*PROG-CSS-FIN*/";
 const IJ = "/*PROG-JS-INICIO*/", FJ = "/*PROG-JS-FIN*/";
+const ABRE_SCRIPT = "<script>";
 const ANCLA_PRACTICA = "body+=askHTML();";
 const ANCLA_SIM = "${explHTML(q)}</div></details>";
 
@@ -26,15 +27,35 @@ function llamada(html, ancla, nueva) {
   return html.replace(ancla, () => nueva);
 }
 
+// Quita el bloque JS (con el salto de línea que lo precede) esté donde esté.
 function quitarJs(html) {
   const a = html.indexOf(IJ), b = html.indexOf(FJ);
-  return a >= 0 && b > a ? html.slice(0, a) + html.slice(b + FJ.length) : html;
+  if (!(a >= 0 && b > a)) return html;
+  const desde = html[a - 1] === "\n" ? a - 1 : a;
+  return html.slice(0, desde) + html.slice(b + FJ.length);
+}
+
+// El bloque JS va justo tras el único <script> de la app (antes del render() inicial, para que PROGRAMA no esté en su zona muerta temporal).
+function ponerJs(html, bloque) {
+  const limpio = quitarJs(html);
+  if (veces(limpio, ABRE_SCRIPT) !== 1) throw new Error(`Falta (o no es único) el anclaje ${ABRE_SCRIPT}`);
+  return limpio.replace(ABRE_SCRIPT, () => ABRE_SCRIPT + "\n" + bloque);
+}
+
+// El manejador global de teclado ignora también <summary> y enlaces (Enter sobre ellos no debe avanzar de pregunta).
+const TECLADO_VIEJO = 'if(e.target.closest("textarea,input")) return;';
+const TECLADO_NUEVO = 'if(e.target.closest("textarea,input,summary,a")) return;';
+function parchearTeclado(html) {
+  if (veces(html, TECLADO_NUEVO) === 1 && veces(html, TECLADO_VIEJO) === 0) return html;
+  if (veces(html, TECLADO_VIEJO) !== 1) throw new Error(`Falta (o no es único) el anclaje ${TECLADO_VIEJO}`);
+  return html.replace(TECLADO_VIEJO, () => TECLADO_NUEVO);
 }
 
 export function inyectar(html, datos, js, css) {
   const json = JSON.stringify(datos).replace(/<\//g, "<\\/");
   let h = poner(html, IC, FC, `${IC}\n${css}\n${FC}`, "</style>");
-  h = poner(h, IJ, FJ, `${IJ}\nconst PROGRAMA = ${json};\n${js}\nactivarTerminos();\n${FJ}`, "</script>");
+  h = ponerJs(h, `${IJ}\nconst PROGRAMA = ${json};\n${js}\nactivarTerminos();\n${FJ}`);
+  h = parchearTeclado(h);
   h = llamada(h, ANCLA_PRACTICA, `${ANCLA_PRACTICA}\n    body+=programaHTML(q.fuente);`);
   // Segunda llamada: tras la primera, programaHTML( ya existe fuera de marcadores; se comprueba aparte
   if (!h.includes("${programaHTML(q.fuente)}</div></details>")) {
