@@ -1,0 +1,67 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+    paths: ['practica/playwright/**', '.github/workflows/e2e.yml']
+  pull_request:
+    branches: [main]
+    paths: ['practica/playwright/**', '.github/workflows/e2e.yml']
+  schedule:
+    - cron: '0 3 * * 1-5'        # 03:00 UTC (05:00 en España en verano), de lunes a viernes
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: 'Navegador'
+        required: true
+        default: 'all'
+        type: choice
+        options: [all, chromium, firefox, webkit]
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: practica/playwright
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1/2, 2/2]
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: practica/playwright/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar navegadores
+        run: npx playwright install --with-deps
+
+      - name: Ejecutar tests
+        env:
+          SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+          BROWSER: ${{ inputs.browser || 'all' }}
+          SHARD: ${{ matrix.shard }}
+        run: |
+          if [ "$BROWSER" = "all" ]; then
+            npx playwright test --shard=$SHARD
+          else
+            npx playwright test --project=$BROWSER --shard=$SHARD
+          fi
+
+      - name: Subir informe
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ strategy.job-index }}
+          path: practica/playwright/playwright-report/
+          retention-days: 14
