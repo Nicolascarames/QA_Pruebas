@@ -1,4 +1,5 @@
 # Memoria del proyecto
+- **Idioma:** hablar SIEMPRE en español de España (respuestas, resúmenes y preguntas), aunque los informes de los subagentes vengan en inglés. (2026-11-04)
 
 - **Formato de explicaciones del aula ISTQB:** nunca un párrafo seguido. Siempre por bloques: veredicto, por qué vale/no cada opción, teoría en una frase, viñetas cortas y truco. Lo mismo para las respuestas de "pregúntale a Claude" (apartados fijos). (2026-10-27)
 - **El banco se basa SOLO en el programa oficial** `Examen ISTQB/documentos/ISTQB_CTFL_Syllabus_v4.0.1.pdf`: nada que no esté en sus capítulos 1–6. Toda pregunta lleva `fuente` (sección), `concepto` y `explicacion` como lista de puntos cortos; el `k` no puede superar el del objetivo (FL-6.1.1 es K2).
