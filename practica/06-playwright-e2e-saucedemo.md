@@ -20,7 +20,7 @@ Los 6 tests pasan en Chromium, también 3 veces seguidas (`--repeat-each=3`): no
 - [x] Capturas, trazas y vídeo al fallar + informe HTML y `list`.
 - [x] README del proyecto: [`playwright/README.md`](playwright/README.md).
 - [x] Extra: Chromium, Firefox y WebKit (18 tests en verde).
-- [ ] Extra: pipeline de CI (prueba 15).
+- [x] Extra: pipeline de CI (prueba 15): [`.github/workflows/e2e.yml`](../.github/workflows/e2e.yml), en verde a la primera.
 - [x] Extra: `storageState`: login una sola vez en `tests/auth.setup.ts` (19 en verde; 55 con `--repeat-each=3`).
 - [x] Borrado `tests/example.spec.ts`.
 
@@ -95,4 +95,6 @@ En el código, cada corrección está marcada con `// ANTES · MAL · POR QUÉ`.
 - **Ficheros de test:** deben acabar en `.spec.ts`. Si no, Playwright los ignora sin avisar.
 - **Cada test arranca con un navegador limpio** (contexto nuevo): nada pasa de un test a otro. `storageState` solo decide con qué arranca: con una copia de la sesión guardada o vacío.
 - **`test.use(...)` no es un test:** es configuración para todo el fichero (o `describe`). Se pone arriba por claridad.
+- **CI:** el YAML va en `.github/workflows/` de la **raíz** del repo. `working-directory` solo afecta a los `run:`; los `uses:` (`path`, `cache-dependency-path`) llevan la ruta completa.
+- **Secrets:** la contraseña va en Settings → Secrets y se pasa como `env:` del paso; en los logs sale `***`. GitHub define `CI=true`, que activa `retries: 2` de la config.
 - **Pick locator con login delante:** `await page.pause()` tras el login, o `codegen --save-storage` / `--load-storage`.

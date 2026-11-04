@@ -1,5 +1,7 @@
 # SauceDemo E2E · Playwright + TypeScript
 
+[![E2E Tests](https://github.com/Nicolascarames/QA_Pruebas/actions/workflows/e2e.yml/badge.svg)](https://github.com/Nicolascarames/QA_Pruebas/actions/workflows/e2e.yml)
+
 Tests end-to-end de [SauceDemo](https://www.saucedemo.com) con Playwright, TypeScript y Page Object Model.
 Resuelve la [prueba 06](../../pruebas/06-playwright-e2e-saucedemo.md); mis fallos y lecciones están en [06-playwright-e2e-saucedemo.md](../06-playwright-e2e-saucedemo.md).
 
@@ -32,6 +34,15 @@ npx playwright show-report                     # abrir el informe HTML
 
 Si un test falla, el informe HTML incluye captura de pantalla, vídeo y traza.
 
+## CI (GitHub Actions)
+
+Workflow: [`.github/workflows/e2e.yml`](../../.github/workflows/e2e.yml) (prueba 15).
+
+- **Cuándo:** push y pull request a `main` (solo si cambia esta carpeta o el workflow), cada noche de lunes a viernes a las 03:00 UTC, y a mano desde la pestaña Actions eligiendo navegador.
+- **En paralelo:** 2 shards; cada uno hace su propio login de `setup`.
+- **Informe:** el HTML de cada shard se sube como artefacto 14 días, también si fallan los tests.
+- **Contraseña:** secret `SAUCE_PASSWORD` del repo (Settings → Secrets and variables → Actions).
+
 ## Cobertura
 
 | Fichero | Casos |
@@ -63,6 +74,5 @@ tests/   especificaciones (auth.setup.ts hace el login único)
 
 ## Con más tiempo
 
-- Pipeline de CI con GitHub Actions.
 - Separar los datos del comprador (nombre, código postal) de los usuarios de login.
 - Tests de API, regresión visual y accesibilidad.
