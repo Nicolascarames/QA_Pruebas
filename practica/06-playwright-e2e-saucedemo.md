@@ -21,7 +21,7 @@ Los 6 tests pasan en Chromium, también 3 veces seguidas (`--repeat-each=3`): no
 - [x] README del proyecto: [`playwright/README.md`](playwright/README.md).
 - [x] Extra: Chromium, Firefox y WebKit (18 tests en verde).
 - [ ] Extra: pipeline de CI (prueba 15).
-- [ ] Extra: `storageState` para no repetir el login en cada test.
+- [x] Extra: `storageState`: login una sola vez en `tests/auth.setup.ts` (19 en verde; 55 con `--repeat-each=3`).
 - [x] Borrado `tests/example.spec.ts`.
 
 ## Mapa de la web (cómo la ve Playwright)
@@ -62,6 +62,9 @@ En el código, cada corrección está marcada con `// ANTES · MAL · POR QUÉ`.
 - **Doble clic en Continue.** `fillInfo` ya lo pulsaba.
 - **Faltaba la comprobación final** del «Thank you for your order!».
 
+### storageState
+- **`test.use` vacío en los ficheros equivocados.** Lo puse en cart, inventory y checkOut (los que **sí** necesitan la sesión) y no en login. Fallaron los 3: sin sesión, SauceDemo devuelve al login. Va solo en `login.spec.ts`.
+
 ## Comparación con la solución oficial
 
 | Punto | Yo | Solución | Comentario |
@@ -90,4 +93,6 @@ En el código, cada corrección está marcada con `// ANTES · MAL · POR QUÉ`.
 - **Solo aceptan array:** `toHaveText`, `toContainText`, `toHaveClass`. El resto exige un solo elemento (*strict*), igual que las acciones (`click`, `fill`).
 - **Decimales:** `29.99 + 15.99 = 45.980000000000004` → `toBeCloseTo(x, 2)`.
 - **Ficheros de test:** deben acabar en `.spec.ts`. Si no, Playwright los ignora sin avisar.
+- **Cada test arranca con un navegador limpio** (contexto nuevo): nada pasa de un test a otro. `storageState` solo decide con qué arranca: con una copia de la sesión guardada o vacío.
+- **`test.use(...)` no es un test:** es configuración para todo el fichero (o `describe`). Se pone arriba por claridad.
 - **Pick locator con login delante:** `await page.pause()` tras el login, o `codegen --save-storage` / `--load-storage`.

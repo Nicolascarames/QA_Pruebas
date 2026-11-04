@@ -41,14 +41,14 @@ Si un test falla, el informe HTML incluye captura de pantalla, vídeo y traza.
 | `tests/cart.spec.ts` | Añadir 2 productos: contador del carrito y contenido |
 | `tests/checkOut.spec.ts` | Checkout completo: total = suma de precios + impuestos, y pedido confirmado |
 
-6 tests × 3 navegadores = 18 ejecuciones.
+6 tests × 3 navegadores = 18 ejecuciones, más 1 de `setup` (el login).
 
 ## Estructura
 
 ```
 data/    datos de prueba (usuarios, productos y precios)
 pages/   Page Objects: LoginPage, InventoryPage, CartPage, CheckoutPage
-tests/   especificaciones
+tests/   especificaciones (auth.setup.ts hace el login único)
 ```
 
 ## Decisiones
@@ -58,11 +58,11 @@ tests/   especificaciones
 - **Sin esperas fijas:** solo el auto-waiting de Playwright y los `expect` que reintentan.
 - **Datos fuera del código:** usuarios y productos en `data/`; la contraseña, en `.env`.
 - **Importes con `toBeCloseTo`:** los decimales en JavaScript no son exactos (`29.99 + 15.99 = 45.980000000000004`).
+- **Login una sola vez con `storageState`:** el proyecto `setup` (`tests/auth.setup.ts`) inicia sesión y la guarda en `playwright/.auth/user.json` (ignorado por git). Los navegadores dependen de él y cada test arranca con una copia de esa sesión. `login.spec.ts` la anula con un `storageState` vacío, porque prueba el propio formulario.
 - **Diagnóstico al fallar:** captura, vídeo y traza solo de los tests fallidos.
 
 ## Con más tiempo
 
-- `storageState` para hacer login una vez y reutilizar la sesión.
 - Pipeline de CI con GitHub Actions.
 - Separar los datos del comprador (nombre, código postal) de los usuarios de login.
 - Tests de API, regresión visual y accesibilidad.

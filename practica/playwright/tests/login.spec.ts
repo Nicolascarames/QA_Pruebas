@@ -2,6 +2,11 @@ import {test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import {users} from '../data/users';
 
+// ANTES: esta línea estaba en cart, inventory y checkOut, y no aquí
+// MAL: quitaba la sesión justo a los tests que la necesitan (fallaban los 3: SauceDemo los devolvía al login)
+// POR QUÉ: test.use vale para todo el fichero; solo los tests de login deben arrancar SIN la sesión guardada
+test.use({ storageState: { cookies: [], origins: [] } });
+
 let loginPage: LoginPage;
 
 test.beforeEach(async ({page}) => {
