@@ -1,0 +1,596 @@
+[
+  {
+    "es": "cobertura",
+    "en": "coverage",
+    "definicion": "Grado en que los elementos de cobertura especificados son practicados por un juego de pruebas, expresado como porcentaje.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/cobertura/3"
+  },
+  {
+    "es": "depurar",
+    "en": "debugging",
+    "definicion": "Proceso de encontrar, analizar y eliminar las causas de fallos en un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/depurar/2"
+  },
+  {
+    "es": "defecto",
+    "en": "defect",
+    "definicion": "Imperfección o deficiencia en un producto de trabajo que implica que no cumpla con los requisitos o las especificaciones, o que dificulte su uso previsto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/defecto/3"
+  },
+  {
+    "es": "error",
+    "en": "error",
+    "definicion": "Acción humana que produce un resultado incorrecto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/error/1"
+  },
+  {
+    "es": "fallo",
+    "en": "failure",
+    "definicion": "Evento en el que un componente o sistema no cumple sus requisitos dentro de los límites especificados durante su ejecución.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/fallo/3"
+  },
+  {
+    "es": "calidad",
+    "en": "quality",
+    "definicion": "El grado en que un producto de trabajo satisface los requisitos explícitos e implícitos.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/calidad/4"
+  },
+  {
+    "es": "aseguramiento de la calidad",
+    "en": "quality assurance",
+    "definicion": "Actividades que se centran en proporcionar confianza en que se cumplirán los requisitos de calidad.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/aseguramiento-de-la-calidad/2"
+  },
+  {
+    "es": "causa raíz",
+    "en": "root cause",
+    "definicion": "Fuente de un defecto tal que, si se elimina, la ocurrencia del tipo de defecto disminuye o desaparece.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/causa-raiz/1"
+  },
+  {
+    "es": "análisis de prueba",
+    "en": "test analysis",
+    "definicion": "Actividad que identifica las condiciones de prueba mediante el análisis de la base de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/analisis-de-prueba/2"
+  },
+  {
+    "es": "base de prueba",
+    "en": "test basis",
+    "definicion": "Conjunto de conocimientos utilizados como base para el análisis y diseño de una prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/base-de-prueba/2"
+  },
+  {
+    "es": "caso de prueba",
+    "en": "test case",
+    "definicion": "Conjunto de precondiciones, entradas, acciones (cuando proceda), resultados esperados y postcondiciones, desarrollado conforme a las condiciones de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/caso-de-prueba/2"
+  },
+  {
+    "es": "compleción de la prueba",
+    "en": "test completion",
+    "definicion": "Actividad que hace que los productos de prueba estén disponibles para un uso posterior, deja los entornos de prueba en condiciones satisfactorias y comunica los resultados de la prueba a los implicados relevantes.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/complecion-de-prueba/2",
+    "variantes": [
+      "compleción de prueba"
+    ]
+  },
+  {
+    "es": "condición de prueba",
+    "en": "test condition",
+    "definicion": "Aspecto que puede ser objeto de prueba de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/condicion-de-prueba/4"
+  },
+  {
+    "es": "control de la prueba",
+    "en": "test control",
+    "definicion": "Actividad que desarrolla y aplica acciones correctivas para encauzar un proyecto de prueba cuando se desvía de lo previsto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/control-de-prueba/2",
+    "variantes": [
+      "control de prueba"
+    ]
+  },
+  {
+    "es": "datos de prueba",
+    "en": "test data",
+    "definicion": "Datos necesarios para la ejecución de una prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/datos-de-prueba/3"
+  },
+  {
+    "es": "diseño de la prueba",
+    "en": "test design",
+    "definicion": "Actividad que obtiene y especifica los casos de prueba a partir de las condiciones de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/diseno-de-prueba/3",
+    "variantes": [
+      "diseño de prueba"
+    ]
+  },
+  {
+    "es": "ejecución de prueba",
+    "en": "test execution",
+    "definicion": "Actividad que ejecuta una prueba sobre un componente o sistema que genera resultados reales.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/ejecucion-de-prueba/2"
+  },
+  {
+    "es": "implementación de prueba",
+    "en": "test implementation",
+    "definicion": "Actividad que prepara los productos de prueba necesarios para la ejecución de la prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/implementacion-de-prueba/3"
+  },
+  {
+    "es": "monitorización de la prueba",
+    "en": "test monitoring",
+    "definicion": "Actividad que registra el estado de las actividades de prueba, identifica las desviaciones con respecto a lo previsto o esperado e informa del estado a los implicados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/monitorizacion-de-prueba/3",
+    "variantes": [
+      "monitorización de prueba"
+    ]
+  },
+  {
+    "es": "objeto de prueba",
+    "en": "test object",
+    "definicion": "Producto de trabajo al que se va a someter a prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/objeto-de-prueba/2"
+  },
+  {
+    "es": "objetivo de prueba",
+    "en": "test objective",
+    "definicion": "Propósito de la prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/objetivo-de-prueba/3"
+  },
+  {
+    "es": "planificación de prueba",
+    "en": "test planning",
+    "definicion": "Actividad consistente en establecer o actualizar un plan de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/planificacion-de-prueba/1"
+  },
+  {
+    "es": "procedimiento de prueba",
+    "en": "test procedure",
+    "definicion": "Secuencia de casos de prueba en orden de ejecución, y cualquier acción asociada que pueda ser necesaria para establecer las precondiciones iniciales y cualquier actividad de cierre posterior a la ejecución.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/procedimiento-de-prueba/1"
+  },
+  {
+    "es": "resultado de prueba",
+    "en": "test result",
+    "definicion": "Estado de la ejecución de una prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/resultado-de-prueba/2"
+  },
+  {
+    "es": "prueba",
+    "en": "testing",
+    "definicion": "Proceso dentro del ciclo de vida de desarrollo del software que evalúa la calidad de un componente o sistema y de los productos de trabajo relacionados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba/3"
+  },
+  {
+    "es": "producto de prueba",
+    "en": "testware",
+    "definicion": "Productos de trabajo producidos durante el proceso de prueba para su uso en la planificación, diseño, ejecución, evaluación y suministro de información sobre la prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/producto-de-prueba/2"
+  },
+  {
+    "es": "prueba de aceptación",
+    "en": "acceptance testing",
+    "definicion": "Nivel de prueba que se concentra en determinar si se acepta el sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-aceptacion/2"
+  },
+  {
+    "es": "prueba de caja negra",
+    "en": "black-box testing",
+    "definicion": "Enfoque de prueba basado en la especificación de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-caja-negra/3"
+  },
+  {
+    "es": "prueba de integración de componentes",
+    "en": "component integration testing",
+    "definicion": "La prueba de integración de componentes.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-integracion-de-componentes/3"
+  },
+  {
+    "es": "prueba de componentes",
+    "en": "component testing",
+    "definicion": "Un nivel de prueba que se concentra en componentes hardware o software individuales.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-componente/3",
+    "variantes": [
+      "prueba de componente"
+    ]
+  },
+  {
+    "es": "prueba de confirmación",
+    "en": "confirmation testing",
+    "definicion": "Un tipo de prueba relacionada con el cambio que se realiza después de corregir un defecto para confirmar que el fallo causado por ese defecto no se vuelve a producir.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-confirmacion/3"
+  },
+  {
+    "es": "prueba funcional",
+    "en": "functional testing",
+    "definicion": "Un tipo de prueba destinado a determinar la adecuación funcional de un objeto de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-funcional/4"
+  },
+  {
+    "es": "prueba de integración",
+    "en": "integration testing",
+    "definicion": "Nivel de prueba que se concentra en las interacciones entre componentes o sistemas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-integracion/2"
+  },
+  {
+    "es": "prueba de mantenimiento",
+    "en": "maintenance testing",
+    "definicion": "Prueba de los cambios en un sistema operativo o del impacto de un entorno modificado en un sistema operativo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-mantenimiento/1"
+  },
+  {
+    "es": "prueba no funcional",
+    "en": "non-functional testing",
+    "definicion": "Prueba realizada para evaluar si un componente o sistema cumple los requisitos no funcionales.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-no-funcional/3"
+  },
+  {
+    "es": "prueba de regresión",
+    "en": "regression testing",
+    "definicion": "Tipo de prueba relacionada con el cambio para detectar si se han introducido o descubierto defectos en zonas no modificadas del software.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-regresion/3"
+  },
+  {
+    "es": "desplazamiento a la izquierda",
+    "en": "shift-left",
+    "definicion": "Un enfoque para realizar actividades de prueba y aseguramiento de la calidad tan pronto como sea posible en el ciclo de vida del desarrollo de software.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/desplazamiento-a-la-izquierda/1"
+  },
+  {
+    "es": "prueba de integración de sistemas",
+    "en": "system integration testing",
+    "definicion": "La prueba de integración de sistemas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-integracion-de-sistemas/4"
+  },
+  {
+    "es": "prueba de sistema",
+    "en": "system testing",
+    "definicion": "Nivel de prueba que se concentra en verificar que un sistema como un todo cumple los requisitos especificados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-sistema/2"
+  },
+  {
+    "es": "nivel de prueba",
+    "en": "test level",
+    "definicion": "Instancia específica de un proceso de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/nivel-de-prueba/2"
+  },
+  {
+    "es": "tipo de prueba",
+    "en": "test type",
+    "definicion": "Conjunto de actividades de prueba basadas en objetivos de prueba específicos dirigidos a características concretas de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/tipo-de-prueba/2"
+  },
+  {
+    "es": "prueba de caja blanca",
+    "en": "white-box testing",
+    "definicion": "Enfoque de prueba basado en la estructura interna de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-caja-blanca/2"
+  },
+  {
+    "es": "anomalía",
+    "en": "anomaly",
+    "definicion": "Condición que se desvía de lo esperado.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/anomalia/1"
+  },
+  {
+    "es": "prueba dinámica",
+    "en": "dynamic testing",
+    "definicion": "Prueba que implica la ejecución del elemento de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-dinamica/2"
+  },
+  {
+    "es": "revisión formal",
+    "en": "formal review",
+    "definicion": "Revisión que sigue un proceso definido con una salida formalmente documentada.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/revision-formal/2"
+  },
+  {
+    "es": "revisión informal",
+    "en": "informal review",
+    "definicion": "Tipo de revisión que no sigue un proceso definido y no tiene una salida formalmente documentada.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/revision-informal/3"
+  },
+  {
+    "es": "inspección",
+    "en": "inspection",
+    "definicion": "Tipo de revisión formal que utiliza roles de equipo definidos y mediciones para identificar defectos en un producto de trabajo, mejorar el proceso de revisión y el proceso de desarrollo de software.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/inspeccion/3"
+  },
+  {
+    "es": "revisión",
+    "en": "review",
+    "definicion": "Tipo de prueba estática en la que la calidad de un producto de trabajo o proceso es evaluada por personas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/revision/4"
+  },
+  {
+    "es": "análisis estático",
+    "en": "static analysis",
+    "definicion": "Proceso de evaluación de un componente o sistema sin ejecutarlo, basado en su forma, estructura, contenido o documentación.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/analisis-estatico/2"
+  },
+  {
+    "es": "prueba estática",
+    "en": "static testing",
+    "definicion": "Prueba de un producto de trabajo sin que se ejecute el código del producto de trabajo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-estatica/4"
+  },
+  {
+    "es": "revisión técnica",
+    "en": "technical review",
+    "definicion": "Revisión formal realizada por expertos técnicos que examinan la calidad de un producto de trabajo e identifican las discrepancias respecto de especificaciones y estándares.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/revision-tecnica/3"
+  },
+  {
+    "es": "revisión guiada",
+    "en": "walkthrough",
+    "definicion": "Tipo de revisión en la que un autor guía a los miembros de la revisión a través de un producto de trabajo y los miembros hacen preguntas y comentarios sobre posibles problemas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/revision-guiada/3"
+  },
+  {
+    "es": "criterios de aceptación",
+    "en": "acceptance criteria",
+    "definicion": "Criterios que debe satisfacer un producto del trabajo para ser aceptado por los implicados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/criterios-de-aceptacion/3"
+  },
+  {
+    "es": "desarrollo guiado por prueba de aceptación",
+    "en": "acceptance test-driven development",
+    "definicion": "Enfoque de \"probar primero\" basado en la colaboración que define las pruebas de aceptación en el lenguaje del dominio de los implicados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/desarrollo-guiado-por-prueba-de-aceptacion/1"
+  },
+  {
+    "es": "técnica de prueba de caja negra",
+    "en": "black-box test technique",
+    "definicion": "Técnica de prueba basada en un análisis de la especificación de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/tecnica-de-prueba-de-caja-negra/3"
+  },
+  {
+    "es": "análisis del valor frontera",
+    "en": "boundary value analysis",
+    "definicion": "Técnica de prueba de caja negra en la que las condiciones de prueba son valores frontera.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/analisis-del-valor-frontera/3"
+  },
+  {
+    "es": "cobertura de rama",
+    "en": "branch coverage",
+    "definicion": "Cobertura de ramas en un grafo del flujo de control.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/cobertura-de-rama/2"
+  },
+  {
+    "es": "prueba basada en lista de comprobación",
+    "en": "checklist-based testing",
+    "definicion": "Técnica de prueba basada en la experiencia en la que se diseñan casos de prueba para practicar los elementos de una lista de comprobación.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-basada-en-lista-de-comprobacion/3"
+  },
+  {
+    "es": "enfoque de prueba basado en la colaboración",
+    "en": "collaboration-based test approach",
+    "definicion": "Enfoque de prueba que se centra en evitar defectos mediante la colaboración entre implicados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/enfoque-de-prueba-basado-en-la-colaboracion/1"
+  },
+  {
+    "es": "elemento de cobertura",
+    "en": "coverage item",
+    "definicion": "Atributo o combinación de atributos procedentes de una o varias condiciones de prueba al utilizar una técnica de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/elemento-de-cobertura/2"
+  },
+  {
+    "es": "prueba de tabla de decisión",
+    "en": "decision table testing",
+    "definicion": "Técnica de prueba de caja negra en la que las condiciones de prueba son las combinaciones de condiciones y las acciones resultantes que se muestran en una tabla de decisión.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-tabla-de-decision/4"
+  },
+  {
+    "es": "partición de equivalencia",
+    "en": "equivalence partitioning",
+    "definicion": "Técnica de prueba de caja negra en la que las condiciones de prueba son particiones de equivalencia practicadas por un miembro representante de cada partición.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/particion-de-equivalencia-1/3"
+  },
+  {
+    "es": "predicción de errores",
+    "en": "error guessing",
+    "definicion": "Técnica de prueba en la que las condiciones de prueba se basan en el conocimiento que tiene el probador de fallos o modos de fallo ocurridos en el pasado.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prediccion-de-errores/3"
+  },
+  {
+    "es": "técnica de prueba basada en la experiencia",
+    "en": "experience-based test technique",
+    "definicion": "Técnica de prueba basada en la experiencia, los conocimientos y la intuición del probador.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/tecnica-de-prueba-basada-en-la-experiencia/4"
+  },
+  {
+    "es": "prueba exploratoria",
+    "en": "exploratory testing",
+    "definicion": "Enfoque de prueba en el que las pruebas se diseñan y ejecutan dinámicamente basándose en los conocimientos del probador, la exploración de un elemento de prueba y los resultados de pruebas anteriores.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-exploratoria/4"
+  },
+  {
+    "es": "prueba de transición de estado",
+    "en": "state transition testing",
+    "definicion": "Técnica de prueba de caja negra en la que se practican casos de prueba para practicar elementos de un modelo de transición de estado.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-de-transicion-de-estado/3"
+  },
+  {
+    "es": "cobertura de sentencia",
+    "en": "statement coverage",
+    "definicion": "Cobertura de las sentencias fuente ejecutables.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/cobertura-de-sentencia/3"
+  },
+  {
+    "es": "técnica de prueba",
+    "en": "test technique",
+    "definicion": "Procedimiento utilizado para definir las condiciones de prueba, diseñar casos de prueba y especificar datos de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/tecnica-de-prueba/3"
+  },
+  {
+    "es": "técnica de prueba de caja blanca",
+    "en": "white-box test technique",
+    "definicion": "Técnica de prueba basada únicamente en la estructura interna de un componente o sistema.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/tecnica-de-prueba-de-caja-blanca/3"
+  },
+  {
+    "es": "gestión de defectos",
+    "en": "defect management",
+    "definicion": "Proceso de reconocimiento, registro, clasificación, investigación, reparación y eliminación de defectos.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/gestion-de-defectos/4"
+  },
+  {
+    "es": "informe de defecto",
+    "en": "defect report",
+    "definicion": "Documentación de la ocurrencia, naturaleza y estado de un defecto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/informe-de-defecto/2"
+  },
+  {
+    "es": "criterios de entrada",
+    "en": "entry criteria",
+    "definicion": "Conjunto de condiciones para iniciar oficialmente una tarea definida.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/criterios-de-entrada/2"
+  },
+  {
+    "es": "criterios de salida",
+    "en": "exit criteria",
+    "definicion": "Conjunto de condiciones para completar formalmente una tarea definida.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/criterios-de-salida/2"
+  },
+  {
+    "es": "riesgo de producto",
+    "en": "product risk",
+    "definicion": "Riesgo que impacta la calidad de un producto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/riesgo-de-producto/2"
+  },
+  {
+    "es": "riesgo de proyecto",
+    "en": "project risk",
+    "definicion": "Riesgo que impacta el éxito de un proyecto.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/riesgo-de-proyecto/2"
+  },
+  {
+    "es": "riesgo",
+    "en": "risk",
+    "definicion": "Factor que podría dar lugar a consecuencias negativas futuras.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/riesgo/1"
+  },
+  {
+    "es": "análisis del riesgo",
+    "en": "risk analysis",
+    "definicion": "Proceso global de identificación del riesgo y evaluación del riesgo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/analisis-del-riesgo/2"
+  },
+  {
+    "es": "evaluación del riesgo",
+    "en": "risk assessment",
+    "definicion": "Proceso para analizar los riesgos identificados y determinar el nivel de riesgo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/evaluacion-del-riesgo/2"
+  },
+  {
+    "es": "control del riesgo",
+    "en": "risk control",
+    "definicion": "Proceso global de mitigación del riesgo y monitorización del riesgo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/control-del-riesgo/1"
+  },
+  {
+    "es": "identificación del riesgo",
+    "en": "risk identification",
+    "definicion": "Proceso de hallazgo, reconocimiento y descripción de riesgos.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/identificacion-del-riesgo/2"
+  },
+  {
+    "es": "nivel de riesgo",
+    "en": "risk level",
+    "definicion": "Medición de un riesgo definida por el impacto y la probabilidad.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/nivel-de-riesgo/2"
+  },
+  {
+    "es": "gestión del riesgo",
+    "en": "risk management",
+    "definicion": "Proceso para gestionar riesgos.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/gestion-del-riesgo/3"
+  },
+  {
+    "es": "mitigación del riesgo",
+    "en": "risk mitigation",
+    "definicion": "Proceso mediante el cual se toman decisiones y se implementan medidas de protección para reducir o mantener los riesgos a niveles especificados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/mitigacion-del-riesgo/2"
+  },
+  {
+    "es": "monitorización del riesgo",
+    "en": "risk monitoring",
+    "definicion": "Actividad que comprueba e informa del estado de los riesgos conocidos a los implicados.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/monitorizacion-del-riesgo/1"
+  },
+  {
+    "es": "pruebas basadas en el riesgo",
+    "en": "risk-based testing",
+    "definicion": "Enfoque de prueba en el que la gestión, selección, priorización y uso de las actividades y recursos de la prueba se basan en los tipos y niveles de riesgo correspondientes.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/prueba-basada-en-el-riesgo/3",
+    "variantes": [
+      "prueba basada en el riesgo"
+    ]
+  },
+  {
+    "es": "enfoque de prueba",
+    "en": "test approach",
+    "definicion": "Forma de implementar las tareas de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/enfoque-de-prueba/3"
+  },
+  {
+    "es": "informe de compleción de la prueba",
+    "en": "test completion report",
+    "definicion": "Tipo de informe de prueba elaborado en los hitos de compleción que proporciona una evaluación de los elementos de prueba correspondientes en función de los criterios de salida.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/informe-de-complecion-de-prueba/3",
+    "variantes": [
+      "informe de compleción de prueba"
+    ]
+  },
+  {
+    "es": "plan de prueba",
+    "en": "test plan",
+    "definicion": "Documentación en la que se describen los objetivos de la prueba, los medios y el calendario para llevar a cabo la coordinación de la misma.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/plan-de-prueba/3"
+  },
+  {
+    "es": "informe del avance de la prueba",
+    "en": "test progress report",
+    "definicion": "Tipo de informe de prueba periódico que incluye el avance de las actividades de prueba con respecto a una línea base, los riesgos y las alternativas que requieren una decisión.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/informe-del-avance-de-la-prueba/4"
+  },
+  {
+    "es": "pirámide de prueba",
+    "en": "test pyramid",
+    "definicion": "Modelo gráfico que representa la relación de la cantidad de pruebas por nivel, con más cantidad en la parte inferior que en la superior.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/piramide-de-prueba/1"
+  },
+  {
+    "es": "cuadrantes de prueba",
+    "en": "testing quadrants",
+    "definicion": "Modelo de clasificación de los tipos/niveles de prueba en cuatro cuadrantes, que los relaciona con dos dimensiones de los objetivos de prueba: el apoyo al equipo frente a la crítica al producto, y la orientación a la tecnología frente a la orientación al negocio",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/cuadrantes-de-prueba/1"
+  },
+  {
+    "es": "automatización de la prueba",
+    "en": "test automation",
+    "definicion": "Conversión de las actividades de prueba en operaciones automáticas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/automatizacion-de-prueba/3",
+    "variantes": [
+      "automatización de prueba"
+    ]
+  },
+  {
+    "es": "proceso de prueba",
+    "en": "test process",
+    "definicion": "Conjunto de actividades de prueba realizadas para alcanzar un objetivo de prueba.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/proceso-de-prueba/3"
+  },
+  {
+    "es": "trazabilidad",
+    "en": "traceability",
+    "definicion": "Capacidad de establecer relaciones explícitas entre productos de trabajo relacionados o elementos dentro de productos de trabajo.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/trazabilidad/3"
+  },
+  {
+    "es": "estrategia de prueba",
+    "en": "test strategy",
+    "definicion": "Descripción de cómo realizar la prueba para alcanzar los objetivos de prueba en unas circunstancias determinadas.",
+    "fuente": "glosario ISTQB (es) · https://glossary.istqb.org/es_ES/term/estrategia-de-prueba/4"
+  }
+]

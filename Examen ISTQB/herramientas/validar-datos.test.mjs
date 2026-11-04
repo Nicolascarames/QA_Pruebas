@@ -15,3 +15,16 @@ test("textos de muestra", () => {
   assert.ok(ap.filter(a => a.padre === "1.4").length === 5);
   assert.ok(ap.find(a => a.id === "5.1.6").texto.length > 200);
 });
+
+// ---- Glosario de términos tocables ----
+const glo = JSON.parse(readFileSync(new URL("glosario.json", dir), "utf8"));
+test("glosario completo", () => {
+  for (const g of glo) {
+    for (const k of ["es", "en", "definicion", "fuente"]) assert.ok(g[k]?.trim(), `${g.en}.${k}`);
+    assert.match(g.fuente, /^glosario ISTQB \((es|en, traducida)\)/);
+  }
+  for (const en of ["test process", "traceability", "test strategy", "regression testing"]) assert.ok(glo.find(g => g.en.toLowerCase() === en), en);
+  assert.equal(new Set(glo.map(g => g.en.toLowerCase())).size, glo.length);
+});
+// 92 términos únicos de las 6 tablas «Palabras Clave» (97 filas, 5 repetidas) + 3 nuevos de v4.0.1
+test("glosario: número de términos", () => assert.equal(glo.length, 95));
