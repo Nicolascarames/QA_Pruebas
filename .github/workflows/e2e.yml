@@ -1,67 +1,127 @@
+# Nombre del workflow: es lo que se ve en la pestaña Actions de GitHub y en el badge del README
 name: E2E Tests
 
+# ── CUÁNDO se ejecuta (disparadores) ─────────────────────────────────────────
 on:
+  # 1) Al hacer push...
   push:
+    # ...a la rama main
     branches: [main]
+    # ...y solo si cambia algo de la práctica de Playwright o este mismo fichero
+    # (así, tocar el Aula o el examen ISTQB no lanza los tests)
     paths: ['practica/playwright/**', '.github/workflows/e2e.yml']
+  # 2) Al abrir o actualizar una pull request...
   pull_request:
+    # ...que va a entrar en main
     branches: [main]
+    # ...con el mismo filtro de carpetas que el push
     paths: ['practica/playwright/**', '.github/workflows/e2e.yml']
+  # 3) A una hora fija (regresión nocturna)
   schedule:
-    - cron: '0 3 * * 1-5'        # 03:00 UTC (05:00 en España en verano), de lunes a viernes
+    # minuto hora día-del-mes mes día-de-la-semana → 03:00 UTC de lunes (1) a viernes (5)
+    - cron: '0 3 * * 1-5'        # 03:00 UTC (05:00 en España en verano)
+  # 4) A mano: añade el botón "Run workflow" en la pestaña Actions
   workflow_dispatch:
+    # Datos que se piden al pulsar el botón
     inputs:
+      # Nombre del dato; dentro del workflow se lee con ${{ inputs.browser }}
       browser:
+        # Texto que aparece junto al desplegable
         description: 'Navegador'
+        # Obligatorio elegir uno
         required: true
+        # Opción marcada por defecto
         default: 'all'
+        # Tipo desplegable (lista cerrada de opciones)
         type: choice
+        # Opciones del desplegable; coinciden con los "name" de projects en playwright.config.ts
         options: [all, chromium, firefox, webkit]
+
+# ── Evitar ejecuciones duplicadas ───────────────────────────────────────────
 concurrency:
+  # Agrupa las ejecuciones por rama (github.ref = refs/heads/main, por ejemplo)
   group: e2e-${{ github.ref }}
+  # Si llega una nueva de la misma rama, cancela la que estaba en marcha (ahorra minutos)
   cancel-in-progress: true
+
+# ── QUÉ se ejecuta ───────────────────────────────────────────────────────────
 jobs:
+  # Identificador del job (aparece como "e2e (1/2)" y "e2e (2/2)")
   e2e:
+    # Máquina de GitHub donde corre: un Ubuntu limpio en cada ejecución
     runs-on: ubuntu-latest
+    # Si tarda más de 30 minutos, se corta (evita jobs colgados gastando minutos)
     timeout-minutes: 30
+    # Valores por defecto para todos los pasos
     defaults:
+      # Solo afecta a los pasos con "run:" (no a los "uses:")
       run:
+        # Equivale a hacer "cd practica/playwright" antes de cada comando
         working-directory: practica/playwright
+    # Cómo se reparte el trabajo
     strategy:
+      # Si un shard falla, el otro sigue hasta el final (así se ven todos los fallos)
       fail-fast: false
+      # Matriz: GitHub lanza una copia del job por cada valor, en paralelo
       matrix:
+        # 2 copias: una ejecuta la 1ª mitad de los tests y otra la 2ª
         shard: [1/2, 2/2]
+    # La receta, paso a paso y en orden
     steps:
+      # Descarga el código del repo en la máquina
       - uses: actions/checkout@v7
 
+      # Instala Node.js
       - uses: actions/setup-node@v7
+        # Parámetros de esta action
         with:
+          # Última versión LTS (estable) de Node
           node-version: lts/*
+          # Guarda la caché de npm entre ejecuciones para instalar más rápido
           cache: npm
+          # Fichero que decide si la caché vale; ruta completa porque "uses:" ignora working-directory
           cache-dependency-path: practica/playwright/package-lock.json
 
+      # Nombre del paso que se ve en el log
       - name: Instalar dependencias
+        # Instala exactamente las versiones de package-lock.json (reproducible; no lo modifica)
         run: npm ci
 
       - name: Instalar navegadores
+        # Descarga Chromium, Firefox y WebKit, y con --with-deps las librerías de Ubuntu que necesitan
         run: npx playwright install --with-deps
 
       - name: Ejecutar tests
+        # Variables de entorno solo para este paso
         env:
+          # La contraseña sale del secret del repo (sustituye al .env, que no se sube); en el log sale ***
           SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+          # Navegador elegido en el botón manual; en push/PR/noche viene vacío y se usa 'all'
           BROWSER: ${{ inputs.browser || 'all' }}
+          # Qué mitad le toca a esta copia del job: "1/2" o "2/2"
           SHARD: ${{ matrix.shard }}
+        # "|" = varias líneas de comandos de bash
         run: |
+          # Si se eligió "all" (o no se eligió nada)...
           if [ "$BROWSER" = "all" ]; then
+            # ...los 3 navegadores, solo la mitad que toca a este shard
             npx playwright test --shard=$SHARD
+          # Si se eligió un navegador concreto...
           else
+            # ...solo ese proyecto (su setup se ejecuta igual, por "dependencies")
             npx playwright test --project=$BROWSER --shard=$SHARD
+          # Fin del if (en bash se cierra con "fi")
           fi
 
       - name: Subir informe
+        # Se ejecuta aunque fallen los tests (solo se salta si cancelas el workflow)
         if: ${{ !cancelled() }}
+        # Action oficial para guardar ficheros de la ejecución (artefactos)
         uses: actions/upload-artifact@v7
         with:
+          # Nombre del artefacto; job-index (0 o 1) evita que los dos shards choquen
           name: playwright-report-${{ strategy.job-index }}
+          # Carpeta a subir; ruta completa porque "uses:" ignora working-directory
           path: practica/playwright/playwright-report/
+          # Días que GitHub lo guarda antes de borrarlo
           retention-days: 14
