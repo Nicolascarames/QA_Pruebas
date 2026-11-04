@@ -18,11 +18,11 @@ Los 6 tests pasan en Chromium, también 3 veces seguidas (`--repeat-each=3`): no
 
 **Pendiente de los requisitos:**
 - [x] Capturas, trazas y vídeo al fallar + informe HTML y `list`.
-- [ ] README del proyecto (instalación, ejecución, cobertura, decisiones, qué haría con más tiempo).
+- [x] README del proyecto: [`playwright/README.md`](playwright/README.md).
 - [x] Extra: Chromium, Firefox y WebKit (18 tests en verde).
 - [ ] Extra: pipeline de CI (prueba 15).
 - [ ] Extra: `storageState` para no repetir el login en cada test.
-- [ ] Borrar `tests/example.spec.ts`, que es el de ejemplo de la instalación.
+- [x] Borrado `tests/example.spec.ts`.
 
 ## Mapa de la web (cómo la ve Playwright)
 
