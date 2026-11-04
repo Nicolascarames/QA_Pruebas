@@ -1,0 +1,21 @@
+/* Bloque «Ver en el programa» y recuadro de definición. Solo variables del aula (cubren el tema oscuro). */
+.prog{margin-top:.6rem;border:1px solid var(--line);border-radius:10px;background:var(--sheet)}
+.prog>summary{cursor:pointer;padding:.5rem .75rem;color:var(--accent);font-weight:600}
+.prog-in{position:relative;padding:.25rem .85rem .8rem;font-size:.92rem;line-height:1.5}
+.prog-ruta{color:var(--muted);font-size:.8rem;margin-bottom:.5rem}
+.prog-h{margin:1rem 0 .3rem;font-size:.95rem}
+.prog-txt p{margin:.4rem 0}
+.prog-txt ul{margin:.3rem 0;padding-left:1.3rem}
+.prog-txt table{border-collapse:collapse;margin:.5rem 0;font-size:.85rem}
+.prog-txt th,.prog-txt td{border:1px solid var(--line);padding:.25rem .5rem;text-align:left;vertical-align:top}
+.prog-txt .fig{color:var(--muted);font-style:italic}
+.prog-txt .nota{color:var(--muted);font-size:.78rem}
+.prog-avisos{margin-top:.7rem}
+.prog-aviso{border-left:3px solid var(--bad);padding:.3rem .6rem;margin:.4rem 0}
+.prog-aviso small{display:block;color:var(--muted);font-size:.75rem;margin-top:.2rem}
+.prog-copy{margin-top:.7rem;color:var(--muted);font-size:.72rem}
+.term{text-decoration:underline dotted var(--accent);text-underline-offset:3px;cursor:pointer}
+.term-pop{position:absolute;z-index:5;max-width:22rem;padding:.55rem .7rem;background:var(--sheet);
+  border:1px solid var(--accent);border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-size:.85rem}
+.term-pop i{color:var(--muted)}
+.term-pop small{display:block;margin-top:.3rem;color:var(--muted)}
