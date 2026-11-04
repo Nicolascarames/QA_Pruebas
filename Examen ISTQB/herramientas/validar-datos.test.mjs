@@ -28,3 +28,13 @@ test("glosario completo", () => {
 });
 // 92 términos únicos de las 6 tablas «Palabras Clave» (97 filas, 5 repetidas) + 3 nuevos de v4.0.1
 test("glosario: número de términos", () => assert.equal(glo.length, 95));
+
+const dif = JSON.parse(readFileSync(new URL("diferencias.json", dir), "utf8"));
+test("diferencias válidas", () => {
+  for (const d of dif) {
+    assert.ok(ap.find(a => a.id === d.id), d.id);
+    assert.ok(["v4.0.1","traducción"].includes(d.tipo)); assert.ok(["alta","media","baja"].includes(d.importancia));
+    for (const k of ["es","en","en_es","resumen"]) assert.ok(d[k]?.trim(), `${d.id}.${k}`);
+  }
+  for (const id of ["5.1.6","1.1.2","2.2.2"]) assert.ok(dif.find(d => d.id === id && d.importancia === "alta"), id);
+});

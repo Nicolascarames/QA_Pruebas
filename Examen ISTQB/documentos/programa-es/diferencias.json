@@ -1,0 +1,326 @@
+[
+ {
+  "id": "1",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "procedimiento de prueba test procedure resultado de prueba test result prueba testing producto de prueba testware",
+  "en": "test procedure, test process, test result, testing, testware, traceability",
+  "en_es": "procedimiento de prueba, proceso de prueba, resultado de prueba, prueba, producto de prueba, trazabilidad",
+  "resumen": "Se añadieron dos palabras clave al capítulo 1, «test process» (proceso de prueba) y «traceability» (trazabilidad), que no figuran en la lista española."
+ },
+ {
+  "id": "1.1.2",
+  "tipo": "v4.0.1",
+  "importancia": "alta",
+  "es": "Diagnóstico (hallazgo de la causa raíz).",
+  "en": "Diagnosis (finding the defect)",
+  "en_es": "Diagnóstico (hallazgo del defecto)",
+  "resumen": "El diagnóstico consiste en encontrar el defecto, no la causa raíz, y el último paso es corregir el defecto, no la causa."
+ },
+ {
+  "id": "1.2.2",
+  "tipo": "v4.0.1",
+  "importancia": "media",
+  "es": "El CC es un enfoque correctivo orientado al producto que se concentra en aquellas actividades que contribuyen a la consecución de unos niveles de calidad adecuados.",
+  "en": "Testing is a product-oriented, corrective approach that focuses on those activities supporting the achievement of appropriate levels of quality.",
+  "en_es": "La prueba es un enfoque correctivo orientado al producto que se concentra en aquellas actividades que contribuyen a la consecución de unos niveles de calidad adecuados.",
+  "resumen": "Este apartado compara el AC con la prueba, no con el control de la calidad (CC): el enfoque correctivo orientado al producto se atribuye a la prueba."
+ },
+ {
+  "id": "1.4.3",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "procedimientos de prueba, guiones de prueba automatizados, juegos de prueba",
+  "en": "test procedures, manual and automated test scripts, test suites",
+  "en_es": "procedimientos de prueba, guiones de prueba manuales y automatizados, juegos de prueba",
+  "resumen": "Los productos de implementación de la prueba incluyen guiones de prueba manuales y automatizados, no solo automatizados."
+ },
+ {
+  "id": "1.5.3",
+  "tipo": "traducción",
+  "importancia": "baja",
+  "es": "que el equipo de pruebas realice las pruebas de integración de sistemas y sistemas",
+  "en": "test team performing system and system integration testing",
+  "en_es": "el equipo de pruebas realiza la prueba de sistema y la prueba de integración de sistemas",
+  "resumen": "Se tradujo «system and system integration testing» como «integración de sistemas y sistemas»; son dos niveles: prueba de sistema y prueba de integración de sistemas."
+ },
+ {
+  "id": "2",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "prueba no funcional non-functional testing prueba no funcional regression testing",
+  "en": "non-functional testing, regression testing",
+  "en_es": "prueba no funcional, prueba de regresión",
+  "resumen": "En la tabla de palabras clave «regression testing» aparece como «prueba no funcional», repetida de la fila anterior; debería ser «prueba de regresión»."
+ },
+ {
+  "id": "2.1.3",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "A continuación, los casos de prueba se traducen automáticamente en pruebas ejecutables.",
+  "en": "Test cases should then automatically be translated into executable tests",
+  "en_es": "A continuación, los casos de prueba deberían traducirse automáticamente en pruebas ejecutables.",
+  "resumen": "En BDD la traducción automática de los casos de prueba es una recomendación («deberían»), no algo que ocurra siempre."
+ },
+ {
+  "id": "2.1.4",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "(por ejemplo, rendimiento, fiabilidad)",
+  "en": "(e.g., performance efficiency, reliability)",
+  "en_es": "(por ejemplo, eficiencia de desempeño, fiabilidad)",
+  "resumen": "Se usa el nombre de característica ISO 25010 «eficiencia de desempeño» en lugar de «rendimiento»."
+ },
+ {
+  "id": "2.1.4",
+  "tipo": "traducción",
+  "importancia": "baja",
+  "es": "La tubería3 de entrega DevOps debe ser definida y establecida.",
+  "en": "The DevOps delivery pipeline must be defined and established",
+  "en_es": "El canal de entrega DevOps debe definirse y establecerse",
+  "resumen": "«Tubería» lleva una nota del traductor sin resolver («Buscar/Confirmar traducción del término») y en el mismo apartado se dice «canal de entrega»; el término no es coherente."
+ },
+ {
+  "id": "2.1.5",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Revisión de la especificación desde la perspectiva de la prueba.",
+  "en": "Reviewing the specification from the perspective of testers.",
+  "en_es": "Revisión de la especificación desde la perspectiva de los probadores.",
+  "resumen": "La revisión de la especificación se hace desde la perspectiva de los probadores, no «de la prueba»."
+ },
+ {
+  "id": "2.1.6",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "(también conocidas como \"reuniones post proyecto\" y retrospectivas de proyecto)",
+  "en": "Retrospectives are often held at the end of a project or an iteration, at a release milestone, or can be held when needed.",
+  "en_es": "Las retrospectivas suelen celebrarse al final de un proyecto o de una iteración, en un hito de entrega, o pueden celebrarse cuando se necesiten.",
+  "resumen": "Se eliminó la aclaración «también conocidas como reuniones post proyecto»; la versión inglesa ya no la incluye."
+ },
+ {
+  "id": "2.2.2",
+  "tipo": "v4.0.1",
+  "importancia": "alta",
+  "es": "Usabilidad. - Fiabilidad. - Seguridad. - Mantenibilidad. - Portabilidad.",
+  "en": "Usability (also known as interaction capability) • Reliability • Security • Maintainability • Portability (also known as flexibility) • Safety",
+  "en_es": "Usabilidad (también conocida como capacidad de interacción) • Fiabilidad • Seguridad • Mantenibilidad • Portabilidad (también conocida como flexibilidad) • Seguridad funcional (safety)",
+  "resumen": "La lista ISO 25010 pasa a ocho características: se añade «Safety» (seguridad funcional) y usabilidad/portabilidad reciben los nombres nuevos «capacidad de interacción»/«flexibilidad»."
+ },
+ {
+  "id": "2.2.2",
+  "tipo": "v4.0.1",
+  "importancia": "media",
+  "es": "se basa en la especificación y obtiene pruebas a partir de documentación externa al objeto de prueba.",
+  "en": "is specification-based and derives tests from documentation not related to the internal structure of the test object.",
+  "en_es": "se basa en la especificación y obtiene pruebas a partir de documentación no relacionada con la estructura interna del objeto de prueba.",
+  "resumen": "La base de la prueba de caja negra es la documentación no relacionada con la estructura interna del objeto de prueba, no la «externa al objeto»."
+ },
+ {
+  "id": "2.2.2",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "(por ejemplo, como parte de las revisiones y prueba de componente o prueba de sistema)",
+  "en": "(e.g., as part of reviews or component testing)",
+  "en_es": "(por ejemplo, como parte de las revisiones o de la prueba de componente)",
+  "resumen": "Se quitó la prueba de sistema como ejemplo de prueba no funcional temprana en el CVDS."
+ },
+ {
+  "id": "2.2.3",
+  "tipo": "traducción",
+  "importancia": "baja",
+  "es": "Es aconsejable realizar primero un análisis de impacto para optimizar el alcance de la prueba de regresión.",
+  "en": "It is advisable first to perform an impact analysis to recognize the extent of the regression testing.",
+  "en_es": "Es aconsejable realizar primero un análisis de impacto para reconocer el alcance de la prueba de regresión.",
+  "resumen": "El análisis de impacto sirve para reconocer el alcance de la prueba de regresión, no para «optimizarlo»."
+ },
+ {
+  "id": "3.1",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Los probadores, los representantes de negocio y los desarrolladores trabajan juntos",
+  "en": "Testers, business representatives (Product Owner, business analyst etc.) and developers work together",
+  "en_es": "Los probadores, los representantes de negocio (propietario de producto, analista de negocio, etc.) y los desarrolladores trabajan juntos",
+  "resumen": "Se detalla quiénes son los representantes de negocio: propietario de producto, analista de negocio, etc."
+ },
+ {
+  "id": "3.1.1",
+  "tipo": "traducción",
+  "importancia": "baja",
+  "es": "los contratos de prueba, la documentación del proyecto y los modelos",
+  "en": "test charters, project documentation, contracts and models",
+  "en_es": "los contratos de prueba (test charters), la documentación del proyecto, los contratos y los modelos",
+  "resumen": "En la lista de productos examinables falta «contracts» (contratos); en español solo aparecen los «contratos de prueba»."
+ },
+ {
+  "id": "3.1.2",
+  "tipo": "v4.0.1",
+  "importancia": "media",
+  "es": "Los defectos de código pueden detectarse utilizando el análisis estático de forma más eficiente que en la prueba dinámica",
+  "en": "Certain code defects can be detected using static analysis more efficiently than in dynamic testing",
+  "en_es": "Ciertos defectos de código pueden detectarse utilizando el análisis estático de forma más eficiente que en la prueba dinámica",
+  "resumen": "Solo ciertos defectos de código se detectan con más eficiencia mediante análisis estático, no todos."
+ },
+ {
+  "id": "3.2.2",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "El proceso de revisión puede invocarse un par de veces para completar la revisión de todo el producto de trabajo.",
+  "en": "The review process may be invoked multiple times to complete the review for the entire work product.",
+  "en_es": "El proceso de revisión puede invocarse varias veces para completar la revisión de todo el producto de trabajo.",
+  "resumen": "El proceso de revisión puede invocarse varias veces, no solo «un par de veces»."
+ },
+ {
+  "id": "3.2.4",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "En las inspecciones, el autor no puede actuar como revisor o escriba.",
+  "en": "In inspections, the author cannot act as the review leader or scribe.",
+  "en_es": "En las inspecciones, el autor no puede actuar como líder de la revisión o escriba.",
+  "resumen": "El autor no puede ser líder de la revisión (no «revisor») ni escriba en una inspección."
+ },
+ {
+  "id": "4.2.1",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "Una partición que contenga valores válidos se denomina partición válida.",
+  "en": "In EP, the coverage items are the equivalence partitions. To achieve 100% coverage with this test technique, test cases must exercise all identified partitions (including invalid partitions) by covering each partition at least once.",
+  "en_es": "En la PE, los elementos de cobertura son las particiones de equivalencia. Para lograr una cobertura del 100% con esta técnica de prueba, los casos de prueba deben practicar todas las particiones identificadas (incluidas las particiones no válidas), cubriendo cada partición al menos una vez.",
+  "resumen": "El párrafo sobre elementos de cobertura y cobertura del 100% de la PE no figura en español, y en su lugar se repite el de particiones válidas e inválidas."
+ },
+ {
+  "id": "4.2.1",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Para objetos de prueba simples, la PE puede ser fácil",
+  "en": "For simple test items, EP can be easy",
+  "en_es": "Para elementos de prueba simples, la PE puede ser fácil",
+  "resumen": "Se usa «elemento de prueba» (test item) en lugar de «objeto de prueba» al aplicar técnicas de prueba."
+ },
+ {
+  "id": "4.2.2",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "si la decisión \"si (x = 10) ...\" se implementa incorrectamente como \"si (x = 10) ...\"",
+  "en": "if the decision “if (x ≤ 10) …” is incorrectly implemented as “if (x = 10) …”",
+  "en_es": "si la decisión «si (x ≤ 10) …» se implementa incorrectamente como «si (x = 10) …»",
+  "resumen": "En el ejemplo de AVF la decisión correcta es «x ≤ 10» pero en español se perdió el «≤» y ambas condiciones salen idénticas."
+ },
+ {
+  "id": "4.2.4",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Un diagrama de transición de estados modela el comportamiento de un sistema",
+  "en": "A state diagram models the behavior of a system",
+  "en_es": "Un diagrama de estados modela el comportamiento de un sistema",
+  "resumen": "El modelo se llama «diagrama de estados» (state diagram) y no «diagrama de transición de estados»."
+ },
+ {
+  "id": "4.2.4",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "los casos de prueba deben asegurar que se visitan todos los estados",
+  "en": "test cases must ensure that all the states are exercised",
+  "en_es": "los casos de prueba deben asegurar que se practican todos los estados",
+  "resumen": "Se usa «practicar» (exercise) los estados en lugar de «visitar»."
+ },
+ {
+  "id": "4.4.1",
+  "tipo": "traducción",
+  "importancia": "baja",
+  "es": "Los ataques de defecto son un enfoque metódico de la implementación de la predicción de errores.",
+  "en": "Fault attacks are a way to implement error guessing.",
+  "en_es": "Los ataques de defecto son una forma de implementar la predicción de errores.",
+  "resumen": "Se añadió «enfoque metódico», que no está en el original: es una forma de implementar la predicción de errores."
+ },
+ {
+  "id": "4.5.2",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "Servir de base para la prueba de aceptación de usuario",
+  "en": "Serve as a basis for the user story acceptance testing",
+  "en_es": "Servir de base para la prueba de aceptación de la historia de usuario",
+  "resumen": "Se habla de la prueba de aceptación de la historia de usuario, no de la «prueba de aceptación de usuario» (UAT)."
+ },
+ {
+  "id": "5",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "informe del avance de la prueba test progress report pirámide de prueba test pyramid cuadrantes de prueba testing quadrants",
+  "en": "test progress report, test pyramid, test strategy, testing quadrants",
+  "en_es": "informe del avance de la prueba, pirámide de prueba, estrategia de prueba, cuadrantes de prueba",
+  "resumen": "Se añadió la palabra clave «test strategy» (estrategia de prueba) al capítulo 5; no figura en la lista española."
+ },
+ {
+  "id": "5.1.1",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Contexto de la prueba (por ejemplo, alcance, objetivos de la prueba, restricciones, base de prueba).",
+  "en": "Context of testing (e.g., test scope, test objectives, test basis)",
+  "en_es": "Contexto de la prueba (por ejemplo, alcance de la prueba, objetivos de la prueba, base de prueba)",
+  "resumen": "Se quitó «restricciones» del contexto de la prueba porque ya están en el punto siguiente."
+ },
+ {
+  "id": "5.1.2",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "Los encargados de la planificación de la entrega participan en la redacción de historias de usuario",
+  "en": "Testers involved in release planning participate in writing testable user stories",
+  "en_es": "Los probadores que participan en la planificación de la entrega participan en la redacción de historias de usuario comprobables",
+  "resumen": "El sujeto son los probadores que participan en la planificación de la entrega, no «los encargados de la planificación»."
+ },
+ {
+  "id": "5.1.3",
+  "tipo": "v4.0.1",
+  "importancia": "media",
+  "es": "y criterios de compleción (p. ej., se han ejecutado las pruebas planificadas",
+  "en": "and binary “yes/no” criteria (e.g., planned tests have been executed",
+  "en_es": "y criterios binarios «sí/no» (p. ej., se han ejecutado las pruebas planificadas",
+  "resumen": "Los criterios de salida son medidas de completitud y criterios binarios «sí/no»; «criterios de compleción» ya no se usa como sinónimo de criterios de salida."
+ },
+ {
+  "id": "5.1.6",
+  "tipo": "v4.0.1",
+  "importancia": "alta",
+  "es": "Cuanto más alta es la capa, menor es la granularidad de la prueba, el aislamiento de la prueba y el tiempo de ejecución de la prueba.",
+  "en": "The higher the layer, the lower the test granularity, the lower the test isolation (i.e., the degree of dependency on other elements of the system) and the higher the test execution time.",
+  "en_es": "Cuanto más alta es la capa, menor es la granularidad de la prueba, menor es el aislamiento de la prueba (es decir, el grado de dependencia de otros elementos del sistema) y mayor es el tiempo de ejecución de la prueba.",
+  "resumen": "Cuanto más alta es la capa de la pirámide, el tiempo de ejecución es mayor, no menor (granularidad y aislamiento sí son menores)."
+ },
+ {
+  "id": "5.2.2",
+  "tipo": "traducción",
+  "importancia": "media",
+  "es": "Problemas técnicos (por ejemplo, corrupción del alcance, soporte deficiente de las herramientas).",
+  "en": "Technical issues (e.g., scope creep, poor tool support)",
+  "en_es": "Problemas técnicos (por ejemplo, crecimiento descontrolado del alcance, soporte deficiente de las herramientas)",
+  "resumen": "«Scope creep» es el crecimiento descontrolado del alcance, no «corrupción del alcance»."
+ },
+ {
+  "id": "5.3.2",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "Los informes de compleción de la prueba resumen una etapa específica de la prueba (por ejemplo, nivel de prueba, ciclo de prueba, iteración)",
+  "en": "Test completion reports summarize a specific test activity (e.g., test level, test cycle, iteration)",
+  "en_es": "Los informes de compleción de la prueba resumen una actividad de prueba específica (por ejemplo, nivel de prueba, ciclo de prueba, iteración)",
+  "resumen": "El informe de compleción resume una actividad de prueba específica, no una «etapa»."
+ },
+ {
+  "id": "5.5",
+  "tipo": "v4.0.1",
+  "importancia": "baja",
+  "es": "un flujo de trabajo para tratar las anomalías individuales desde su descubrimiento hasta su cierre",
+  "en": "a workflow for handling individual defects or anomalies from their discovery to their closure",
+  "en_es": "un flujo de trabajo para tratar defectos o anomalías individuales desde su descubrimiento hasta su cierre",
+  "resumen": "El flujo de trabajo trata defectos o anomalías individuales, no solo anomalías."
+ },
+ {
+  "id": "6.2",
+  "tipo": "v4.0.1",
+  "importancia": "media",
+  "es": "las tasas de defectos y la duración de la ejecución de las pruebas",
+  "en": "failure rates, and test execution duration",
+  "en_es": "las tasas de fallos y la duración de la ejecución de las pruebas",
+  "resumen": "La información de prueba que se puede obtener incluye tasas de fallos, no de defectos."
+ }
+]
